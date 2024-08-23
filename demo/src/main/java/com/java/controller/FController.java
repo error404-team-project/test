@@ -9,6 +9,8 @@ public class FController {
 	
 @RequestMapping ("/index")
 public String index () {
-	return "index";
+	return "////////////////////////index";
+	
 }
+
 }

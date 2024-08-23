@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>index.jsp</title>
 </head>
 <body>
-
+	<h1>부에에에엑</h1>
 
 </body>
 </html>

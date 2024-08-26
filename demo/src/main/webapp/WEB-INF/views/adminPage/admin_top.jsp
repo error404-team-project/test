@@ -230,7 +230,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="chartjs.html" class="nav-link active">
+                <a href="chartjs.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>주문관리</p>
                 </a>
@@ -244,7 +244,7 @@
             </ul>
           </li>
            <li class="nav-item">
-            <a href="../gallery.html" class="nav-link">
+            <a href="/ex_member" class="nav-link">
               <i class="nav-icon far fa-image"></i>
               <p>
                 회원정보관리

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
+@RequestMapping("/adminPage")
 public class AdiminPageController {
 	
 	
@@ -21,6 +22,11 @@ public class AdiminPageController {
 	@RequestMapping("/ex_f_board")
 	public String ex_f_board() {
 		return "ex_f_board";
+	}
+	
+	@RequestMapping("/ex_member")
+	public String ex_member() {
+		return "ex_member";
 	}
 	
 	@RequestMapping("/ex_event")

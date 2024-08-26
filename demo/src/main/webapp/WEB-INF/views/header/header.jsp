@@ -197,7 +197,7 @@ $(document).ready(function() {
             <a href="/join" class="button">JOIN</a>
             <a href="/mypage" class="button">MYPAGE</a>
             <a href="/cart" class="button">CART</a>
-            <a href="/admin" class="button">ADMIN</a>
+            <a href="/admin_index" class="button">ADMIN</a>
         </div>
     </div>
 </div>

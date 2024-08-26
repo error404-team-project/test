@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
  <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 
   <!-- 상단고정바 - 왼쪽 -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -207,13 +207,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="ex_notice" class="nav-link">
+                <a href="/ex_notice" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>공지사항</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="ex_event" class="nav-link">
+                <a href="/ex_event" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>이벤트</p>
                 </a>

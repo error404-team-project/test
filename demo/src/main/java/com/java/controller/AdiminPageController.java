@@ -43,5 +43,22 @@ public class AdiminPageController {
 		return "/adminPage/ex_notice";
 	}
 	
+	@RequestMapping ("/ex_Product")
+	public String ex_Product (Model model) {//관리자코드 상품페이지
+//		HashMap<String,Object>map = adnservice.selectAll();
+//		model.addAttribute("list",map.get("list"));
+		System.out.println(model);
+		return "/adminPage/ex_Product";
+	}
+	
+	@RequestMapping ("/ex_Order")
+	public String ex_Order (Model model) {//관리자코드 상품페이지
+//		HashMap<String,Object>map = adnservice.selectAll();
+//		model.addAttribute("list",map.get("list"));
+		System.out.println(model);
+		return "/adminPage/ex_Order";
+	}
+	
+	
 	
 }

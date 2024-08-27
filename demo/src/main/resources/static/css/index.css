@@ -216,7 +216,7 @@ html{overflow-y:scroll; width:100%;}
   display: flex;
   align-items: center; /* 이미지와 텍스트를 수직으로 정렬 */
   gap: 20px; /* 이미지와 텍스트 간격 */
-  padding: 0 0 0 150px; /* 패딩 추가 */
+  padding: 0 0 0 90px; /* 패딩 추가 */
 }
 
 .image-box {
@@ -250,111 +250,6 @@ html{overflow-y:scroll; width:100%;}
   line-height: 1.6;
   color: #666; /* 보조 텍스트 색상 */
 }
-
-.brand-button {
-	padding: 10px 0 0 5px;
-}
-
-.details-button {
-  display: inline-block; /* 버튼을 인라인 블록으로 설정 */
-  padding: 15px 20px; /* 버튼의 패딩 */
-  font-size: 16px; /* 글자 크기 */
-  color: #fff; /* 글자 색상 */
-  background-color: #5fbaf1; /* 배경 색상 */
-  text-decoration: none; /* 링크의 기본 밑줄 제거 */
-  border-radius: 5px; /* 버튼의 둥근 모서리 */
-  transition: background-color 0.3s, color 0.3s; /* 배경 색상과 글자 색상 전환 효과 */
-}
-
-.details-button:hover {
-  background-color: #4a9fd1; /* 호버 시 배경 색상 */
-  color: #fff; /* 호버 시 글자 색상 유지 */
-}
-
-/* item card */
-.product-info {
-  padding: 150px 0 0 16px; /* 카드 내부 여백 */
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* 텍스트 중앙 정렬 */
-  justify-content: center; /* 카드의 내용 수직 중앙 정렬 */
-  height: 100%; /* 카드 높이 전체를 사용 */
-}
-
-.product-info h2 {
-  font-size: 35px; /* 제목 크기 */
-  color: #333333; /* 제목 색상 */
-  margin: 0 0 10px; /* 제목의 하단 여백 */
-  line-height: 1.4; /* 제목 줄 높이 */
-}
-
-.product-info .highlight-background {
-  background-color: #5fbaf1; /* 하늘 색 배경 */
-  color: #fff; /* 배경 위 텍스트 색상 */
-  padding: 5px 10px; /* 텍스트 주위 여백 */
-  border-radius: 4px; /* 배경 둥글기 */
-}
-
-.product-info .highlight-text {
-  color: #333; /* 텍스트 색상 */
-  font-weight: bold; /* 텍스트 두껍게 */
-  padding: 5px; /* 텍스트 주위 여백 */
-}
-
-.product-info p {
-  font-size: 20px; /* 본문 텍스트 크기 */
-  color: #666; /* 본문 텍스트 색상 */
-  line-height: 1.6; /* 본문 줄 높이 */
-}
-.gallery-container {
-  display: flex; /* 이미지들을 가로로 정렬 */
-  gap: 200px; /* 이미지 사이의 간격 */
-  padding: 40px 100px 30px 100px; /* 컨테이너의 패딩 */
-  overflow-x: auto; /* 수평 스크롤 허용 */
-}
-
-.gallery-item {
-  position: relative;
-  display: block;
-  width: 500px; /* 이미지 너비 */
-  height: 350px; /* 이미지 높이 */
-  overflow: hidden; /* 내용이 넘치면 숨기기 */
-  text-decoration: none; /* 링크의 기본 밑줄 제거 */
-  border-radius: 8px; /* 카드 모서리 둥글기 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 이미지에 그림자 추가 */
-}
-
-.gallery-item img {
-  width: 100%; /* 이미지 너비를 컨테이너에 맞춤 */
-  height: 100%; /* 이미지 높이를 컨테이너에 맞춤 */
-  object-fit: cover; /* 이미지 비율을 유지하며 잘림 */
-  
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* 반투명 검은색 배경 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0; /* 기본적으로 숨김 */
-  transition: opacity 0.3s; /* 호버 시 전환 효과 */
-}
-
-.text {
-  color: #fff; /* 텍스트 색상 */
-  font-size: 30px; /* 텍스트 크기 */
-  font-weight: bold; /* 텍스트 두께 */
-}
-
-.gallery-item:hover .overlay {
-  opacity: 1; /* 호버 시 오버레이 표시 */
-}
-
 
 /* MAIN CONTENTS */
 
@@ -398,7 +293,7 @@ html{overflow-y:scroll; width:100%;}
 #newGoods .newcoffee .abimg{position:absolute; left:20px; top:153px;}
 #newGoods ul li.name{font-size:16px; line-height:1.2; font-weight:600; color:#7d4f00; padding:0 0 6px 0;}
 #newGoods ul li.txt{width:332px; color:#666; line-height:1.2;}
-#newGoods ul li.price{font-size:22px; font-weight:600; color:#f15e23; padding:6px 0 0 0;}
+#newGoods ul li.price{font-size:22px; font-weight:600; color:#87CEEB; padding:6px 0 0 0;}
 #newGoods .mdchoice{ float:left; width:370px; margin:0 0 0 40px;}
 #newGoods .mdchoice ul li.name{width:144px;}
 #newGoods .mdchoice ul li.txt{width:186px; color:#666; line-height:1.2;}
@@ -420,7 +315,7 @@ html{overflow-y:scroll; width:100%;}
 #mainBrand ul li .img{width:100%; height:198px; background:url('../images/bg/bg_main_brand.gif') left top repeat-x; border-bottom:1px #e7e7e7 solid; text-align:center;}
 #mainBrand ul li .img img{padding:25px 0 0 0;}
 #mainBrand ul li .name{width:150px; text-align:center; line-height:1.2; color:#666; margin:23px auto 0;}
-#mainBrand ul li .price{width:150px; text-align:center; font-size:22px; color:#f15e23; font-weight:600; margin:4px auto 0;}
+#mainBrand ul li .price{width:150px; text-align:center; font-size:22px; color:#87CEEB; font-weight:600; margin:4px auto 0;}
 
 
 #noticeBLock{width:100%; margin:0 0 40px 0; overflow:hidden;}
@@ -593,7 +488,7 @@ html{overflow-y:scroll; width:100%;}
 	width:150px;
 	 text-align:center; 
 	 font-size:22px; 
-	 color:#f15e23;
+	 color:#87CEEB;
 	  font-weight:600; 
 	  margin:4px auto 0;
 	  }
@@ -602,7 +497,7 @@ html{overflow-y:scroll; width:100%;}
 #mainSale .swiper-slide{position:relative; width:180px; height:210px; overflow:hidden;}
 #mainSale .swiper-slide .img{width:180px; height:152px; margin:0 auto;}
 #mainSale .swiper-slide .name{width:150px; text-align:center; line-height:1.2; color:#666; margin:0 auto;}
-#mainSale .swiper-slide .price{width:150px; text-align:center; font-size:22px; color:#f15e23; font-weight:600; margin:4px auto 0;}
+#mainSale .swiper-slide .price{width:150px; text-align:center; font-size:22px; color:#87CEEB; font-weight:600; margin:4px auto 0;}
 #mainSale .discount{position:absolute; left:10%; top:0; width:44px; height:38px; padding:16px 0 0 16px; font-size:14px; color:#fff; font-weight:600; letter-spacing:-1px; background:url('../images/bg/sale_bg_arrow.png') left top no-repeat;}
 
 /* main rolling arrow */
@@ -763,7 +658,7 @@ html{overflow-y:scroll; width:100%;}
 #mainBrand ul li .img{height:178px;}
 #mainBrand ul li .img img{padding:14px 0 0 0;}
 #mainBrand ul li .name{margin:10px auto 0;}
-#mainBrand ul li .price{width:150px; text-align:center; font-size:22px; color:#f15e23; font-weight:600; margin:4px auto 0;}
+#mainBrand ul li .price{width:150px; text-align:center; font-size:22px; color:#87CEEB; font-weight:600; margin:4px auto 0;}
 
 
 #noticeBLock{width:765px; margin:0 auto}
@@ -867,7 +762,7 @@ html{overflow-y:scroll; width:100%;}
 #mainBrand ul li .img{width:100%; height:198px; background:url('../images/bg/bg_main_brand.gif') left top repeat-x; border-bottom:1px #e7e7e7 solid; text-align:center;}
 #mainBrand ul li .img img{padding:25px 0 0 0;}
 #mainBrand ul li .name{width:150px; text-align:center; line-height:1.2; color:#666; margin:23px auto 0;}
-#mainBrand ul li .price{width:150px; text-align:center; font-size:22px; color:#f15e23; font-weight:600; margin:4px auto 0;}
+#mainBrand ul li .price{width:150px; text-align:center; font-size:22px; color:#87CEEB; font-weight:600; margin:4px auto 0;}
 
 
 #noticeBLock{width:auto;}

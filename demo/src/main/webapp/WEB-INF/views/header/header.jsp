@@ -179,7 +179,7 @@ $(document).ready(function() {
     		<div class="dropdown">
 	            <a href="/shop" class="button">SHOP</a>
 	            <div class="dropdown-content">
-		            <a href="/event1">의약품</a>
+		            <a href="/product/medical_list">의약품</a>
 		            <a href="/event2">생활용품</a>
 		            <a href="/event3">긴급 배송</a>
 		        </div>
@@ -193,8 +193,8 @@ $(document).ready(function() {
         
         <!-- 오른쪽 버튼들 -->
         <div class="right-buttons">
-            <a href="/login" class="button">LOGIN</a>
-            <a href="/join" class="button">JOIN</a>
+            <a href="/member/login" class="button">LOGIN</a>
+            <a href="/member/join01" class="button">JOIN</a>
             <a href="/mypage" class="button">MYPAGE</a>
             <a href="/cart" class="button">CART</a>
             <a href="/adminPage/admin_index" class="button">ADMIN</a>

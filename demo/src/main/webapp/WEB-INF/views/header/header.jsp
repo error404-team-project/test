@@ -156,15 +156,15 @@ $(document).ready(function() {
         <!-- 왼쪽 버튼들 -->
         <div class="left-buttons">
         	<div class="dropdown">
-		        <a href="/event" class="button">EVENT</a>
+		        <a href="/event/event_list" class="button">EVENT</a>
 		        <div class="dropdown-content">
 		        </div>
     		</div>
     		<div class="dropdown">    		
             	<a href="/customer" class="button">CUSTOMER</a>
             	<div class="dropdown-content">
-		            <a href="/event1">공지사항</a>
-		            <a href="/event2">1:1 문의</a>
+		            <a href="/customer/notice_list">공지사항</a>
+		            <a href="/customer/inquiry_list">1:1 문의</a>
 		            <a href="/event3">자주 묻는 질문</a>
 		            <a href="/event4">카카오톡 문의</a>
 		        </div>

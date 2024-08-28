@@ -65,7 +65,7 @@
 							<div class="btn"><a href="#" class="nbtnbig">조회하기</a></div>
 							<div class="point">
 								<p>아직 Medison 회원이 아니신가요? <span>회원가입 후 다양한 상품을 배송받아보세요</span></p>
-								<a href="#" class="nbtn">회원가입</a>
+								<a href="/member/join01" class="nbtn">회원가입</a>
 							</div>
 						</div>
 					</div>

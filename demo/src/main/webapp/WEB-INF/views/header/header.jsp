@@ -188,7 +188,7 @@ $(document).ready(function() {
         
         <!-- 중앙 로고 -->
         <div class="logo">
-            <h3 class="logo-text"><span>Medison</span><a href="../">.</a></h3>
+            <h3 class="logo-text"><a href="../"><span>Medison</span>.</a></h3>
         </div>
         
         <!-- 오른쪽 버튼들 -->

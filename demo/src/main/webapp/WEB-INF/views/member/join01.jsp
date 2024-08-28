@@ -1,19 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../header/header.jsp" %>
+<link rel="stylesheet" type="text/css" href="../css/join.css?v=Y" />
+<script type="text/javascript" src="../js/left_navi.js"></script>
 	<!-- container -->
 	<div id="container">
 
 		<div id="location">
 			<ol>
-				<li><a href="#">HOME</a></li>
+				<li><a href="/index">HOME</a></li>
+				<li><a href="#">MEMBER</a></li>
 				<li class="last">회원가입</li>
 			</ol>
 		</div>
 		
 		<div id="outbox">		
 			<div id="left">
-				<div id="title2"></div>
+				<div id="title2">MEMBER<span>회원</span></div>
 				<ul>	
 					<li><a href="/member/login" id="leftNavi1">로그인</a></li>
 					<li><a href="#" id="leftNavi2" class="hover">회원가입</a></li>

@@ -1,6 +1,10 @@
 /* layout */
 html{overflow-y:scroll; width:100%;}
-#allwrap{position:relative; width:100%; overflow:hidden;}
+#allwrap{
+	position:relative; 
+	width:100%;
+ 	overflow:hidden;
+ 	margin-bottom: 200px;}
 #wrap{}
 
 
@@ -653,7 +657,7 @@ html{overflow-y:scroll; width:100%;}
 
 #footerWrap #footer #finfo{
 	position:relative; 
-	max-width:900px; 
+	max-width:1000px; 
 	padding:30px 0; 
 	margin:0 auto; 
 	overflow:hidden;}

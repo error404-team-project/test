@@ -1,0 +1,423 @@
+/** LOGIN **/
+#outbox {
+   display: flex;
+   justify-content: space-between; /* 두 요소 사이의 간격을 조절 */
+   margin-top: 20px; /* 상단 여백 */
+}
+
+.box {
+    flex: 1; /* 각 박스가 동일한 비율로 공간을 차지하도록 설정 */
+    margin-right: 20px; /* 오른쪽 여백 */
+}
+
+.box:last-child {
+    margin-right: 0; /* 마지막 박스는 오른쪽 여백 제거 */
+}
+
+#left {
+    max-width: 250px; /* 왼쪽 내비게이션의 최대 너비 설정 */
+}
+
+#contents {
+    flex: 2;
+    padding: 0 0 0 50px;
+    margin-right: 20px; /* 추가하여 오른쪽에 여백을 확보 */
+}
+
+/* 기존 스타일 유지 */
+#container {
+    max-width: 1200px;
+    margin: 0px 0 0 170px;
+    padding: 0 60px 0 20px;
+    font-family: Arial, sans-serif;
+}
+
+/** LOCATION **/
+#location{
+	position:absolute; 
+	right:0; 
+	top:-30px; 
+	overflow:hidden;
+}
+
+#location ol{
+	float:right; 
+	padding:0 0 0 7px;}
+	
+#location ol li{	
+	float:left; 
+	padding:12px 14px 12px 7px; 
+	line-height:1; 
+	font-size:11px; 
+	color:#888; 
+	background:url('../images/bg/bg_location.gif') right 12px no-repeat;}
+	
+#location ol li.last{
+	background:url(none); 
+	padding:12px 0 12px 7px; 
+	color:#333; 
+	font-weight:600;}
+	
+#location ol li a{text-decoration:none; color:#888;}
+
+#location ol li a:hover{text-decoration:none; color:#888;}
+
+#title2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+#left ul {
+    list-style: none;
+    padding: 0;
+}
+
+#left li {
+    margin-bottom: 10px;
+}
+
+#left a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px 10px 10px 20px;
+    display: block;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    position: relative;
+}
+
+#left a:hover {
+    background-color: #87CEEB;
+    color: white;
+}
+
+/* 화살표 추가 및 위치 조정 */
+#left a::after {
+    content: '▶'; /* 화살표 모양의 텍스트 */
+    position: absolute;
+    right: 10px; /* 화살표를 오른쪽으로 이동 */
+    font-size: 12px; /* 화살표 크기 */
+    color: white; /* 화살표 색상 */
+    transition: right 0.3s ease; /* 부드러운 이동 효과 */
+}
+
+#left a:hover::after {
+    right: 5px; /* 호버 시 화살표가 더 오른쪽으로 이동하도록 설정 */
+}
+
+/* BTN */
+.nbtnbig{
+	display:block; 
+	width:110px; 
+	height:30px; 
+	line-height:30px;
+	 background:#808080; 
+	 color:#fff !important; 
+	 font-size:14px; 
+	 font-weight:600; 
+	 text-align:center;
+	 }
+
+.sbtnMini{
+	display:block; 
+	width:110px; 
+	height:30px; 
+	line-height:30px; 
+	background:#87CEEB; 
+	color:#fff !important; 
+	font-size:14px; 
+	font-weight:600; 
+	text-align:center;
+	}
+
+/* 버튼 스타일 */
+.nbtnbig, .sbtnMini {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sbtnMini:hover {
+    background-color: #4a9fd1;
+}
+
+.nbtnbig:hover {
+    background-color: #5b524d;
+}
+
+/* 로그인 섹션 스타일 */
+.login-section {
+    margin-bottom: 30px;
+    
+}
+
+.login-section h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+    color: #333;
+}
+
+.informbox {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    border-right: 1px solid #ddd;
+}
+
+.informbox ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 15px;
+}
+
+.informbox ul li {
+    margin-bottom: 10px;
+}
+
+/********** MEMBER ***********/
+#member{width:100%; overflow:hidden;}
+#member h3{
+	font-size:20px; 
+	color:#666; 
+	margin:30px 0 10px 0;}
+#member .inform{position:relative; margin:40px 60px 32px; overflow:hidden;}
+#member .inform ul{width:100%; overflow:hidden;}
+#member .inform ul li{float:left; padding:0 10px 0 0;}
+#member .inform .chk{clear:both; padding:25px 0 0 0;}
+#member .inform .chk label{font-size:12px; color:#888; font-weight:600; padding:2px 0 0 2px;}
+#member .inform .btn{position:absolute; right:0; top:0;}
+#member .inform .point{clear:both; padding:20px 0 0 0;}
+#member .inform .point p{float:left; color:#666; font-weight:600; background:url('../images/ico/ico_alert.png') left 2px no-repeat; padding:0 0 0 16px; line-height:1.2;}
+#member .inform .point a{float:right; margin:-2px 0 0 0;}
+
+/* STEP */
+#member .stepWrap{width:100%; margin:40px 0 30px 0; overflow:hidden;}
+#member .stepWrap .step{position:relative; float:left; width:25%; height:80px; background:#ebebeb; border-right:1px #fff solid; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box;}
+#member .stepWrap .step p.web{color:#888; font-weight:600; padding:16px 0 0 15px;}
+#member .stepWrap .step p.txt{color:#727272; font-weight:600; padding:5px 0 0 15px; font-size:14px;}
+#member .stepWrap .step p.ck{position:absolute; right:10px; bottom:10px;}
+#member .stepWrap .stepon{background:#87CEEB;}
+#member .stepWrap .stepon p.web{color:#fff;}
+#member .stepWrap .stepon p.txt{color:#fff;}
+
+.idfocus{width:200px; 
+height:38px; 
+line-height:38px; 
+padding:0 0 0 9px; 
+border:1px #d9d9d9 solid; 
+font-size:14px; 
+font-weight:600; 
+color:#888;
+}
+
+.idfocusnot{width:200px; 
+height:38px; 
+line-height:38px; 
+padding:0 0 0 9px; 
+border:1px #d9d9d9 solid; 
+font-size:14px; 
+font-weight:600; 
+color:#888;
+}
+
+.pwfocus{width:300px; 
+height:38px; 
+line-height:38px; 
+padding:0 0 0 9px; 
+border:1px #d9d9d9 solid; 
+font-size:14px; 
+font-weight:600; 
+color:#888;
+}
+
+.pwfocusnot{width:300px; 
+height:38px; 
+line-height:38px; 
+padding:0 0 0 9px; 
+border:1px #d9d9d9 solid; 
+font-size:14px; 
+font-weight:600; 
+color:#888;
+}
+
+
+
+
+/* CELEBRATE */
+#member .celebrate{width:100%; background:#f9f9f9; padding:50px 0 40px; overflow:hidden;}
+#member .celebrate .img{text-align:center;}
+#member .celebrate .thx{font-size:32px; color:#5a524c; padding:35px 0 15px 0; text-align:center; line-height:1.1; word-break:keep-all;}
+#member .celebrate .thx span{display:block; font-weight:600; line-height:1.1; word-break:keep-all;}
+#member .celebrate .txt{font-size:14px; color:#888; text-align:center; line-height:1.3; word-break:keep-all;}
+
+
+/* quick reset */
+#container #quick{top:314px;}
+#maxcontents #quick{top:208px;}
+
+/* INPUT TYPE */
+.loginType{
+	width:200px; 
+	height:38px; 
+	line-height:38px; 
+	padding:0 0 0 9px; 
+	border:1px #d9d9d9 solid; 
+	font-size:14px; 
+	font-weight:600; 
+	color:#888; 
+	background:url('../images/bg/bg_id.gif') left top #fff no-repeat;}
+.passType{width:300px; height:38px; line-height:38px; padding:0 0 0 9px; border:1px #d9d9d9 solid; font-size:14px; font-weight:600; color:#888; background:url('../images/bg/bg_password.gif') left top #fff no-repeat;}
+.ordererType{width:200px; height:38px; line-height:38px; padding:0 0 0 9px; border:1px #d9d9d9 solid; font-size:14px; font-weight:600; color:#888; background:url('../images/bg/bg_orderer.gif') left top #fff no-repeat;}
+.ordernumType{width:300px; height:38px; line-height:38px; padding:0 0 0 9px; border:1px #d9d9d9 solid; font-size:14px; font-weight:600; color:#888; background:url('../images/bg/bg_ordernum.gif') left top #fff no-repeat;}
+.nameType{width:200px; height:38px; line-height:38px; padding:0 0 0 9px; border:1px #d9d9d9 solid; font-size:14px; font-weight:600; color:#888; background:url('../images/bg/bg_name.gif') left top #fff no-repeat;}
+
+
+.wlong{width:95%; height:18px; line-height:18px; background:#fff; border:1px #d9d9d9 solid; padding:0 5px; font-size:12px;}
+.w348{width:343px; height:18px; line-height:18px; background:#fff; border:1px #c0c0c0 solid; padding:0 0 0 5px; font-size:12px;}
+.w290{width:285px; height:18px; line-height:18px; background:#fff; border:1px #c0c0c0 solid; padding:0 0 0 5px; font-size:12px;}
+.w215{width:210px; height:18px; line-height:18px; background:#fff; border:1px #d9d9d9 solid; padding:0 0 0 5px; font-size:12px;}
+.w186{width:181px; height:18px; line-height:18px; background:#fff; border:1px #d9d9d9 solid; padding:0 0 0 5px; font-size:12px;}
+.w134{width:129px; height:18px; line-height:18px; background:#fff; border:1px #d9d9d9 solid; padding:0 0 0 5px; font-size:12px;}
+.w84{width:79px; height:18px; line-height:18px; background:#fff; border:1px #d9d9d9 solid; padding:0 0 0 5px; font-size:12px;}
+.w74{width:69px; height:18px; line-height:18px; background:#fff; border:1px #d9d9d9 solid; padding:0 0 0 5px; font-size:12px;}
+
+.fileType{width:95%; height:30px; line-height:20px; background:#fff;}
+.fileType::-ms-value{border:1px #c0c0c0 solid;background:none;}
+
+/* TEXTAREA TYPE */
+.tta{width:95%; height:88px; font-size:12px; border:1px #d9d9d9 solid; font-family:'Nanum Gothic';}
+.demandtta{width:97%; height:88px; font-size:12px; border:1px #d9d9d9 solid; font-family:'Nanum Gothic';}
+.reasontta{width:394px; height:82px; font-size:12px; border:1px #d9d9d9 solid; font-family:'Nanum Gothic'; margin:20px 0 10px 0;}
+
+
+/** CONTENTS **/
+#contents{float:left; width:670px;}
+#contents h2{height:86px; text-align:center; color: #5b524d;}
+#contents h2 strong{width:100%; display:block; font-size:40px; font-weight:600; color:#444; margin:0 0 10px 0;}
+#contents h2 span{width:100%; display:block; font-size:14px; color:#888; font-weight:normal; line-height:1.2; word-break:keep-all;}
+
+/** MAXCONTENTS **/
+#maxcontents{float:left; width:100%;}
+#maxcontents h2{height:57px; border-bottom:2px #87CEEB solid;}
+#maxcontents h2 strong{width:100%; display:block; font-size:40px; font-weight:600; color:#444;}
+#maxcontents h2.brand{height:50px; font-size:26px; font-weight:600; color:#333; margin:40px 0 0 0; border-bottom:1px #cdcbc9 solid;}
+#maxcontents h2.brand span{font-size:12px; font-weight:normal; color:#999; padding:0 0 0 10px;}
+#maxcontents .banner{width:100%; text-align:center; overflow:hidden;}
+#maxcontents .banner .mobile{width:290px; margin:0 auto;}
+
+/** LOCATION **/
+#location{
+	position:relative; 
+	right:0;  
+	top: 20px;
+	left: 50px;
+	overflow:hidden;}
+#location ol{float:right; padding:0 0 0 7px;}
+#location ol li{float:left;
+ padding:12px 14px 12px 7px
+ ; line-height:1;
+  font-size:11px;
+   color:#888;
+    background:url('../images/bg/bg_location.gif') right 12px no-repeat;}
+#location ol li.last{background:url(none); padding:12px 0 12px 7px; color:#333; font-weight:600;}
+#location ol li a{text-decoration:none; color:#888;}
+#location ol li a:hover{text-decoration:none; color:#888;}q
+
+/** LEFT **/
+#left{float:left; width:180px; margin:0 50px 0 0; overflow:hidden;}
+#left #title{width:100%; height:81px; font-size:34px; color:#444; font-weight:600; letter-spacing:-1px; line-height:1;}
+#left #title span{display:block; font-size:14px; color:#888; font-weight:600; line-height:2;}
+#left #title2{width:100%; height:81px; font-size:27px; color:#444; font-weight:600; letter-spacing:-1px; line-height:1;}
+#left #title2 span{display:block; font-size:14px; color:#888; font-weight:600; line-height:2;}
+#left ul li{width:100%; height:29px; border-bottom:1px #d9d9d9 solid; padding:5px 0;}
+#left ul li a{display:block; height:29px; line-height:29px; padding:0 0 0 10px; color:#666; font-size:15px; font-weight:600;}
+#left ul li a.hover{background:url() 163px 8px #87CEEB no-repeat; color:#fff;}
+#left ul li a:hover{background:url() 163px 8px #87CEEB no-repeat; color:#fff;}
+#left ul li.last{border:0;}
+
+.point {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.point p {
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: #666;
+}
+
+.point a.nbtn {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #d1d1d1;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* 작은 화면을 위한 미디어 쿼리 */
+@media (max-width: 768px) {
+    #container {
+        padding: 0 20px; /* 여백 줄이기 */
+    }
+
+    #outbox {
+        flex-direction: column; /* 세로 정렬로 변경 */
+    }
+
+    .box {
+        margin-right: 0; /* 오른쪽 여백 제거 */
+        margin-bottom: 20px; /* 아래 여백 추가 */
+    }
+
+    #left {
+        max-width: 100%; /* 최대 너비를 100%로 설정 */
+        margin: 0 0 20px 0; /* 여백 조정 */
+    }
+
+    #contents {
+        padding: 0; /* 패딩 제거 */
+        margin-right: 0; /* 오른쪽 여백 제거 */
+    }
+
+    .informbox {
+        padding: 10px; /* 패딩 추가 */
+    }
+
+    #member .stepWrap .step {
+        width: 100%; /* 각 스텝을 100%로 설정 */
+        height: auto; /* 높이 자동 조정 */
+    }
+
+    .login-section h3 {
+        font-size: 18px; /* 폰트 크기 조정 */
+    }
+    
+    .idfocus, .pwfocus {
+        width: 100%; /* 입력 필드 너비를 100%로 설정 */
+    }
+
+    /* 추가적인 스타일 조정 */
+    .point a.nbtn {
+        width: 100%; /* 버튼 너비를 100%로 설정 */
+        text-align: center; /* 텍스트 중앙 정렬 */
+    }
+}
+
+/* 더 작은 화면을 위한 추가 미디어 쿼리 */
+@media (max-width: 480px) {
+    #title2 {
+        font-size: 22px; /* 폰트 크기 조정 */
+    }
+
+    #contents h2 strong {
+        font-size: 30px; /* 폰트 크기 조정 */
+    }
+}
+
+

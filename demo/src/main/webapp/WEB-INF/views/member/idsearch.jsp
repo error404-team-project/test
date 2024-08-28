@@ -1,19 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../header/header.jsp" %>
+<link rel="stylesheet" type="text/css" href="../css/idsearch.css?v=Y" />
+<script type="text/javascript" src="../js/left_navi.js"></script>
 	<!-- container -->
 	<div id="container">
 
 		<div id="location">
 			<ol>
 				<li><a href="#">HOME</a></li>
+				<li><a href="#">MEMBER</a></li>
 				<li class="last">아이디/비밀번호 찾기</li>
 			</ol>
 		</div>
 		
 		<div id="outbox">		
 			<div id="left">
-				<div id="title2"></div>
+				<div id="title2">MEMBER<span>회원</span></div>
 				<ul>	
 					<li><a href="/member/login" id="leftNavi1">로그인</a></li>
 					<li><a href="/member/join01" id="leftNavi2">회원가입</a></li>
@@ -33,22 +36,20 @@
 					<div class="informbox">
 						<div class="inform">
 							<ul>
-								<li><input type="text" class="nameType" onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='nameType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" /></li>
-								<li><input type="password" class="emailType" onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='emailType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" /></li>
+								<li><input type="text" class="nameType" onfocus="this.className='idfocus'" onblur="if (this.value.length==0) {this.className='nameType'}else {this.className='idfocusnot'}" style="ime-mode:inactive;" /></li>
+								<li><input type="password" class="emailType" onfocus="this.className='pwfocus'" onblur="if (this.value.length==0) {this.className='emailType'}else {this.className='pwfocusnot'}" style="ime-mode:inactive;" /></li>
 							</ul>
 
 							<div class="btn"><a href="#" class="gbtn">아이디 찾기</a></div>
 						</div>
 					</div>
 
-
-
 					<h3>비밀번호 찾기</h3>
 					<div class="informbox">
 						<div class="inform">
 							<ul>
-								<li><input type="text" class="loginType" onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='loginType'}else {this.className='mfocusnot'}" /></li>
-								<li><input type="text" class="emailType" onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='emailType'}else {this.className='mfocusnot'}" /></li>
+								<li><input type="text" class="loginType" onfocus="this.className='idfocus'" onblur="if (this.value.length==0) {this.className='loginType'}else {this.className='idfocusnot'}" /></li>
+								<li><input type="text" class="emailType" onfocus="this.className='pwfocus'" onblur="if (this.value.length==0) {this.className='emailType'}else {this.className='pwfocusnot'}" /></li>
 							</ul>
 
 							<div class="btn"><a href="#" class="gbtn">비밀번호 찾기</a></div>

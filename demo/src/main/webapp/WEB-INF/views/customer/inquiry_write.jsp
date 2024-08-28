@@ -23,9 +23,9 @@
         <div class="box" id="left">
             <div id="title2">CUSTOMER<span>고객센터</span></div>
             <ul>    
-                <li><a href="#" id="leftNavi1">공지사항</a></li>
-                <li><a href="#" id="leftNavi2">1:1문의</a></li>
-                <li><a href="#" id="leftNavi3">자주 묻는 질문</span></a></li>
+                <li><a href="/customer/notice_list" id="leftNavi1">공지사항</a></li>
+                <li><a href="/customer/inquiry_list" id="leftNavi2">1:1문의</a></li>
+                <li><a href="/customer/faq" id="leftNavi3">자주 묻는 질문</span></a></li>
                 <li class="last"><a href="#" id="leftNavi4">카카오톡 문의</a></li>
             </ul>            
         </div>

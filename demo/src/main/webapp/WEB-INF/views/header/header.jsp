@@ -161,11 +161,11 @@ $(document).ready(function() {
 		        </div>
     		</div>
     		<div class="dropdown">    		
-            	<a href="/customer" class="button">CUSTOMER</a>
+            	<a href="/customer/notice_list" class="button">CUSTOMER</a>
             	<div class="dropdown-content">
 		            <a href="/customer/notice_list">공지사항</a>
 		            <a href="/customer/inquiry_list">1:1 문의</a>
-		            <a href="/event3">자주 묻는 질문</a>
+		            <a href="/customer/faq">자주 묻는 질문</a>
 		            <a href="/event4">카카오톡 문의</a>
 		        </div>
     		</div>

@@ -5,8 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>   
 
 <%@ include file="../header/header.jsp" %>
-<link rel="stylesheet" type="text/css" href="../css/content.css?v=Y" />
-<link rel="stylesheet" type="text/css" href="../css/inquiry.css?v=Y" />
+<link rel="stylesheet" type="text/css" href="../css/event.css?v=Y" />
 <script type="text/javascript" src="../js/left_navi.js"></script>
 
 	<!-- container -->

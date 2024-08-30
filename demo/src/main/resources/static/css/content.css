@@ -329,7 +329,7 @@
 .brandList ul li .img{border:7px #fff solid;}
 .brandList ul li .img img{width:286px; height:231px;}
 .brandList ul li .name{height:32px; line-height:1.2; color:#666; text-align:center; padding:4px 0 0 0;}
-.brandList ul li .price{font-size:22px; font-weight:600; color:#f15e23; text-align:center;}
+.brandList ul li .price{font-size:22px; font-weight:600; color:#87CEEB; text-align:center;}
 .brandList ul li:hover .img{border:7px #ffc7b1 solid;}
 
 

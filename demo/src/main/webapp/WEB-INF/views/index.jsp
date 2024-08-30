@@ -75,7 +75,7 @@
 	    <p>We utilize advanced drone technology to deliver </p>
 	    <p>your essential medicines safely and efficiently.</p>
 	    <!-- 버튼 추가 -->
-  		<div class="brand-button"><a href="/brand" class="details-button">About Brand</a></div>
+  		<div class="brand-button"><a href="brand-details.html" class="details-button">About Brand</a></div>
   </div>
 	    <!-- 이미지 박스 -->
 	  <div class="image-box">
@@ -94,19 +94,19 @@
   	</div>
 	<!-- 상품 이미지 박스 -->
 	<div class="gallery-container">
-  <a href="../" class="gallery-item">
+  <a href="../product/medical_list" class="gallery-item">
     <img src="../images/img/product_medicine.jpg" alt="Medicines">
     <div class="overlay">
       <div class="text">Medicines</div>
     </div>
   </a>
-  <a href="../" class="gallery-item">
+  <a href="../product/household_list" class="gallery-item">
     <img src="../images/img/daily_product.jpeg" alt="Household Items">
     <div class="overlay">
       <div class="text">Household Items</div>
     </div>
   </a>
-  <a href="../" class="gallery-item">
+  <a href="../product/em_delivery" class="gallery-item">
     <img src="../images/img/emergency_kit.jpg" alt="Emergency Delivery">
     <div class="overlay">
       <div class="text">Emergency Delivery</div>

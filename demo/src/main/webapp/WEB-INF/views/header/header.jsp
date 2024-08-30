@@ -173,15 +173,15 @@ $(document).ready(function() {
             	<a href="/community" class="button">COMMUNITY</a>
             	<div class="dropdown-content">
 		            <a href="/event1">자유 게시판</a>
-		            <a href="/community/ex_review_b_list">후기 게시판</a>
+		            <a href="/event2">후기 게시판</a>
 		        </div>
     		</div>
     		<div class="dropdown">
 	            <a href="/shop" class="button">SHOP</a>
 	            <div class="dropdown-content">
 		            <a href="/product/medical_list">의약품</a>
-		            <a href="/event2">생활용품</a>
-		            <a href="/event3">긴급 배송</a>
+		            <a href="/product/household_list">생활용품</a>
+		            <a href="/product/em_delivery">긴급 배송</a>
 		        </div>
     		</div>
         </div>

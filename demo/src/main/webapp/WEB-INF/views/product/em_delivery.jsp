@@ -9,26 +9,19 @@
 			<ol>
 				<li><a href="/index">HOME</a></li>
 				<li>SHOP</li>
-				<li class="last">의약품</li>
+				<li class="last">긴급배송</li>
 			</ol>
 		</div>
 					
 		<!-- maxcontents -->
 		<div id="maxcontents">
-			<div class="banner"><img src="../images/img/medical_product.png" alt="원두커피, 원두커피 전문 기업 쟈뎅의 Coffee Master의 심혈을 기울인 엄선된 원두 선별, 일반 원두커피부터 간편하게 즐기는 원두커피백, POD까지 다양하게 구성되어 있습니다." class="web" /><img src="../images/img/product_banner01_m.jpg" alt="원두커피, 원두커피 전문 기업 쟈뎅의 Coffee Master의 심혈을 기울인 엄선된 원두 선별, 일반 원두커피부터 간편하게 즐기는 원두커피백, POD까지 다양하게 구성되어 있습니다." class="mobile" /></div>
+			<div class="banner"><img src="../images/img/emdeli.jpg" alt="원두커피, 원두커피 전문 기업 쟈뎅의 Coffee Master의 심혈을 기울인 엄선된 원두 선별, 일반 원두커피부터 간편하게 즐기는 원두커피백, POD까지 다양하게 구성되어 있습니다." class="web" /><img src="../images/img/product_banner01_m.jpg" alt="원두커피, 원두커피 전문 기업 쟈뎅의 Coffee Master의 심혈을 기울인 엄선된 원두 선별, 일반 원두커피부터 간편하게 즐기는 원두커피백, POD까지 다양하게 구성되어 있습니다." class="mobile" /></div>
 			
-			<h2 class="brand">의약품<span>다양한 의약품.</span></h2>
+			<h2 class="brand">긴급배송<span>구급키트 / 상비약 세트를 빠르게</span></h2>
 
 			<div class="brandTab">
 				<ul>
-					<li><a href="#" class="hover">항생제</a></li>
-					<li><a href="#">소화제</a></li>
-					<li><a href="#">비염</a></li>
-					<li><a href="#">진통/소염제</a></li>
-					<li><a href="#">항바이러스제</a></li>
-					<li><a href="#">항염증제</a></li>
-					<li><a href="#">연고</a></li>
-					<li><a href="#">밴드</a></li>
+					<li><a href="#" class="hover">긴급배송</a></li>
 				</ul>
 			</div>
 
@@ -36,7 +29,8 @@
 				<ul>
 					<!-- 반복 -->
 					<li>
-						<a href="/product/medical_view">
+						<input type="checkbox">
+						<a href="#">
 							<div class="img"><img src="../images/img/sample_brand.jpg" alt="제품이미지" /></div>
 							<div class="name">쟈뎅 바리스타 벨벳<br/>에스프레소 원두커피</div>
 							<div class="price">5,600원</div>

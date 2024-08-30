@@ -115,7 +115,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="chartjs.html" class="nav-link">
+                <a href="/adminPage/ex_Order" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>주문관리</p>
                 </a>
@@ -137,7 +137,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="/adminPage/ex_Product" class="nav-link">
               <i class="nav-icon fas fa-tree"></i>
               <p>
                 상품정보 관리

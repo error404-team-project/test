@@ -13,9 +13,19 @@ public class ProductController {
 		return "/product/medical_list";
 	}
 	
-	@RequestMapping("/list")
-	public String list() {
-		return "/product/list";
+	@RequestMapping("/household_list")
+	public String household_list() {
+		return "/product/household_list";
+	}
+	
+	@RequestMapping("/em_delivery")
+	public String em_delivery() {
+		return "/product/em_delivery";
+	}
+	
+	@RequestMapping("/medical_view")
+	public String medical_view() {
+		return "/product/medical_view";
 	}
 	
 }

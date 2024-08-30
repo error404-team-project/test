@@ -75,7 +75,7 @@
 	    <p>We utilize advanced drone technology to deliver </p>
 	    <p>your essential medicines safely and efficiently.</p>
 	    <!-- 버튼 추가 -->
-  		<div class="brand-button"><a href="brand-details.html" class="details-button">About Brand</a></div>
+  		<div class="brand-button"><a href="/brand" class="details-button">About Brand</a></div>
   </div>
 	    <!-- 이미지 박스 -->
 	  <div class="image-box">

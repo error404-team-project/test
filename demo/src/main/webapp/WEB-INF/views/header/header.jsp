@@ -173,7 +173,7 @@ $(document).ready(function() {
             	<a href="/community" class="button">COMMUNITY</a>
             	<div class="dropdown-content">
 		            <a href="/event1">자유 게시판</a>
-		            <a href="/event2">후기 게시판</a>
+		            <a href="/community/ex_review_b_list">후기 게시판</a>
 		        </div>
     		</div>
     		<div class="dropdown">

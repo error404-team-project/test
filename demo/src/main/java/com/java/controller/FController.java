@@ -22,6 +22,12 @@ public class FController {
 	public String chartjs () {
 		return "chartjs";
 	}
+	
+	
+	@RequestMapping ("/brand")
+	public String brand() {
+		return "brand";
+	}
 
 
 }

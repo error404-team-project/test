@@ -10,7 +10,7 @@ public class CommunityController {
 	@RequestMapping("/ex_review_b_list")
 	public String ex_review_b_list() {
 		
-		return "ex_review_b_list";
+		return "/community/ex_review_b_list";
 	}
 
 }

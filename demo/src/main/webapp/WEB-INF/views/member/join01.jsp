@@ -3,6 +3,7 @@
 <%@ include file="../header/header.jsp" %>
 <link rel="stylesheet" type="text/css" href="../css/join.css?v=Y" />
 <script type="text/javascript" src="../js/left_navi.js"></script>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<!-- container -->
 	<div id="container">
 
@@ -29,6 +30,7 @@
 
 
 			<!-- contents -->
+			<form action="/member/join02" method="post" name="jFrm">
 			<div id="contents">
 				<div id="member">
 					<h2><strong>회원가입</strong><span>회원으로 가입하시면 보다 더 다양한 혜택을 누리실 수 있습니다.</span></h2>
@@ -336,7 +338,7 @@
 
 							<ul>
 								<li class="chk">
-									<input type="checkbox" id="agree1" /><label for="agree1">이용약관에 동의합니다.</label>
+									<input type="checkbox" name="svc_agree" id="agree1" class="agree" value="Y"/><label for="agree1">이용약관에 동의합니다.</label>
 								</li>
 								<li class="btn">
 									<a href="#" class="nbtnMini">전체보기</a>
@@ -388,7 +390,7 @@
 
 							<ul>
 								<li class="chk">
-									<input type="checkbox" id="agree2" /><label for="agree2">개인정보 보호를 위한 이용자 <span>동의사항에 동의합니다.</span></label>
+									<input type="checkbox" name="ps_agree1" id="agree2" class="agree" value="Y"/><label for="agree2">개인정보 보호를 위한 이용자 <span>동의사항에 동의합니다.</span></label>
 								</li>
 								<li class="btn">
 									<a href="#" class="nbtnMini">전체보기</a>
@@ -440,15 +442,62 @@
 
 							<ul class="fn">
 								<li class="chk">
-									<input type="checkbox" id="agree3" /><label for="agree3">개인정보 보호를 위한 이용자 <span>동의사항에 동의합니다.</span></label>
+									<input type="checkbox" name="ps_agree" id="agree3" class="agree" value="Y"/><label for="agree3">개인정보 보호를 위한 이용자 <span>동의사항에 동의합니다.</span></label>
 								</li>
 								<li class="btn">
 									<a href="#" class="nbtnMini">전체보기</a>
 								</li>
 							</ul>
 						</div>
-
+									<input type="checkbox" name="agreeAll" id="agreeAll"><label for="agreeAll">전체동의</label>
 					</div>
+<script>
+$(function(){
+	// 전체선택 체크 시 전체 선택되게
+	$("#agreeAll").click(function(){
+		if($("#agreeAll").is(":checked")){
+			// 전체선택 체크하면 인풋박스 전체 체크
+			$("input[class=agree]").prop("checked",true);
+		} else {
+			// 전체선택 체크 해제하면 인풋박스 전체 체크해제
+			$("input[class=agree]").prop("checked",false);
+		}
+	}) // ("#agreeAll").click
+	
+	// 클래스가 agree인 체크박스를 눌렀을때
+	$("input[class=agree]").click(function(){
+		// 체크박스 전체갯수
+		var total = $("input[class=agree]").length;
+		// 체크된 체크박스 갯수
+		var checked = $("input[class=agree]:checked").length;
+		
+		if(checked < total){
+			// 체크된게 전체 체크박스보다 적으면 전채선택 체크해제
+			$("#agreeAll").prop("checked",false);
+		}else {
+			// 체크된게 전체 체크박스랑 같으면 전체선택 체크
+			$("#agreeAll").prop("checked",true);
+		}
+	}) // ("#input[class=agree]").click
+
+}) // jquery
+
+function joinBtn(){
+	// 체크박스 전체갯수
+	var total = $("input[class=agree]").length;
+	// 체크된 체크박스 갯수
+	var checked = $("input[class=agree]:checked").length;
+	
+	if(checked < total){
+		// 체크된게 전체갯수보다 적으면
+		alert("전체 동의하셔야 가능합니다.");
+	} else {
+		// 갯수가 같으면
+		jFrm.submit();
+	}
+}
+
+</script>
 
 
 					<!-- Btn Area -->
@@ -456,12 +505,12 @@
 						<div class="bCenter">
 							<ul>
 								<li><a href="#" class="nbtnbig">취소하기</a></li>
-								<li><a href="/member/join02" class="sbtnMini">가입하기</a></li>
+								<li><a onclick="joinBtn()" class="sbtnMini">가입하기</a></li>
 							</ul>
 						</div>
 					</div>
 					<!-- //Btn Area -->
-
+				</form>
 
 
 				</div>

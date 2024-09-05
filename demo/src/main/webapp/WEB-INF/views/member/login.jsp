@@ -4,7 +4,7 @@
 
 <link rel="stylesheet" type="text/css" href="../css/login.css?v=Y" />
 <script type="text/javascript" src="../js/left_navi.js"></script>
-
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 	<!-- container -->
 	<div id="container">
@@ -30,20 +30,39 @@
         </div>
         <script type="text/javascript">initSubmenu(1,0);</script>
 
+<script>
+var result = "${result}";
+if(result == 2){
+	alert("아이디 또는 비밀번호 틀림\n다시 로그인해주세요");
+	result = 1;
+}
+function lBtn(){
+	if($("#user_pw").val() == ''){
+		alert("비밀번호를 입력해주세요");
+	}
+	if($("#user_id").val() == ''){
+		alert("아이디를 입력해주세요");
+	}
+	lFrm.submit();
+	
+	
+} // lBtn
+</script>
 
 			<!-- contents -->
 			<div id="contents">
 				<div id="member">
 					<h2><strong>로그인</strong><span>로그인 후 주문하시면 다양한 혜택을 받으실 수 있습니다.</span></h2>
 					<h3>회원 로그인</h3>
+					<form action="/member/login" method="post" name="lFrm">
 					<div class="informbox">
 						<div class="inform">
 							<ul>
-								<li><input type="text" class="loginType" onfocus="this.className='idfocus'" onblur="if (this.value.length==0) {this.className='loginType'}else {this.className='idfocusnot'}" style="ime-mode:inactive;" /></li>
-								<li><input type="password" class="passType" onfocus="this.className='pwfocus'" onblur="if (this.value.length==0) {this.className='passType'}else {this.className='pwfocusnot'}" style="ime-mode:inactive;" /></li>
+								<li><input type="text" class="loginType" id="user_id" name="user_id" onfocus="this.className='idfocus'" onblur="if (this.value.length==0) {this.className='loginType'}else {this.className='idfocusnot'}" style="ime-mode:inactive;" /></li>
+								<li><input type="password" class="passType" id="user_pw" name="user_pw" onfocus="this.className='pwfocus'" onblur="if (this.value.length==0) {this.className='passType'}else {this.className='pwfocusnot'}" style="ime-mode:inactive;" /></li>
 							</ul>
 
-							<div class="btn"><a href="#" class="sbtnMini">로그인</a></div>
+							<div class="btn"><a onclick="lBtn()" class="sbtnMini">로그인</a></div>
 
 							<div class="point">
 								<p>아이디 혹은 비밀번호를 잊으셨나요?</p>
@@ -51,6 +70,7 @@
 							</div>
 						</div>
 					</div>
+					</form>
 
 
 

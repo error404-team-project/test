@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../header/header.jsp" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" type="text/css" href="../css/layout.css?v=Y" />
+<style>
+	.name{width:300px; height:36px; overflow : hidden;}
+</style>
 	<!-- container -->
 	<div id="container">
 
@@ -21,33 +25,151 @@
 
 			<div class="brandTab">
 				<ul>
-					<li><a href="#" class="hover">항생제</a></li>
-					<li><a href="#">소화제</a></li>
-					<li><a href="#">비염</a></li>
-					<li><a href="#">진통/소염제</a></li>
-					<li><a href="#">항바이러스제</a></li>
-					<li><a href="#">항염증제</a></li>
-					<li><a href="#">연고</a></li>
-					<li><a href="#">밴드</a></li>
+				<c:if test="${medical_category == 0 }">
+					<li><a href="/product/medical_list" class="hover">전체</a></li>
+				</c:if>
+				<c:if test="${medical_category != 0 }">
+					<li><a href="/product/medical_list">전체</a></li>
+				</c:if>
+				<c:if test="${medical_category == 1 }">
+					<li><a href="/product/medical_list?medical_category=1" class="hover">항생제</a></li>
+				</c:if>
+				<c:if test="${medical_category != 1 }">
+					<li><a href="/product/medical_list?medical_category=1" >항생제</a></li>
+				</c:if>
+				<c:if test="${medical_category == 2 }">
+					<li><a href="/product/medical_list?medical_category=2" class="hover">소화제</a></li>
+				</c:if>
+				<c:if test="${medical_category != 2 }">
+					<li><a href="/product/medical_list?medical_category=2">소화제</a></li>
+				</c:if>
+				<c:if test="${medical_category == 3 }">
+					<li><a href="/product/medical_list?medical_category=3" class="hover">비염</a></li>
+				</c:if>
+				<c:if test="${medical_category != 3 }">
+					<li><a href="/product/medical_list?medical_category=3">비염</a></li>
+				</c:if>
+				<c:if test="${medical_category == 4 }">
+					<li><a href="/product/medical_list?medical_category=4" class="hover">진통/소염제</a></li>
+				</c:if>
+				<c:if test="${medical_category != 4 }">
+					<li><a href="/product/medical_list?medical_category=4">진통/소염제</a></li>
+				</c:if>
+				<c:if test="${medical_category == 5 }">
+					<li><a href="/product/medical_list?medical_category=5" class="hover">항바이러스제</a></li>
+				</c:if>
+				<c:if test="${medical_category != 5 }">
+					<li><a href="/product/medical_list?medical_category=5">항바이러스제</a></li>
+				</c:if>
+				<c:if test="${medical_category == 6 }">
+					<li><a href="/product/medical_list?medical_category=6" class="hover">항염증제</a></li>
+				</c:if>
+				<c:if test="${medical_category != 6 }">
+					<li><a href="/product/medical_list?medical_category=6">항염증제</a></li>
+				</c:if>
+				<c:if test="${medical_category == 7 }">
+					<li><a href="/product/medical_list?medical_category=7" class="hover">연고</a></li>
+				</c:if>
+				<c:if test="${medical_category != 7 }">
+					<li><a href="/product/medical_list?medical_category=7">연고</a></li>
+				</c:if>
+				<c:if test="${medical_category == 8 }">
+					<li><a href="/product/medical_list?medical_category=8" class="hover">밴드</a></li>
+				</c:if>
+				<c:if test="${medical_category != 8 }">
+					<li><a href="/product/medical_list?medical_category=8">밴드</a></li>
+				</c:if>
 				</ul>
 			</div>
 
 			<div class="brandList">
 				<ul>
 					<!-- 반복 -->
+					
+					<c:forEach var="m" items="${mCList}">
 					<li>
-						<a href="/product/medical_view">
-							<div class="img"><img src="../images/img/sample_brand.jpg" alt="제품이미지" /></div>
-							<div class="name">쟈뎅 바리스타 벨벳<br/>에스프레소 원두커피</div>
-							<div class="price">5,600원</div>
+						<a href="/product/medical_view?p_num=${m.p_num}&medical_category=${medical_category}">
+							<c:if test="${m.stock != 0}">
+							<div class="img">
+							<img src="../images/img/${m.image}" alt="제품이미지" />
+							</div>
+							</c:if>
+							<c:if test="${m.stock == 0}">
+							<div class="img">
+							<img src="../images/img/stock0.png" alt="제품이미지" />
+							</div>
+							</c:if>
+							<div class="name">${m.name }</div>
+							<div class="price">${m.price }원</div>
 						</a>
 					</li>
+					</c:forEach>
 					<!-- //반복 -->
 			</div>
+			<div class="btnAreaList">
+						<!-- 페이징이동1 -->
+						<div class="allPageMoving1">
+					<!-- 처음페이지 -->
+					<c:if test="${pageDto.page > 1 }">
+						<a href="/product/medical_list?page=1&medical_category=${medical_category}" class="n">
+							<img src="../images/btn/btn_pre2.gif" alt="처음으로"/>
+						</a>
+					</c:if>
+					<c:if test="${pageDto.page == 1 }">
+							<img src="../images/btn/btn_pre2.gif" alt="처음으로"/>
+					</c:if>
+					<!-- 처음페이지 -->
+					
+					<!-- 이전페이지 -->
+					<c:if test="${pageDto.page>1}">
+						<a href="/product/medical_list?page=${pageDto.page-1}&medical_category=${medical_category}" class="pre">
+							<img src="../images/btn/btn_pre1.gif" alt="앞페이지로"/>
+						</a>
+					</c:if>
+					<c:if test="${pageDto.page==1}">
+							<img src="../images/btn/btn_pre1.gif" alt="앞페이지로"/>
+					</c:if>
+					<!-- 이전페이지 -->
+					
+					<!-- 페이지 넘버링 -->	
+					<c:forEach var="pnum" begin="${pageDto.startPage}" end="${pageDto.endPage }" step="1">
+						<c:if test="${pnum != pageDto.page }">
+							<a href="/product/medical_list?page=${pnum}&medical_category=${medical_category}">${pnum}</a> 
+						</c:if>
+						<c:if test="${pnum == pageDto.page }">
+							<strong>${pnum}</strong>
+						</c:if>	
+					</c:forEach>	
+					<!-- 페이지 넘버링 -->	
+					
+					<!-- 다음페이지 -->
+					<c:if test="${pageDto.page < pageDto.maxPage }">
+						<a href="/product/medical_list?page=${pageDto.page + 1 }&medical_category=${medical_category}" class="next">
+							<img src="../images/btn/btn_next1.gif" alt="뒤페이지로"/>
+						</a>
+					</c:if>	
+					<c:if test="${pageDto.page == pageDto.maxPage }">
+							<img src="../images/btn/btn_next1.gif" alt="뒤페이지로"/>
+					</c:if>	
+					<!-- 다음페이지 -->
+					<!-- 마지막페이지 -->
+					<c:if test="${pageDto.page < pageDto.endPage }">
+						<a href="/product/medical_list?page=${pageDto.maxPage}&medical_category=${medical_category}" class="n">
+							<img src="../images/btn/btn_next2.gif" alt="마지막페이지로"/>
+						</a>
+					</c:if>
+					<c:if test="${pageDto.page == pageDto.endPage }">
+							<img src="../images/btn/btn_next2.gif" alt="마지막페이지로"/>
+					</c:if>
+					<!-- 마지막페이지 -->
+
+						</div>
+						<!-- //페이징이동1 -->
+					</div>
 
 			<!-- quickmenu -->
 			<div id="quick">
-				<div class="cart"><a href="#">장바구니</a></div>
+				<div class="cart"><a href="/member/cart">장바구니</a></div>
 				<div class="wish">
 					<p class="title">위시 리스트</p>
 					<div class="list">

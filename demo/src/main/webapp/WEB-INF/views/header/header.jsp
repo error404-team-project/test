@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -193,10 +194,16 @@ $(document).ready(function() {
         
         <!-- 오른쪽 버튼들 -->
         <div class="right-buttons">
+        <c:if test="${sessionId == null }">
             <a href="/member/login" class="button">LOGIN</a>
             <a href="/member/join01" class="button">JOIN</a>
+        </c:if>
+        <c:if test="${sessionId != null }">
+            <sapn class="button">${sessionName}님</sapn>
+            <a href="/member/logout" class="button">LOGOUT</a>
+        </c:if>
             <a href="/mypage" class="button">MYPAGE</a>
-            <a href="/cart" class="button">CART</a>
+            <a href="/product/cart" class="button">CART</a>
             <a href="/adminPage/admin_index" class="button">ADMIN</a>
         </div>
     </div>

@@ -539,8 +539,8 @@ color:#888;
 .pta li.cb{clear:both; padding-right:40px;}
 .pta li span.valign{line-height:20px;}
 .pta li span.mvalign{font-size:12px; font-weight:600; line-height:20px; color:#999;}
-.pta li span.black{color:#5a524c; font-weight:normal;}
-.pta li span.orange{color:#87CEEB; font-weight:normal;}
+.pta li span.red{color:#FF0000; font-weight:normal;}
+.pta li span.skyblue{color:#87CEEB; font-weight:normal;}
 .pta li label.star{padding:2px 20px 0 2px;}
 .pta li label.star img{margin:4px 0 0 0;}
 .question{float:left;}

@@ -1,0 +1,90 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.mapper.ProductMapper">
+
+	<select id="selectMListCountAll" resultType="int">
+		<if test="medical_category == 0">
+			select count(*)from product where product_category = 1
+		</if>
+		<if test="medical_category > 0">
+		<![CDATA[
+			select count(*)from product where medical_category = #{medical_category}
+		]]>
+		</if>
+		
+	</select>
+	
+	<select id="selectDListCount" resultType="int">
+		select count(*)from product where product_category = 2
+	</select>
+
+	<select id ="selectMList" resultType="com.java.dto.Product">
+		<if test="medical_category == 0">
+			<![CDATA[
+				select * from
+				(select rownum rnum, a.* from
+				(select * from Product where product_category = 1
+				 order by p_num asc) a ) 
+				where rnum >= #{pageDto.startRow} and rnum<= #{pageDto.endRow}
+			]]>
+		</if>
+		<if test="medical_category > 0">
+			<![CDATA[
+				select * from
+				(select rownum rnum, a.* from
+				(select * from Product where medical_category = #{medical_category}
+				 order by p_num asc	) a ) 
+				where rnum >= #{pageDto.startRow} and rnum<= #{pageDto.endRow}
+			]]>
+		</if>
+	</select>
+	
+	<select id="mediView" resultType="com.java.dto.Product">
+		select * from product where p_num=#{p_num}
+	</select>
+
+	<insert id="insertWish">
+		insert into wishlist values(#{user_seq},#{p_num})
+	</insert>
+	
+	<delete id="deleteWish">
+		delete from wishlist where user_seq=#{user_seq} and p_num=#{p_num}
+	</delete>
+	
+	<select id="selectWish" resultType="com.java.dto.Wishlist">
+		select p_num from wishlist where user_seq=#{user_seq}
+	</select>
+	
+	<insert id="inCart">
+		insert into cart values(#{user_seq},#{p_num},#{count})
+	</insert>
+
+	<select id="selectCart" resultType="com.java.dto.Cart">
+		select p_num,count from cart where user_seq=#{user_seq}
+	</select>
+	
+	<select id="selectDListAll" resultType="com.java.dto.Product">
+		select * from Product where product_category = 2
+	</select>
+	
+	<select id="seletMyCart" resultMap="cmap">
+		select c.*, p.* from cart c
+		inner join product p
+		on c.p_num = p.p_num
+	</select>
+	
+	<resultMap id="cmap" type="com.java.dto.Cart">
+		<result column="user_seq" property="user_seq" />
+		<result column="p_num" property="p_num" />	
+		<result column="count" property="count" />	
+		<association property="product" column="p_num" javaType="com.java.dto.Product">
+			<id column="p_num" property="p_num" />
+			<result column="name" property="name" />
+			<result column="price" property="price" />
+			<result column="image" property="image" />
+		</association>
+	</resultMap>
+
+
+</mapper>

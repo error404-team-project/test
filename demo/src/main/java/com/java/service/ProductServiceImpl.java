@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
 		int cp_num = 0;
 		ArrayList<Cart> cart = pMapper.selectCart(user_seq);
 		for(int i = 0; i<cart.size(); i++) {
-			// 한 회원이 위시리스트에 여러개 담았을 경우
+			// 한 회원이 장바구니에 여러개 담았을 경우
 			// 현재 상품페이지의 p_num과 일치하면 cp_num에 값 넣기
 			if(cart.get(i).getP_num() == p_num) {
 				cp_num = cart.get(i).getP_num();

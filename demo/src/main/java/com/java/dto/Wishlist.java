@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Wishlist {
-	private int user_seq, p_num; 
-	
+	private Integer user_seq, p_num; 
+	private Product product;
 }

@@ -23,16 +23,24 @@ public class ProductServiceImpl implements ProductService {
 	// 의약품
 	@Override
 	public HashMap<String, Object> selectMList(int medical_category,Page pageDto) {
-		System.out.println("카테고리"+ medical_category);
+	//	System.out.println("카테고리"+ medical_category);
 		HashMap<String, Object> map = new HashMap<>();
+		int user_seq;
+		if(session.getAttribute("sessionSeq") == null) {
+			user_seq = 0;
+		} else {
+			user_seq = (int) session.getAttribute("sessionSeq");
+		}
 		pageDto = mPageMethod(pageDto,medical_category);
 		ArrayList<Product> mCList = pMapper.selectMList(medical_category,pageDto);
-		
-		System.out.println("엔드페이지"+pageDto.getEndPage());
-		System.out.println("맥스페이지"+pageDto.getMaxPage());
-		System.out.println("리스트카운트"+pageDto.getListCount());
+		ArrayList<Wishlist> wList = pMapper.selectAllWish(user_seq);
+	//	System.out.println("엔드페이지"+pageDto.getEndPage());
+	//	System.out.println("맥스페이지"+pageDto.getMaxPage());
+	//	System.out.println("리스트카운트"+pageDto.getListCount());
 		map.put("mCList", mCList);
+		map.put("wList", wList);
 		map.put("pageDto", pageDto);
+		map.put("user_seq", user_seq);
 		map.put("medical_category", medical_category);
 		
 		return map;
@@ -62,7 +70,6 @@ public class ProductServiceImpl implements ProductService {
 		ArrayList<Cart> cart = pMapper.selectCart(user_seq);
 		for(int i = 0; i<cart.size(); i++) {
 			// 한 회원이 장바구니에 여러개 담았을 경우
-			// 현재 상품페이지의 p_num과 일치하면 cp_num에 값 넣기
 			if(cart.get(i).getP_num() == p_num) {
 				cp_num = cart.get(i).getP_num();
 			}
@@ -73,6 +80,41 @@ public class ProductServiceImpl implements ProductService {
 		map.put("wp_num", wp_num);
 		map.put("cp_num", cp_num);
 	//	System.out.println(medi.getName());
+		return map;
+	} // mediView
+	
+	@Override
+	public HashMap<String, Object> dailyView(int p_num) {
+		int user_seq;
+		if(session.getAttribute("sessionSeq") == null) {
+			user_seq = 0;
+		} else {
+			user_seq = (int) session.getAttribute("sessionSeq");
+		}
+		int wp_num = 0;
+		//System.out.println("회원번호"+user_seq);
+		HashMap<String,Object> map = new HashMap<>();
+		Product daily = pMapper.dailyView(p_num);
+		ArrayList<Wishlist> wish = pMapper.selectWish(user_seq,p_num);
+		for(int i = 0; i<wish.size(); i++) {
+			// 한 회원이 위시리스트에 여러개 담았을 경우
+			// 현재 상품페이지의 p_num과 일치하면 wp_num에 값 넣기
+			if(wish.get(i).getP_num() == p_num) {
+				wp_num = wish.get(i).getP_num();
+			}
+		}
+		int cp_num = 0;
+		ArrayList<Cart> cart = pMapper.selectCart(user_seq);
+		for(int i = 0; i<cart.size(); i++) {
+			// 한 회원이 장바구니에 여러개 담았을 경우
+			if(cart.get(i).getP_num() == p_num) {
+				cp_num = cart.get(i).getP_num();
+			}
+		}
+		
+		map.put("daily", daily);
+		map.put("wp_num", wp_num);
+		map.put("cp_num", cp_num);
 		return map;
 	}
 	
@@ -96,7 +138,7 @@ public class ProductServiceImpl implements ProductService {
 		pMapper.inCart(user_seq,p_num,count);
 	}
 	
-	private Page mPageMethod(Page pageDto, int medical_category) {
+	public Page mPageMethod(Page pageDto, int medical_category) {
 		// 전체 게시글 수 저장 
 		pageDto.setListCount(   pMapper.selectMListCountAll(medical_category)   );
 		// 최대 넘버링 페이지 
@@ -123,19 +165,44 @@ public class ProductServiceImpl implements ProductService {
 		return pageDto;
 	}
 	
-	private Page dPageMethod(Page pageDto) {
+	@Override
+	public HashMap<String, Object> selectDlist(int health_category, Page pageDto) {
+		HashMap<String,Object> map = new HashMap<>();
+		int user_seq;
+		if(session.getAttribute("sessionSeq") == null) {
+			user_seq = 0;
+		} else {
+			user_seq = (int) session.getAttribute("sessionSeq");
+		}
+		pageDto = dPageMethod(pageDto,health_category);
+		ArrayList<Product> mDList = pMapper.selectDList(health_category,pageDto);
+		ArrayList<Wishlist> wList = pMapper.selectAllWish(user_seq);
+		map.put("mDList", mDList);
+		map.put("wList", wList);
+		map.put("pageDto", pageDto);
+		map.put("user_seq", user_seq);
+		map.put("health_category", health_category);
+		return map;
+	}
+	
+	public Page dPageMethod(Page pageDto,int health_category) {
 		// 전체 게시글 수 저장 
-		pageDto.setListCount(   pMapper.selectDListCount()   );
+		pageDto.setListCount(   pMapper.selectDListCount(health_category)   );
 		// 최대 넘버링 페이지 
-		pageDto.setMaxPage( (int)Math.ceil( (double)pageDto.getListCount()/10  ));
+		pageDto.setMaxPage( (int)Math.ceil( (double)pageDto.getListCount()/15  ));
 		// 시작 넘버링페이지
 		pageDto.setStartPage(  (int)((pageDto.getPage()-1)/10)*10 +1     );
 		// 끝 넘버링 페이지 
 		pageDto.setEndPage(  pageDto.getStartPage() + 10 - 1   );
+		if(pageDto.getEndPage() > pageDto.getMaxPage()) {
+			pageDto.setEndPage(pageDto.getMaxPage());
+		} else	if(pageDto.getEndPage() < pageDto.getNumberingPerPage()) {
+			pageDto.setNumberingPerPage(pageDto.getEndPage());
+		}
 		// 게시글 시작번호 
-		pageDto.setStartRow( (pageDto.getPage() - 1 ) * 10 + 1   );
+		pageDto.setStartRow( (pageDto.getPage() - 1 ) * 15 + 1   );
 		// 게시글 끝나는 번호
-		pageDto.setEndRow( pageDto.getStartRow() + 10 - 1 );
+		pageDto.setEndRow( pageDto.getStartRow() + 15 - 1 );
 		
 //		System.out.println(pageDto.getStartPage());
 //		System.out.println(pageDto.getEndPage());
@@ -155,8 +222,10 @@ public class ProductServiceImpl implements ProductService {
 		ArrayList<Cart> list = pMapper.seletMyCart(user_seq);
 	//	System.out.println(list.get(0).getUser_seq());
 		map.put("list", list);
+		map.put("user_seq", user_seq);
 		return map;
 	}
+
 
 
 

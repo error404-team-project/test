@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../header/header.jsp" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<link rel="stylesheet" type="text/css" href="../css/content.css?v=Y" />
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/content.css?v=Y" />
 	<!-- container -->
 	<div id="container">
 		<div id="location">
@@ -47,10 +47,10 @@
 					<div class="img">
 						<ul>
 						  <c:if test="${medi.stock != 0}">
-							<li style="padding:0;"><img src="../images/img/${medi.image}" alt="제품이미지" style="width:348px; height:348px; margin:0 auto;"/></li>
+							<li style="padding:0;"><img src="../image/${medi.image}" alt="제품이미지" style="width:348px; height:348px; margin:0 auto;"/></li>
 						  </c:if>
 						  <c:if test="${medi.stock == 0}">
-							<li style="padding:0;"><img src="../images/img/stock0.png" alt="제품이미지" style="width:348px; height:348px; margin:0 auto;"/></li>
+							<li style="padding:0;"><img src="../image/stock0.png" alt="제품이미지" style="width:348px; height:348px; margin:0 auto;"/></li>
 						  </c:if>
 						</ul>
 					</div>
@@ -288,7 +288,7 @@ function inCart(){
 
 									<div class="hideArea">
 										<div class="bodyArea">
-											${medi.medical_precautions }
+											${medi.precautions }
 										</div>
 									</div>
 									
@@ -301,7 +301,7 @@ function inCart(){
 									</div>
 									<div class="hideArea">
 										<div class="bodyArea">
-											${medi.medical_becareful}
+											${medi.becareful}
 										</div>
 									</div>
 								</li>

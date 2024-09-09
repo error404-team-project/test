@@ -16,7 +16,14 @@
 	</select>
 	
 	<select id="selectDListCount" resultType="int">
-		select count(*)from product where product_category = 2
+		<if test="medical_category == 0">
+			select count(*)from product where product_category = 2
+		</if>
+		<if test="medical_category > 0">
+		<![CDATA[
+			select count(*)from product where health_category = #{health_category}
+		]]>
+		</if>
 	</select>
 
 	<select id ="selectMList" resultType="com.java.dto.Product">
@@ -41,6 +48,31 @@
 	</select>
 	
 	<select id="mediView" resultType="com.java.dto.Product">
+		select * from product where p_num=#{p_num}
+	</select>
+	
+	<select id="selectDList" resultType="com.java.dto.Product">
+		<if test="health_category == 0">
+			<![CDATA[
+				select * from
+				(select rownum rnum, a.* from
+				(select * from Product where product_category = 2
+				 order by p_num asc) a ) 
+				where rnum >= #{pageDto.startRow} and rnum<= #{pageDto.endRow}
+			]]>
+		</if>
+		<if test="health_category > 0">
+			<![CDATA[
+				select * from
+				(select rownum rnum, a.* from
+				(select * from Product where health_category = #{health_category}
+				 order by p_num asc	) a ) 
+				where rnum >= #{pageDto.startRow} and rnum<= #{pageDto.endRow}
+			]]>
+		</if>
+	</select>
+
+	<select id="dailyView" resultType="com.java.dto.Product">
 		select * from product where p_num=#{p_num}
 	</select>
 
@@ -72,6 +104,7 @@
 		select c.*, p.* from cart c
 		inner join product p
 		on c.p_num = p.p_num
+		where user_seq = #{user_seq}
 	</select>
 	
 	<resultMap id="cmap" type="com.java.dto.Cart">
@@ -85,6 +118,25 @@
 			<result column="image" property="image" />
 		</association>
 	</resultMap>
-
+	
+	<select id="selectAllWish" resultMap="wmap">
+		select w.*, p.* from wishlist w
+		inner join product p
+		on w.p_num = p.p_num
+		where user_seq = #{user_seq}
+	</select>
+	
+	<resultMap id="wmap" type="com.java.dto.Wishlist">
+		<result column="user_seq" property="user_seq" />
+		<result column="p_num" property="p_num" />	
+		<association property="product" column="p_num" javaType="com.java.dto.Product">
+			<id column="p_num" property="p_num" />
+			<result column="name" property="name" />
+			<result column="image" property="image" />
+			<result column="medical_category" property="medical_category" />
+			<result column="health_category" property="health_category" />
+			<result column="product_category" property="product_category" />
+		</association>
+	</resultMap>
 
 </mapper>

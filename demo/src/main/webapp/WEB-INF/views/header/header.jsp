@@ -204,7 +204,9 @@ $(document).ready(function() {
         </c:if>
             <a href="/mypage" class="button">MYPAGE</a>
             <a href="/product/cart" class="button">CART</a>
+        <c:if test="${sessionAuth == 'admin' }">
             <a href="/adminPage/admin_index" class="button">ADMIN</a>
+        </c:if>
         </div>
     </div>
 </div>

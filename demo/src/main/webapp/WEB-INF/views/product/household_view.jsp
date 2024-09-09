@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../header/header.jsp" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" type="text/css" href="../css/content.css?v=Y" />
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<!-- container -->
@@ -10,8 +11,31 @@
 			<ol>
 				<li><a href="#">HOME</a></li>
 				<li>생활용품</li>
-				<li class="last">카테고리 넣기</li>
-			</ol>
+				<c:if test="${daily.health_category == 1}">
+				<li class="last">소독/세정</li>
+				</c:if>
+				<c:if test="${daily.health_category == 2}">
+					<li class="last">자세교정</li>
+				</c:if>
+				<c:if test="${daily.health_category == 3}">
+					<li class="last">찜질/테이핑</li>
+				</c:if>
+				<c:if test="${daily.health_category == 4}">
+					<li class="last">서포터/보호대</li>
+				</c:if>
+				<c:if test="${daily.health_category == 5}">
+					<li class="last">콘택트렌즈</li>
+				</c:if>
+				<c:if test="${daily.health_category == 6}">
+					<li class="last">숙면용품</li>
+				</c:if>
+				<c:if test="${daily.health_category == 7}">
+					<li class="last">인솔/깔창</li>
+				</c:if>
+				<c:if test="${daily.health_category == 8}">
+					<li class="last">기타</li>
+				</c:if>
+				</ol>
 		</div>
 					
 		<!-- maxcontents -->
@@ -23,13 +47,12 @@
 				<div class="imgSlide">
 					<div class="img">
 						<ul>
-							<li><img src="../images/img/sample_brand.jpg" alt="제품이미지" /></li>
-						</ul>
-					</div>
-
-					<div class="thum">
-						<ul>
-							<li><img src="../images/img/sample_brand.jpg" alt="썸네일 제품이미지" /></li>
+						  <c:if test="${daily.stock != 0}">
+							<li style="padding:0;"><img src="../images/img/${daily.image}" alt="제품이미지" style="width:348px; height:348px; margin:0 auto;"/></li>
+						  </c:if>
+						  <c:if test="${daily.stock == 0}">
+							<li style="padding:0;"><img src="../images/img/stock0.png" alt="제품이미지" style="width:348px; height:348px; margin:0 auto;"/></li>
+						  </c:if>
 						</ul>
 					</div>
 				</div>
@@ -39,44 +62,121 @@
 				<!-- info -->
 				<div class="info">
 					<p class="title">
-						<span>[오리지널]</span>
-						쟈뎅 오리지널 콜롬비아 페레이라 원두커피백 15p
+						${daily.name }
 					</p>
 
 					<div class="priceInfo">
 						<ul>
 							<li>
-								<div class="stit">제조사</div> <div class="heavygray">어딜까</div>
+								<div class="stit">제조사</div> <div class="heavygray">${daily.company }</div>
 							</li>
 							<li>
-								<div class="stit">판매가</div> <div class="heavygray"><strong>4,330원</strong></div>
+								<div class="stit">판매가</div> <div class="heavygray"><strong>${daily.price }원</strong></div>
 							</li>
 							<li>
-								<div class="stit">용량</div> <div>3.8kg+15p</div>
+								<div class="stit">원료/성분</div> <div>${daily.row_material }</div>
 							</li>
 							<li>
-								<div class="stit">수량</div> <div class="num"><input name="p_count" id="spinner" value="1" /></div>
+								<div class="stit">남은수량</div> <div>${daily.stock }</div>
+							</li>
+							<li>
+								<c:if test="${daily.stock != 0}">
+									<div class="stit">수량</div> <div class="num"><input name="p_count" id="spinner" value="1" /></div>
+						  		</c:if>
+								<c:if test="${daily.stock == 0}">
+									<div class="stit"></div>
+						  		</c:if>
 							</li>
 						</ul>
 					</div>
+<script>
 
+function wBtn(){
+	if(confirm("위시리스트에 추가하시겠습니까?")){
+		$.ajax({
+			url : "/product/insertWish",
+			type : "post",
+			data : {"user_seq" : ${sessionSeq},
+					"p_num" : ${daily.p_num}},
+			success : function(data){
+				alert(data);
+				$("#wl").html('<a onclick="wDBtn()" class="ty3">위시 <span>리스트 삭제</span></a>');
+			},
+			error : function(){
+				alert("실패");
+			}
+		})//ajax
+	};
+} // wBtn
+
+function wDBtn(){
+	if(confirm("위시리스트에서 삭제하시겠습니까?")){
+		$.ajax({
+			url : "/product/deletetWish",
+			type : "post",
+			data : {"user_seq" : ${sessionSeq},
+					"p_num" : ${daily.p_num}},
+			success : function(data){
+				alert(data);
+				$("#wl").html('<a onclick="wBtn()" class="ty3">위시 <span>리스트 추가</span></a>');
+			},
+			error : function(){
+				alert("실패");
+			}
+		})//ajax
+	};
+} // wDBtn
+
+function inCart(){
+	if(confirm("장바구니에 추가하시겠습니까?")){
+		$.ajax({
+			url : "/product/inCart",
+			type : "post",
+			data : {"user_seq" : ${sessionSeq},
+					"p_num" : ${daily.p_num},
+					"count" : $("#spinner").val()},
+			success : function(data){
+				alert(data);
+				$("#pl").html('<a href="#" class="ty2">장바구니에 <span>담김</span></a>');
+			},
+			error : function(){
+				alert("실패");
+			}
+		}) // ajax
+	}
+} // inCart
+</script>
 					<!-- 판매중 -->
+					<c:if test="${daily.stock != 0}">
 					<div class="infobtn">
 						<ul>
 							<li><a href="#" class="ty1">바로 <span>구매하기</span></a></li>
-							<li><a href="#" class="ty2">장바구니 <span>담기</span></a></li>
-							<li class="last"><a href="#" class="ty3">위시 <span>리스트</span></a></li>
+						  <c:if test="${cp_num == p_num}">
+							<li id="pl"><a href="#" class="ty2">장바구니에 <span>담김</span></a></li>
+						  </c:if>
+						  <c:if test="${cp_num != p_num}">
+							<li id="pl"><a onclick="inCart()" class="ty2">장바구니 <span>담기</span></a></li>
+						  </c:if>
+						  <c:if test="${wp_num == p_num }">
+							<li class="last" id="wl"><a onclick="wDBtn()" class="ty3">위시 <span>리스트 삭제</span></a></li>
+						  </c:if>
+						  <c:if test="${wp_num != p_num }">
+							<li class="last" id="wl"><a onclick="wBtn()" class="ty3">위시 <span>리스트 추가</span></a></li>
+						  </c:if>
 						</ul>
 					</div>
+					</c:if>
 					<!-- //판매중 -->
 
 					<!-- 판매중지 -->
-					<div class="endbtn" style="display:none;">
+					<c:if test="${daily.stock == 0}">
+					<div class="endbtn"">
 						<ul>
 							<li><a href="#">판매중지</a></li>
 							<li><a href="#">SOLD OUT</a></li>
 						</ul>
 					</div>
+					</c:if>
 					<!-- //판매중지 -->
 
 
@@ -91,8 +191,7 @@
 			<div class="detailTab">
 				<ul>
 					<li class="dep"><a href="javascript:;" onclick="return false;" id="detailInfo">상품상세 정보</a></li>
-					<li><a href="javascript:;" onclick="return false;" id="goodsRelation">용법/용량</a></li>
-					<li class="dep"><a href="javascript:;" onclick="return false;" id="goodsReview">부작용</a></li>
+					<li><a href="javascript:;" onclick="return false;" id="goodsRelation">사용법</a></li>
 					<li><a href="javascript:;" onclick="return false;" id="goodsQna">주의사항</a></li>
 					<li class="last"><a href="javascript:;" onclick="return false;" id="goodsNotice">정책 및 공지</a></li>
 				</ul>
@@ -103,49 +202,109 @@
 		<!-- detail content -->
 			<div id="detailContent">
 
-				<!-- detail info -->
 				<div class="detailInfo disnone">
 					<div class="checkInfoDiv">
 						<table summary="제품의 정보를 알 수 있는 표로 제품명, 내용량, 제조원, 포장재질, 유통기한, 고객상담실, 식품의 유형, 유통전문판매원, 영양성분, 원재료명 및 함량, 업소명 및 소재지 순으로 나열되어 있습니다." class="checkTable" border="1" cellspacing="0">
 							<caption>제품의 정보</caption>
 							<colgroup>
 							<col width="20%" class="tw22" />
-							<col width="*" />
-							<col width="18%" class="tw22" />
-							<col width="*" class="tw25" />
+							<col width="80%" />
 							</colgroup>
-							<tbody>
 								<tr>
 									<th scope="row" class="info"><span>제품명</span></th>
-									<td>원두커피백</td>
+									<td>${daily.name }</td>
 								</tr>
 
 								<tr>
 									<th scope="row" class="info"><span>제조사</span></th>
-									<td>JARDIN</td>
+									<td>${daily.company }</td>
 								</tr>
 
 								<tr>
 									<th scope="row" class="info"><span>상품설명</span></th>
-									<td>제조일로부터 OO개월</td>
+									<td>${daily.description }</td>
 								</tr>
 
 								<tr>
 									<th scope="row" class="info"><span>사용방법</span></th>
-									<td>인스턴트 커피</td>
+									<td>${daily.howuse }</td>
 								</tr>
 
 								<tr>
 									<th scope="row" class="info"><span>보관방법</span></th>
-									<td colspan="3">인스턴트 커피, 합성 헤이즐넛향</td>
+									<td colspan="3">${daily.storage }</td>
 								</tr>
-
-							</tbody>
 						</table>
 					</div>
 				</div>
 				<!-- detail info -->
 
+				<!-- goods review -->
+				<div class="goodsReview disnone">
+					<div class="headTitle">
+						<strong>약품 복용 시 부작용&nbsp;</strong> 해당 약품 복용 시 다음과 같은 부작용이 발생할 수 있음
+					</div>
+
+					<div class="accordion">
+						<table class="checkTable" border="1" cellspacing="0">
+							<tr>
+								<th scope="row" class="info"><span>부작용</span></th>
+								<td>${daily.howuse }</td>
+							</tr>
+						</table>
+					</div>
+
+
+
+
+				<!-- //포토 구매후기 -->
+
+				</div>
+				<!-- //goods review -->
+
+
+				<!-- goods qna -->
+					<div class="goodsQna disnone">
+						<div class="headTitle depth">
+							<strong>주의사항&nbsp;</strong> 의약품 복용 시 주의사항 및 피해야 할 음식, 약
+						</div>
+
+						<!-- 질문과 답변 -->
+						<div class="accordion">
+							<ul>
+								<li>
+									<div class="headArea">
+										<div class="subject">
+											<a href="javascript:;" class="accbtn">주의사항은 무엇인가요?</a>
+										</div>
+										<div class="day">
+										</div>
+									</div>
+
+									<div class="hideArea">
+										<div class="bodyArea">
+											${daily.precautions }
+										</div>
+									</div>
+									
+								</li>
+								<li>
+									<div class="headArea">
+										<div class="subject">
+											<a href="javascript:;" class="accbtn">주의해야 할 약 또는 음식이 있나요?</a>
+										</div>
+									</div>
+									<div class="hideArea">
+										<div class="bodyArea">
+											${daily.becareful}
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<!-- //질문과 답변 -->
+					</div>
+				<!-- //goods qna -->
 
 				<!-- goods notice -->
 					<div class="goodsNotice disnone">
@@ -213,9 +372,8 @@
 									<td>
 										<ul>
 											<li>저희 쇼핑몰은 교환/반품 정책을 운영하고 있습니다.</li>
-											<li>사이즈 교환에 한하여는 1회 교환이 가능합니다. (단, 택배비는 고객 부담입니다.)</li>
 											<li>교환 시 제품을 수령한 날로부터 24시간 이내 1:1문의 게시판 혹은 고객센터로 연락을 주시고 3일 이내에 보내주신 상품에 한하여 교환됩니다.</li>
-											<li>제품에 하자가 있는 경우에는 동일 사이즈, 동일 디자인으로 재교환 해 드립니다.</li>
+											<li>제품에 하자가 있는 경우에는 새 상품으로 재교환 해 드립니다.</li>
 										</ul>
 									</td>
 								</tr>

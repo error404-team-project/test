@@ -19,4 +19,8 @@ public interface ProductService {
 
 	HashMap<String, Object> seletCart();
 
+	HashMap<String, Object> selectDlist(int health_category, Page pageDto);
+
+	HashMap<String, Object> dailyView(int p_num);
+
 }

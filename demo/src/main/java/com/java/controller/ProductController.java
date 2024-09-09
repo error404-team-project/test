@@ -25,6 +25,7 @@ public class ProductController {
 		HashMap<String, Object> map = pservice.seletCart();
 	//	System.out.println(map.get("list"));
 		model.addAttribute("list", map.get("list"));
+		model.addAttribute("user_seq", map.get("user_seq"));
 		return "/product/cart";
 	}
 	
@@ -33,13 +34,22 @@ public class ProductController {
 		HashMap<String, Object> map = pservice.selectMList(medical_category,pageDto);
 		
 		model.addAttribute("mCList", map.get("mCList"));
+		model.addAttribute("wList", map.get("wList"));
 		model.addAttribute("pageDto", map.get("pageDto"));
+		model.addAttribute("user_seq", map.get("user_seq"));
 		model.addAttribute("medical_category", map.get("medical_category"));
 		return "/product/medical_list";
 	}
 	
 	@RequestMapping("/household_list")
-	public String household_list() {
+	public String household_list(Model model,@RequestParam(defaultValue= "0")int health_category, Page pageDto) {
+		HashMap<String, Object> map = pservice.selectDlist(health_category,pageDto);
+		
+		model.addAttribute("mDList", map.get("mDList"));
+		model.addAttribute("wList", map.get("wList"));
+		model.addAttribute("pageDto", map.get("pageDto"));
+		model.addAttribute("user_seq", map.get("user_seq"));
+		model.addAttribute("health_category", map.get("health_category"));
 		return "/product/household_list";
 	}
 	
@@ -59,6 +69,17 @@ public class ProductController {
 		model.addAttribute("wp_num", map.get("wp_num"));
 		model.addAttribute("cp_num", map.get("cp_num"));
 		return "/product/medical_view";
+	}
+	
+	@RequestMapping("/household_view")
+	public String household_view(Model model,int p_num, int health_category) {
+		HashMap<String,Object> map = pservice.dailyView(p_num);
+		model.addAttribute("p_num", p_num);
+		model.addAttribute("health_category", health_category);
+		model.addAttribute("daily", map.get("daily"));
+		model.addAttribute("wp_num", map.get("wp_num"));
+		model.addAttribute("cp_num", map.get("cp_num"));
+		return "/product/household_view";
 	}
 	
 	@PostMapping("/insertWish")
@@ -89,10 +110,5 @@ public class ProductController {
 		return "장바구니에 담겼습니다.";
 	}
 	
-	
-	@RequestMapping("/household_view")
-	public String household_view() {
-		return "/product/household_view";
-	}
 	
 }

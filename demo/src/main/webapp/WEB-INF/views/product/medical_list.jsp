@@ -169,13 +169,25 @@
 
 			<!-- quickmenu -->
 			<div id="quick">
-				<div class="cart"><a href="/member/cart">장바구니</a></div>
+				<div class="cart"><a href="/product/cart">장바구니</a></div>
 				<div class="wish">
 					<p class="title">위시 리스트</p>
 					<div class="list">
 						<ul>	
 						<!-- 10~15개정도 반복 -->
+						<c:if test="${wList == null || user_seq == 0}">
 							<li><a href="#"><img src="../images/img/sample_wish.gif" alt="" /></a>
+						</c:if>
+						<c:if test="${user_seq > 0}">
+							<c:forEach var="w" items="${wList}">
+							<c:if test="${w.product.product_category == 1 }">
+								<li><a href="/product/medical_view?p_num=${w.p_num}&medical_category=${w.product.medical_category}"><img src="../images/img/${w.product.image }" alt="상품페이지로 이동" style="width:78px;height:78px" /></a>
+							</c:if>
+							<c:if test="${w.product.product_category == 2 }">
+								<li><a href="/product/household_view?p_num=${w.p_num}&health_category=${w.product.health_category}"><img src="../images/img/${w.product.image }" alt="상품페이지로 이동" style="width:78px;height:78px" /></a>
+							</c:if>
+						</c:forEach>
+						</c:if>
 						<!-- 10~15개정도 반복 -->
 						</ul>
 					</div>

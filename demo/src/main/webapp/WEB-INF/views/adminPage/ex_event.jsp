@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,6 +27,7 @@
   <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
+  <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!--   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
  --><title>이벤트 관리페이지</title>
  <style>
@@ -43,10 +45,134 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
+<script>
+$(document).ready(function() { // 기본으로 그려져있는것들
+	var str = '';
+	str += '<c:forEach var="e" items="${elist}">';
+	str += '<input type="hidden" name="event_no" value="${e.event_no}">';
+	str += '<tr class="up${e.event_no}">';
+	str += '<td>${e.event_no}</td>';
+	str += '<td><a href="/event/event_view?event_no=${e.event_no}">${e.event_title }</a></td>';
+	str += '<td>${e.user.user_name}</td>';
+	str += '<td>${e.event_hit}</td>';
+	str += '<td><fmt:formatDate value="${e.event_start_date }" pattern="yyyy-MM-dd"/>';
+	str += ' ~ <fmt:formatDate value="${e.event_end_date }" pattern="yyyy-MM-dd"/></td>';
+	str += '<td>';
+	str += '<input type="button" onclick="mBtn(${e.event_no})" class="btn btn-sm btn-primary" value="수정"> ';
+	str += '<input type="button" onclick="dBtn(${e.event_no})" class="btn btn-sm btn-secondary" value="삭제">';
+	str += '</td>';
+	str += '</tr>';
+	str += '</c:forEach>';
+	$("#event").html(str);
+	var page = '';
+	page += '<c:if test="${epageDto.page>1 }"><li class="page-item disabled"><a class="page-link" href="/adminPage/ex_event?page=${epageDto.page-1}">이전페이지</a></li></c:if>';
+	page += '<c:if test="${epageDto.page == 1 }"><li class="page-item"><a class="page-link">이전페이지</a></li></c:if>';
+	page += '<c:forEach var="pN" begin="${epageDto.startPage}" end="${epageDto.endPage}" step="1">';
+	page += '<c:if test="${pN != epageDto.page}"><li class="page-item"><a class="page-link" href="/adminPage/ex_event?page=${pN}">${pN}</a></li></c:if>';
+	page += '<c:if test="${pN == epageDto.page}"><li class="page-item"><a class="page-link"><strong>${pN}</strong></a></li></c:if>';
+	page += '</c:forEach>';
+	page += '<c:if test="${epageDto.page<epageDto.maxPage }"><li class="page-item"><a class="page-link" href="/adminPage/ex_event?page=${epageDto.page+1}">다음페이지</a></li></c:if>';
+	page += '<c:if test="${epageDto.page==epageDto.maxPage }"><li class="page-item"><a class="page-link">다음페이지</a></li></c:if>';
+	$(".pagination").html(page);
+});
 
+function cbtn(){ // 카테고리 바뀔때 그릴것들
+	if($("#eCate").val() == 1){
+//		alert(1);
+		var str = '';
+		str += '<c:forEach var="e" items="${elist}">';
+		str += '<input type="hidden" name="event_no" value="${e.event_no}">';
+		str += '<tr class="up${e.event_no}">';
+		str += '<td>${e.event_no}</td>';
+		str += '<td><a href="/event/event_view?event_no=${e.event_no}">${e.event_title }</a></td>';
+		str += '<td>${e.user.user_name}</td>';
+		str += '<td>${e.event_hit}</td>';
+		str += '<td><fmt:formatDate value="${e.event_start_date }" pattern="yyyy-MM-dd"/>';
+		str += ' ~ <fmt:formatDate value="${e.event_end_date }" pattern="yyyy-MM-dd"/></td>';
+		str += '<td>';
+		str += '<input type="button" onclick="mBtn(${e.event_no})" class="btn btn-sm btn-primary" value="수정"> ';
+		str += '<input type="button" onclick="dBtn(${e.event_no})" class="btn btn-sm btn-secondary" value="삭제">';
+		str += '</td>';
+		str += '</tr>';
+		str += '</c:forEach>';
+		$("#event").html(str);
+		var page = '';
+		page += '<c:if test="${epageDto.page>1 }"><li class="page-item disabled"><a class="page-link" href="/adminPage/ex_event?page=${epageDto.page-1}">이전페이지</a></li></c:if>';
+		page += '<c:if test="${epageDto.page == 1 }"><li class="page-item"><a class="page-link">이전페이지</a></li></c:if>';
+		page += '<c:forEach var="pN" begin="${epageDto.startPage}" end="${epageDto.endPage}" step="1">';
+		page += '<c:if test="${pN != epageDto.page}"><li class="page-item"><a class="page-link" href="/adminPage/ex_event?page=${pN}">${pN}</a></li></c:if>';
+		page += '<c:if test="${pN == epageDto.page}"><li class="page-item"><a class="page-link"><strong>${pN}</strong></a></li></c:if>';
+		page += '</c:forEach>';
+		page += '<c:if test="${epageDto.page<epageDto.maxPage }"><li class="page-item"><a class="page-link" href="/adminPage/ex_event?page=${epageDto.page+1}">다음페이지</a></li></c:if>';
+		page += '<c:if test="${epageDto.page==epageDto.maxPage }"><li class="page-item"><a class="page-link">다음페이지</a></li></c:if>';
+		$(".pagination").html(page);
+	}
+	if($("#eCate").val() == 2){
+//		alert(2);
+		var str = '';
+		str += '<c:forEach var="f" items="${flist}">';
+		str += '<input type="hidden" name="event_no" value="${f.event_no}">';
+		str += '<tr class="up${f.event_no}">';
+		str += '<td>${f.event_no}</td>';
+		str += '<td>${f.event_title }</td>';
+		str += '<td>${f.user.user_name}</td>';
+		str += '<td>${f.event_hit}</td>';
+		str += '<td><fmt:formatDate value="${f.event_start_date }" pattern="yyyy-MM-dd"/>';
+		str += ' ~ <fmt:formatDate value="${f.event_end_date }" pattern="yyyy-MM-dd"/></td>';
+		str += '<td>';
+		str += '<input type="button" onclick="mBtn(${f.event_no})" class="btn btn-sm btn-primary" value="수정"> ';
+		str += '<input type="button" onclick="dBtn(${f.event_no})" class="btn btn-sm btn-secondary" value="삭제">';
+		str += '</td>';
+		str += '</tr>';
+		str += '</c:forEach>';
+		$("#event").html(str);
+		var page = '';
+		page += '<c:if test="${fpageDto.page>1 }"><li class="page-item disabled"><a class="page-link" href="/adminPage/ex_event?page=${fpageDto.page-1}">이전페이지</a></li></c:if>';
+		page += '<c:if test="${fpageDto.page == 1 }"><li class="page-item"><a class="page-link">이전페이지</a></li></c:if>';
+		page += '<c:forEach var="pN" begin="${fpageDto.startPage}" end="${fpageDto.endPage}" step="1">';
+		page += '<c:if test="${pN != fpageDto.page}"><li class="page-item"><a class="page-link" href="/adminPage/ex_event?page=${pN}">${pN}</a></li></c:if>';
+		page += '<c:if test="${pN == fpageDto.page}"><li class="page-item"><a class="page-link"><strong>${pN}</strong></a></li></c:if>';
+		page += '</c:forEach>';
+		page += '<c:if test="${fpageDto.page<fpageDto.maxPage }"><li class="page-item"><a class="page-link" href="/adminPage/ex_event?page=${fpageDto.page+1}">다음페이지</a></li></c:if>';
+		page += '<c:if test="${fpageDto.page==fpageDto.maxPage }"><li class="page-item"><a class="page-link">다음페이지</a></li></c:if>';
+		$(".pagination").html(page);
+	}
+} // cbtn
+
+ function dBtn(eno){
+//	alert(eno);
+	if(confirm("해당 이벤트를 삭제하시겠습니까?")){
+		$.ajax({
+			url : "/event/deleteE",
+			data : {"event_no" : eno},
+			method : "post",
+			success : function(data){
+				alert(data);
+				$(".up"+eno).remove();
+			},
+			error : function(){
+				alert("실패");
+			}
+		})// ajax
+	}
+} // dBtn 
+
+function wBtn(){
+	location.href="/event/event_write";
+}
+
+function mBtn(eno){
+//	alert(eno);
+	location.href="/event/event_modi?event_no="+eno;
+}
+</script>
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">이벤트 리스트</h3>
+                <h3 class="card-title">이벤트 리스트</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select id="eCate" onchange="cbtn()">
+                	<option value="1" selected>진행중인 이벤트</option>
+                	<option value="2">종료된 이벤트</option>
+                </select>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -55,64 +181,33 @@
 					<col width="8%"/>
 					<col width="*" />
 					<col width="10%"/>
-					<col width="5%"/>
-					<col width="5%"/>
 					<col width="7%"/>
+					<col width="10%"/>
+					<col width="10%"/>
 				</colgroup>
                   <thead>
                   <tr>
-                    <th>게시글 번호</th>
+                     <th>번호</th>
                     <th>제목</th>
                     <th>작성자</th>
                     <th>조회수</th>
-                  	<th>선택</th>
-                  	<th>전체 선택</th>
+                  	<th>시작/종료일</th>
+                  	<th>수정/삭제</th>
                   </tr>
                   </thead>
-                  <tbody>
-                  <!-- 반복 -->
-                  <tr>
-                    <td>1</td>
-                    <td>제목입니다</td>
-                    <td>admin</td>
-                    <td>1</td>
-                  	<td>
-                  		<input type="checkbox">
-                  	</td>
-                  	<td>
-                  		<input type="checkbox">
-                  	</td>
-                  </tr>
+                  <tbody id="event">
                   <!-- 반복 -->
                 </table>
                 <br>
          <nav aria-label="...">
   			<ul class="pagination">
-    			<li class="page-item disabled">
-     				<a class="page-link">이전페이지</a>
-   	 		    </li>
-    			<li class="page-item">
-    				<a class="page-link" href="#">1</a>
-    			</li>
-   				<li class="page-item">
-   					<a class="page-link" href="#">2</a>
-   				</li>
-    			<li class="page-item">
-    				<a class="page-link" href="#">3</a>
-    			</li>
-    			<li class="page-item">
-    				<a class="page-link" href="#">다음페이지</a>
-    			</li>
  		    </ul>
 		  </nav>
                 <br>
             	<table>
              <tr>
              	<td>
-            		<button type="button" class="btn btn-block btn-primary">글 작성</button>
-             	</td>
-             	<td>
-             		<button type="button" class="btn btn-block btn-secondary">글 삭제</button>
+            		<button type="button" onclick="wBtn()" class="btn btn-block btn-primary">글 작성</button>
              	</td>
              </tr>
              </table>

@@ -152,9 +152,15 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/adminPage/ex_Product" class="nav-link">
+                <a href="/adminPage/ad_medical" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>상품현황</p>
+                  <p>의약품 관리</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/adminPage/ad_health" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>건강기능식품 관리</p>
                 </a>
               </li>
               </ul>

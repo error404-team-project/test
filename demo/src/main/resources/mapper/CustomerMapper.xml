@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.mapper.CustomerMapper">
+	
+	<select id="selectNListCountAll">
+		select count(*) from notice
+	</select>
+	
+	<select id="selectAllN" resultType="com.java.dto.Notice">
+		<![CDATA[
+		select * from
+		(select rownum rnum, a.* from 
+		(select b.*,  extract(day from notice_date - sysdate) remainDate 
+		from notice b order by notice_date desc) a)
+		where rnum >= #{startRow} and rnum<=#{endRow}
+		]]>
+	</select>
+	
+	<select id="selectOneN" resultType="com.java.dto.Notice">
+		select * from notice where notice_no=#{notice_no}
+	</select>
+	
+	<select id="selectPrev" resultType="com.java.dto.Notice">
+		select * from notice where notice_no =
+		(select prevDto from
+		(select notice_no,lag(notice_no,1,-1)over(order by notice_date desc)as prevDto
+		from notice)
+		where notice_no = #{notice_no})
+	</select>
+	
+	<select id="selectNext" resultType="com.java.dto.Notice">
+		select * from notice where notice_no =
+		(select prevDto from
+		(select notice_no,lead(notice_no,1,-1)over(order by notice_date desc)as prevDto
+		from notice)
+		where notice_no = #{notice_no})
+	</select>
+	
+	<insert id="insertNotice">
+		insert into notice values(notice_seq.nextval,#{user_seq},#{notice_title},#{notice_content},#{notice_image},0,sysdate)
+	</insert>
+	
+	<update id="updateNotice">
+		update notice set notice_title=#{notice_title}, notice_content=#{notice_content}, notice_image=#{notice_image} where notice_no=#{notice_no}
+	</update>
+	
+</mapper>

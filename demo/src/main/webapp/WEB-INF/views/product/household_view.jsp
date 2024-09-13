@@ -10,30 +10,69 @@
 		<div id="location">
 			<ol>
 				<li><a href="#">HOME</a></li>
-				<li>생활용품</li>
+				<li>건강기능식품</li>
 				<c:if test="${daily.health_category == 1}">
-				<li class="last">소독/세정</li>
+				<li class="last">오메가3</li>
 				</c:if>
 				<c:if test="${daily.health_category == 2}">
-					<li class="last">자세교정</li>
+					<li class="last">비타민</li>
 				</c:if>
 				<c:if test="${daily.health_category == 3}">
-					<li class="last">찜질/테이핑</li>
+					<li class="last">유산균</li>
 				</c:if>
 				<c:if test="${daily.health_category == 4}">
-					<li class="last">서포터/보호대</li>
+					<li class="last">비오틴</li>
 				</c:if>
 				<c:if test="${daily.health_category == 5}">
-					<li class="last">콘택트렌즈</li>
+					<li class="last">루테인/지아잔틴</li>
 				</c:if>
 				<c:if test="${daily.health_category == 6}">
-					<li class="last">숙면용품</li>
+					<li class="last">밀크씨슬/실리마린</li>
 				</c:if>
 				<c:if test="${daily.health_category == 7}">
-					<li class="last">인솔/깔창</li>
+					<li class="last">프로폴리스</li>
 				</c:if>
 				<c:if test="${daily.health_category == 8}">
-					<li class="last">기타</li>
+					<li class="last">가르시니아/잔티젠</li>
+				</c:if>
+				<c:if test="${daily.health_category == 9}">
+					<li class="last">녹차추출물/카테킨</li>
+				</c:if>
+				<c:if test="${daily.health_category == 10}">
+					<li class="last">콜라겐</li>
+				</c:if>
+				<c:if test="${daily.health_category == 11}">
+					<li class="last">글루코사민/MSM</li>
+				</c:if>
+				<c:if test="${daily.health_category == 12}">
+					<li class="last">칼슘/마그네슘</li>
+				</c:if>
+				<c:if test="${daily.health_category == 13}">
+					<li class="last">아연/철분</li>
+				</c:if>
+				<c:if test="${daily.health_category == 14}">
+					<li class="last">모나콜린K</li>
+				</c:if>
+				<c:if test="${daily.health_category == 15}">
+					<li class="last">마카/쏘팔메토</li>
+				</c:if>
+				<c:if test="${daily.health_category == 16}">
+					<li class="last">아르기닌</li>
+				</c:if>
+				<c:if test="${daily.health_category == 17}">
+					<li class="last">포스파티딜</li>
+				</c:if>
+				<c:if test="${daily.health_category == 18}">
+					<li class="last">옥타코사놀/폴리코사놀</li>
+				</c:if>
+				<c:if test="${daily.health_category == 19}">
+					<li class="last">스피루라나</li>
+				</c:if>
+				<c:if test="${daily.health_category == 20}">
+					<li class="last">글루타치온</li>
+				</c:if>
+				<c:if test="${daily.health_category == 21}">
+					<li class="last">기타건강식품</li>
 				</c:if>
 				</ol>
 		</div>
@@ -48,7 +87,7 @@
 					<div class="img">
 						<ul>
 						  <c:if test="${daily.stock != 0}">
-							<li style="padding:0;"><img src="../images/img/${daily.image}" alt="제품이미지" style="width:348px; height:348px; margin:0 auto;"/></li>
+							<li style="padding:0;"><img src="../image/${daily.image}" alt="제품이미지" style="width:348px; height:348px; margin:0 auto;"/></li>
 						  </c:if>
 						  <c:if test="${daily.stock == 0}">
 							<li style="padding:0;"><img src="../images/img/stock0.png" alt="제품이미지" style="width:348px; height:348px; margin:0 auto;"/></li>

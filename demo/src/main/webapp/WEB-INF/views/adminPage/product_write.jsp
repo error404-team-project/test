@@ -49,7 +49,7 @@ function pct(){
 		str += '</select>';
 		$(".categories").html(str);
 	}
-		 if($("#product_category").val() == '2'){
+	if($("#product_category").val() == '2'){
 		var str= '';
 		str += '<label for="health_category">건강기능식품 카테고리</label>';
 		str += '<select name="health_category" id="health_category" class="form-control custom-select" onchange="cbtn()">';

@@ -56,96 +56,19 @@
 								<th scope="col" class="tnone">조회수</th>
 							</thead>
 							<tbody>
+							<c:forEach var="n" items="${nlist}">
 								<tr>
-									<td class="tnone">1</td>
+									<td class="tnone">${n.notice_no}</td>
 									<td class="left">
-										<a href="#">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
+										<a href="/customer/notice_view?notice_no=${n.notice_no}">${n.notice_title}</a>
+								<c:if test="${n.remainDate >= 0 }">
 										<img src="../images/ico/ico_new.gif" alt="NEW" />
+								</c:if>
 									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
+									<td>${n.notice_date}</td>
+									<td class="tnone">${n.notice_hit}</td>
 								</tr>
-
-								<tr>
-									<td class="tnone">2</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">3</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">4</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">5</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">6</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">7</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">8</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">9</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">10</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
+							</c:forEach>
 							</tbody>
 						</table>
 					</div>
@@ -155,14 +78,59 @@
 					<div class="btnAreaList">
 						<!-- 페이징이동1 -->
 						<div class="allPageMoving1">
-
-						<a href="#" class="n"><img src="../images/btn/btn_pre2.gif" alt="처음으로"/></a><a href="#" class="pre"><img src="../images/btn/btn_pre1.gif" alt="앞페이지로"/></a>
-						<strong>1</strong>
-						<a href="#">2</a>
-						<a href="#">3</a>
-						<a href="#">4</a>
-						<a href="#">5</a>
-						<a href="#" class="next"><img src="../images/btn/btn_next1.gif" alt="뒤페이지로"/></a><a href="#" class="n"><img src="../images/btn/btn_next2.gif" alt="마지막페이지로"/></a>
+<!-- 처음페이지 -->
+					<c:if test="${pageDto.page > 1 }">
+						<a href="/customer/notice_list?page=1" class="n">
+							<img src="../images/btn/btn_pre2.gif" alt="처음으로"/>
+						</a>
+					</c:if>
+					<c:if test="${pageDto.page == 1 }">
+							<img src="../images/btn/btn_pre2.gif" alt="처음으로"/>
+					</c:if>
+					<!-- 처음페이지 -->
+					
+					<!-- 이전페이지 -->
+					<c:if test="${pageDto.page>1}">
+						<a href="/customer/notice_list?page=${pageDto.page-1}" class="pre">
+							<img src="../images/btn/btn_pre1.gif" alt="앞페이지로"/>
+						</a>
+					</c:if>
+					<c:if test="${pageDto.page==1}">
+							<img src="../images/btn/btn_pre1.gif" alt="앞페이지로"/>
+					</c:if>
+					<!-- 이전페이지 -->
+					
+					<!-- 페이지 넘버링 -->	
+					<c:forEach var="pnum" begin="${pageDto.startPage}" end="${pageDto.endPage }" step="1">
+						<c:if test="${pnum != pageDto.page }">
+							<a href="/customer/notice_list?page=${pnum}">${pnum}</a> 
+						</c:if>
+						<c:if test="${pnum == pageDto.page }">
+							<strong>${pnum}</strong>
+						</c:if>	
+					</c:forEach>	
+					<!-- 페이지 넘버링 -->	
+					
+					<!-- 다음페이지 -->
+					<c:if test="${pageDto.page < pageDto.maxPage }">
+						<a href="/customer/notice_list?page=${pageDto.page + 1 }" class="next">
+							<img src="../images/btn/btn_next1.gif" alt="뒤페이지로"/>
+						</a>
+					</c:if>	
+					<c:if test="${pageDto.page == pageDto.maxPage }">
+							<img src="../images/btn/btn_next1.gif" alt="뒤페이지로"/>
+					</c:if>	
+					<!-- 다음페이지 -->
+					<!-- 마지막페이지 -->
+					<c:if test="${pageDto.page < pageDto.endPage }">
+						<a href="/customer/notice_list?page=${pageDto.maxPage}" class="n">
+							<img src="../images/btn/btn_next2.gif" alt="마지막페이지로"/>
+						</a>
+					</c:if>
+					<c:if test="${pageDto.page == pageDto.endPage }">
+							<img src="../images/btn/btn_next2.gif" alt="마지막페이지로"/>
+					</c:if>
+					<!-- 마지막페이지 -->
 
 						</div>
 						<!-- //페이징이동1 -->

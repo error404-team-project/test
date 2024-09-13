@@ -181,7 +181,7 @@ $(document).ready(function() {
 	            <a href="/shop" class="button">SHOP</a>
 	            <div class="dropdown-content">
 		            <a href="/product/medical_list">의약품</a>
-		            <a href="/product/household_list">생활용품</a>
+		            <a href="/product/household_list">건강기능식품</a>
 		            <a href="/product/em_delivery">긴급 배송</a>
 		        </div>
     		</div>

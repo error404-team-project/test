@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.mapper.AdminMapper">
+	
+	 <select id="selectListCount" resultType="int">
+		select count(*) from product
+	 </select>
+	
+	 <insert id="insertP">
+	 	<if test="medical_category == null">
+		insert into product values(product_seq.nextval,#{product_category},
+				null,#{health_category},#{name},
+				#{company},#{price},#{stock},#{image},
+				#{howuse},#{description},#{precautions},#{side_effects},
+				#{storage},#{becareful},#{row_material},0)
+	 	</if>
+	 	<if test="health_category == null">
+		insert into product values(product_seq.nextval,#{product_category},
+				#{medical_category},null,#{name},
+				#{company},#{price},#{stock},#{image},
+				#{howuse},#{description},#{precautions},#{side_effects},
+				#{storage},#{becareful},#{row_material},0)
+	 	</if>
+	</insert>
+	 
+	 <update id="updateP">
+	 	update product set stock=#{stock},price=#{price} where p_num=#{p_num}
+	 </update>
+	 
+	 <delete id="deleteP">
+	 	delete from product where p_num = #{p_num}
+	 </delete>
+	 
+	 <select id="selectN" resultMap="nMap">
+	 <![CDATA[	
+	 	select * from (
+		select rownum rnum, a.* from
+		(select * from notice n
+		inner join user_table u
+		on n.user_seq=u.user_seq
+        order by n.notice_no desc, n.notice_date desc) a )
+		where rnum>=#{startRow} and rnum<=#{endRow}
+		]]>
+	 </select>
+	 
+	 <resultMap type="com.java.dto.Notice" id="nMap">
+	 	<result column="notice_no" property="notice_no"/>
+	 	<result column="user_seq" property="user_seq"/>
+	 	<result column="notice_hit" property="notice_hit"/>
+	 	<result column="notice_title" property="notice_title"/>
+	 	<result column="notice_date" property="notice_date"/>
+	 	<association property="user" column="user_seq" javaType="com.java.dto.User">
+	 		<id column="user_seq" property="user_seq"/>
+		 	<result column="user_name" property="user_name"/>
+		 	<result column="user_auth" property="user_auth"/>
+		 	<result column="user_id" property="user_id"/>
+	 	</association>
+	 </resultMap>
+	 
+	 <delete id="deleteNotice">
+	 	delete from notice where notice_no = #{notice_no}
+	 </delete>
+	 
+</mapper>

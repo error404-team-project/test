@@ -13,7 +13,7 @@
 			<ol>
 				<li><a href="/index">HOME</a></li>
 				<li>SHOP</li>
-				<li class="last">생활용품</li>
+				<li class="last">건강기능식품</li>
 			</ol>
 		</div>
 					
@@ -21,11 +21,11 @@
 		<div id="maxcontents">
 			<div class="banner"><img src="../images/img/dailyBanner.jpg" alt="원두커피, 원두커피 전문 기업 쟈뎅의 Coffee Master의 심혈을 기울인 엄선된 원두 선별, 일반 원두커피부터 간편하게 즐기는 원두커피백, POD까지 다양하게 구성되어 있습니다." class="web" /><img src="../images/img/product_banner01_m.jpg" alt="원두커피, 원두커피 전문 기업 쟈뎅의 Coffee Master의 심혈을 기울인 엄선된 원두 선별, 일반 원두커피부터 간편하게 즐기는 원두커피백, POD까지 다양하게 구성되어 있습니다." class="mobile" /></div>
 			
-			<h2 class="brand">생활용품<span>생활에 필요한 다양한 상품.</span></h2>
+			<h2 class="brand">건강기능식품<span></span></h2>
 
 			<div class="brandTab">
 				<ul>
-					<c:if test="${health_category == 0 }">
+				<c:if test="${health_category == 0 }">
 					<li><a href="/product/household_list" class="hover">전체</a></li>
 				</c:if>
 				<c:if test="${health_category != 0 }">
@@ -168,7 +168,7 @@
 						<a href="/product/household_view?p_num=${d.p_num}&health_category=${health_category}">
 							<c:if test="${d.stock != 0}">
 							<div class="img">
-								<img src="../images/img/${d.image}" alt="제품이미지" />
+								<img src="../image/${d.image}" alt="제품이미지" />
 							</div>
 							</c:if>
 							<c:if test="${d.stock == 0}">

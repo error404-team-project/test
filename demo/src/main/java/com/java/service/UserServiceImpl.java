@@ -43,6 +43,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User selectLogin(User user) {
 		User u = uMapper.selectLogin(user);
+		if(u != null) {
+			uMapper.lastLogin(user);
+		}
 		//System.out.println(u.getUser_id());
 		return u;
 	}

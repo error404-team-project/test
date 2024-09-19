@@ -12,6 +12,10 @@
 		select * from User_table where user_id=#{user_id} and user_pw=#{user_pw}
 	</select>
 	
+	<update id="lastLogin">
+		update user_table set last_login = sysdate where user_id=#{user_id}
+	</update>
+	
 	<insert id="joinOne">
 		insert into user_table values 
 			(user_seq.nextval,'user',#{user_id},#{user_pw},#{user_name},

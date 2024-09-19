@@ -13,4 +13,6 @@ public interface UserMapper {
 
 	User selectLogin(User user);
 
+	void lastLogin(User user);
+
 }

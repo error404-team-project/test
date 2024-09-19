@@ -38,6 +38,7 @@ public class MemberController {
 			session.setAttribute("sessionId", u.getUser_id());
 			session.setAttribute("sessionSeq", u.getUser_seq());
 			session.setAttribute("sessionName", u.getUser_name());
+			session.setAttribute("sessionAuth", u.getAuth_id());
 			System.out.println(u.getUser_name());
 			System.out.println(u.getUser_seq());
 		return "redirect:../index";

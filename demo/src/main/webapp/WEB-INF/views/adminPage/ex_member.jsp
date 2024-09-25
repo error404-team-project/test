@@ -213,25 +213,25 @@ function jBtn(uno){
                 <br>
          <nav aria-label="...">
   			<ul class="pagination">
-  			<c:if test="${pageDto.page>1 }">
+  			<c:if test="${upageDto.page>1 }">
     			<li class="page-item">
-     				<a class="page-link" href="/adminPage/ex_member?page=${pageDto.page-1}">이전페이지</a>
+     				<a class="page-link" href="/adminPage/ex_member?page=${upageDto.page-1}">이전페이지</a>
    	 		    </li>
   			</c:if>
-  			<c:if test="${pageDto.page == 1 }">
+  			<c:if test="${upageDto.page == 1 }">
     			<li class="page-item">
      				<a class="page-link">이전페이지</a>
    	 		    </li>
   			</c:if>
   			
    	 		<!-- 페이지 넘버링 -->
-   	 		<c:forEach var="pN" begin="${pageDto.startPage}" end="${pageDto.endPage}" step="1">
-    		<c:if test="${pN != pageDto.page}">
+   	 		<c:forEach var="pN" begin="${upageDto.startPage}" end="${upageDto.endPage}" step="1">
+    		<c:if test="${pN != upageDto.page}">
     			<li class="page-item">
     				<a class="page-link" href="/adminPage/ex_member?page=${pN}">${pN}</a>
     			</li>
     		</c:if>
-    		<c:if test="${pN == pageDto.page}">
+    		<c:if test="${pN == upageDto.page}">
     			<li class="page-item">
     				<a class="page-link"><strong>${pN}</strong></a>
     			</li>
@@ -239,12 +239,12 @@ function jBtn(uno){
    	 		</c:forEach>
    	 		<!-- 페이지 넘버링 -->
    	 		
-    		<c:if test="${pageDto.page<pageDto.maxPage }">
+    		<c:if test="${upageDto.page<upageDto.maxPage }">
     			<li class="page-item">
-    				<a class="page-link" href="/adminPage/ex_member?page=${pageDto.page+1}">다음페이지</a>
+    				<a class="page-link" href="/adminPage/ex_member?page=${upageDto.page+1}">다음페이지</a>
     			</li>
     		</c:if>	
-    		<c:if test="${pageDto.page==pageDto.maxPage }">
+    		<c:if test="${upageDto.page==upageDto.maxPage }">
     			<li class="page-item">
     				<a class="page-link">다음페이지</a>
     			</li>

@@ -8,6 +8,44 @@
 		select count(*) from notice
 	</select>
 	
+	<select id="selectPListCountAll">
+		<if test="auth_id == 'admin' || auth_id == 'store'">
+			select count(*) from prescription
+		</if>
+		<if test="auth_id == 'user'">
+			select count(*) from prescription where user_seq=#{user_seq}
+		</if>
+	</select>
+	
+	<select id="selectPre" resultType="com.java.dto.Prescription">
+		<if test="auth_id == 'admin' || auth_id == 'store'">
+			<![CDATA[
+			select * from
+			(select rownum rnum, a.* from 
+			(select p.* from prescription p order by prescription_no desc) a)
+			where rnum >= #{pageDto.startRow} and rnum<=#{pageDto.endRow}
+			]]>
+		</if>
+		<if test="auth_id == 'user'">
+			<![CDATA[
+			select * from
+			(select rownum rnum, a.* from 
+			(select p.* from prescription p 
+			where user_seq=#{user_seq}
+			order by prescription_no desc) a)
+			where rnum >= #{pageDto.startRow} and rnum<=#{pageDto.endRow}
+			]]>
+		</if>
+	</select>
+	
+	<select id="selectOnePre" resultType="com.java.dto.Prescription">
+		select * from prescription where prescription_no = #{prescription_no}
+	</select>
+	
+	<update id="updatePre">
+		update prescription set prescription_content=#{prescription_content}, prescription_image=#{prescription_image} where prescription_no=#{prescription_no}
+	</update>
+	
 	<select id="selectAllN" resultType="com.java.dto.Notice">
 		<![CDATA[
 		select * from
@@ -45,5 +83,13 @@
 	<update id="updateNotice">
 		update notice set notice_title=#{notice_title}, notice_content=#{notice_content}, notice_image=#{notice_image} where notice_no=#{notice_no}
 	</update>
+	
+	<update id="NHitUp">
+		update notice set notice_hit=notice_hit+1 where notice_no=#{notice_no}
+	</update>
+	
+	<insert id="insertPrescription">
+		insert into prescription values(pre_seq.nextval,#{user_seq},#{prescription_title},#{prescription_content},#{prescription_image},'N',NULL)
+	</insert>
 	
 </mapper>

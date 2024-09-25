@@ -1,7 +1,6 @@
 package com.java.controller;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -16,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.java.dto.Notice;
 import com.java.dto.Page;
+import com.java.dto.Prescription;
 import com.java.dto.Product;
+import com.java.dto.User;
 import com.java.service.AdminService;
 import com.java.service.CustomerService;
 import com.java.service.EventService;
@@ -62,20 +62,25 @@ public class AdiminPageController {
 	}
 	
 	@RequestMapping ("/ad_medical")
-	public String ad_medical (Model model,Page pageDto,@RequestParam(defaultValue = "0")int medical_category) {// 상품정보관리 - 상품현황
-		HashMap<String, Object> map = pservice.selectMList(medical_category,pageDto);
+	public String ad_medical (Model model,Page pageDto,@RequestParam(defaultValue = "0")int medical_category,String sWord,@RequestParam(defaultValue= "0")int store_seq) {// 상품정보관리 - 상품현황
+		HashMap<String, Object> map = pservice.selectMList(medical_category,pageDto, sWord,store_seq);
+		System.out.println(medical_category);
 		model.addAttribute("mCList", map.get("mCList"));
 		model.addAttribute("pageDto", map.get("pageDto"));
 		model.addAttribute("medical_category", map.get("medical_category"));
+		model.addAttribute("sWord", sWord);
+		model.addAttribute("store_seq", store_seq);
 		return "/adminPage/ad_medical";
 	}
 	
 	@RequestMapping ("/ad_health")
-	public String ad_health (Model model,Page pageDto,@RequestParam(defaultValue = "0")int health_category) {// 상품정보관리 - 상품현황
-		HashMap<String, Object> map = pservice.selectDlist(health_category,pageDto);
+	public String ad_health (Model model,Page pageDto,@RequestParam(defaultValue = "0")int health_category,String sWord,@RequestParam(defaultValue= "0")int store_seq) {// 상품정보관리 - 상품현황
+		HashMap<String, Object> map = pservice.selectDlist(health_category,pageDto,sWord,store_seq);
 		model.addAttribute("mDList", map.get("mDList"));
 		model.addAttribute("pageDto", map.get("pageDto"));
 		model.addAttribute("health_category", map.get("health_category"));
+		model.addAttribute("sWord", sWord);
+		model.addAttribute("store_seq", store_seq);
 		return "/adminPage/ad_health";
 	}
 	
@@ -119,7 +124,14 @@ public class AdiminPageController {
 	}
 	
 	@RequestMapping("/ex_member")
-	public String ex_member() {
+	public String ex_member(Model model, Page pageDto) {
+		HashMap<String,Object> map = adservice.allUser(pageDto);
+		model.addAttribute("uList", map.get("uList"));
+		model.addAttribute("sList", map.get("sList"));
+		model.addAttribute("nList", map.get("nList"));
+		model.addAttribute("upageDto", map.get("upageDto"));
+		model.addAttribute("spageDto", map.get("spageDto"));
+		model.addAttribute("npageDto", map.get("npageDto"));
 		return "/adminPage/ex_member";
 	}
 	
@@ -143,6 +155,21 @@ public class AdiminPageController {
 		return "/adminPage/ex_notice";
 	}
 	
+	@RequestMapping("/ad_prescription")
+	public String ad_prescription(Model model,Page pageDto,@RequestParam(defaultValue = "0")int user_seq) {
+		HashMap<String, Object> map = cservice.selectMyPrescription(pageDto,user_seq);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("pageDto", map.get("pageDto"));
+		return "/adminPage/ad_prescription";
+	}
+	
+	@PostMapping("/checkPre")
+	@ResponseBody
+	public Prescription checkPre(int prescription_no, int prescription_price) {
+		Prescription pre = adservice.checkPre(prescription_no,prescription_price);
+		return pre;
+	}
+	
 	@PostMapping("/deleteNotice")
 	@ResponseBody
 	public String deleteNotice(int notice_no) {
@@ -156,6 +183,22 @@ public class AdiminPageController {
 //		HashMap<String,Object>map = adnservice.selectAll();
 //		model.addAttribute("list",map.get("list"));
 		return "/adminPage/ex_Order";
+	}
+	
+	@GetMapping ("/store_approval")
+	public String store_approval (Model model,int user_seq) {
+		//System.out.println("컨트롤러"+user_seq);
+		User user = adservice.checkApproval(user_seq);
+		model.addAttribute("user", user);
+		return "/adminPage/store_approval";
+	}
+	
+	@PostMapping("/store_approval")
+	public String store_approval(User user,Model model) {
+	//	System.out.println(user.getUser_seq());
+		adservice.updateApproval(user.getUser_seq());
+		model.addAttribute("result", 2);
+		return "redirect:/adminPage/ex_member";
 	}
 	
 	

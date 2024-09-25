@@ -59,7 +59,8 @@ $(document).ready(function() {
 });
 function cbtn(){
 	var health_category = $("#pCateDt").val();
-	location.href="/adminPage/ad_health?health_category="+health_category+"";
+	var store_seq = $("#store_seq").val();
+	location.href="/adminPage/ad_health?health_category="+health_category+"&store_seq="+store_seq+"";
 }
 
 function sbtn(pno){
@@ -111,13 +112,23 @@ function dbtn(pno){
 		}
 	})// ajax
 } // dbtn
+
+function schBtn(){
+//	alert($("#sWord").val());
+	sFrm.submit();
+}
 </script>
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">건강기능식품 리스트</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <select id="pCateDt" onchange="cbtn()">
+                <form action="/adminPage/ad_health" name="sFrm" method="get">
+                <input type="hidden" name="store_seq" id="store_seq" value="${sessionSeq}">
+                <select id="pCateDt" name="health_category" onchange="cbtn()">
                 </select>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <input type="text" name="sWord" id="sWord" >
+	    		<a onclick="schBtn()"><img src="../images/btn/btn_search.gif" alt="검색" /></a>
+	            </form>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -168,7 +179,7 @@ function dbtn(pno){
   			<ul class="pagination">
     		<c:if test="${pageDto.page>1 }">
     			<li class="page-item">
-     				<a class="page-link" href="/adminPage/ad_health?page=${pageDto.page-1}&health_category=${health_category}">이전페이지</a>
+     				<a class="page-link" href="/adminPage/ad_health?page=${pageDto.page-1}&health_category=${health_category}&sWord=${sWord}&store_seq=${sessionSeq}">이전페이지</a>
    	 		    </li>
   			</c:if>
   			<c:if test="${pageDto.page == 1 }">
@@ -181,7 +192,7 @@ function dbtn(pno){
    	 		<c:forEach var="pN" begin="${pageDto.startPage}" end="${pageDto.endPage}" step="1">
     		<c:if test="${pN != pageDto.page}">
     			<li class="page-item">
-    				<a class="page-link" href="/adminPage/ad_health?page=${pN}&health_category=${health_category}">${pN}</a>
+    				<a class="page-link" href="/adminPage/ad_health?page=${pN}&health_category=${health_category}&sWord=${sWord}&store_seq=${sessionSeq}">${pN}</a>
     			</li>
     		</c:if>
     		<c:if test="${pN == pageDto.page}">
@@ -194,7 +205,7 @@ function dbtn(pno){
    	 		
     		<c:if test="${pageDto.page<pageDto.maxPage }">
     			<li class="page-item">
-    				<a class="page-link" href="/adminPage/ad_health?page=${pageDto.page+1}&health_category=${health_category}">다음페이지</a>
+    				<a class="page-link" href="/adminPage/ad_health?page=${pageDto.page+1}&health_category=${health_category}&sWord=${sWord}&store_seq=${sessionSeq}">다음페이지</a>
     			</li>
     		</c:if>	
     		<c:if test="${pageDto.page==pageDto.maxPage }">

@@ -30,4 +30,6 @@ public interface EventMapper {
 
 	void modiE(Event event);
 
+	void EHitUp(int event_no);
+
 }

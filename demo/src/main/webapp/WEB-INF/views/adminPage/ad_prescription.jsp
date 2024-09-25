@@ -28,7 +28,7 @@
   <!-- summernote -->
   <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
   <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-<title>공지사항 관리페이지</title>
+<title>처방전 관리페이지</title>
 <style>
 	 tr{text-align:center;}
 	 .btn-block{width : 100px; height : 50px;}
@@ -38,7 +38,6 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 	<%@ include file="../header/admin_top.jsp" %>
-	<h1>공지사항 관리</h1>
 	 <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -47,7 +46,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">공지 리스트</h3>
+                <h3 class="card-title">처방전 리스트</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -57,60 +56,56 @@
 					<col width="*" />
 					<col width="10%"/>
 					<col width="10%"/>
-					<col width="7%"/>
-					<col width="10%"/>
 				</colgroup>
 <script>
-function wBtn(){
-	location.href="/customer/notice_write"
+function cBtn(pno){
+var price = $(".price"+pno).val();
+	if(price == null || price == ""){
+		alert("가격을 입력해주세요!");
+		$(".price"+pno).focus();
+	} else {
+		if(confirm("해당 처방전 확인하셨습니까?")){
+			$.ajax({
+				url : "/adminPage/checkPre",
+				data : {prescription_no : pno,
+						prescription_price : price},
+				method : "post",
+				success : function(data){
+					alert("해당 고객에게 결제확인 이메일이 발송되었습니다.\n결제확인 후 약 제조 및 배송 부탁드립니다");
+				 	var str = '';
+					str += '<td>'+data.prescription_no+'</td>';
+					str += '<td><a href="/customer/prescription_view?prescription_no='+data.prescription_no+'">'+data.prescription_title+'</a></td>';
+					str += '<td>'+data.store_check+'</td>';
+					str += '<td><input type="number" name="price" class="price'+data.prescription_no+'" value="'+data.prescription_price+'"/></td>';
+					str += '<td><input type="button" onclick="cBtn('+data.prescription_no+')" class="btn btn-sm btn-primary" value="확인"></td>';
+					$(".up"+pno).html(str); 
+				},
+				error : function(){
+					alert("실패");
+				}
+			}); // ajax
+		} 
+	}
 }
-
-function mBtn(pno){
-	if(confirm("해당 공지사항을 수정하시겠습니까?"))
-	location.href="/customer/notice_modi?notice_no="+pno;
-} // mBtn
-
-function dBtn(pno){
-	//alert("삭제누른번호"+notice_no);
-	if(confirm("해당 공지사항을 삭제하시겠습니까?")){
-		 $.ajax({
-			url : "/adminPage/deleteNotice",
-			data : {"notice_no" : pno},
-			method : "post",
-			success : function(data){
-				alert(data);
-				$(".up"+pno).remove();
-			},
-			error : function(){
-				alert("실패");
-			}
-		});//ajax 
-	} // if
-} // dBtn
 </script>
                   <thead>
                  <tr>
                     <th>번호</th>
                     <th>제목</th>
-                    <th>작성자</th>
-                    <th>조회수</th>
-                  	<th>작성일</th>
-                  	<th>수정/삭제</th>
+                    <th>확인유무</th>
+                    <th>가격 입력하기</th>
+                    <th>확인하기</th>
                   </tr>
                   </thead>
                   <tbody>
                   <!-- 반복 -->
-                  <c:forEach var="n" items="${nlist}">
-                  <tr class="up${n.notice_no}">
-                    <td class="n_no${n.notice_no}">${n.notice_no}</td>
-                    <td><a href="/customer/notice_view?notice_no=${n.notice_no}">${n.notice_title}</a></td>
-                    <td>${n.user.user_name}</td>
-                    <td>${n.notice_hit}</td>
-                  	<td><fmt:formatDate value="${n.notice_date}" pattern="yyyy-MM-dd"/></td>
-                  	<td>
-                  		<input type="button" onclick="mBtn(${n.notice_no})" class="btn btn-sm btn-primary" value="수정"> 
-                  		<input type="button" onclick="dBtn(${n.notice_no})" class="btn btn-sm btn-secondary" value="삭제">
-                  	</td>
+                  <c:forEach var="p" items="${list}">
+                  <tr class="up${p.prescription_no}">
+                    <td>${p.prescription_no}</td>
+                    <td><a href="/customer/prescription_view?prescription_no=${p.prescription_no}">${p.prescription_title}</a></td>
+                    <td>${p.store_check}</td>
+                  	<td><input type="number" name="price" class="price${p.prescription_no}" value="${p.prescription_price}"/></td>
+                  	<td><input type="button" onclick="cBtn(${p.prescription_no})" class="btn btn-sm btn-primary" value="확인"></td>
                   </tr>
                   </c:forEach>
                   <!-- 반복 -->
@@ -120,7 +115,7 @@ function dBtn(pno){
   			<ul class="pagination">
     			<c:if test="${pageDto.page>1 }">
     			<li class="page-item">
-     				<a class="page-link" href="/adminPage/ex_notice?page=${pageDto.page-1}">이전페이지</a>
+     				<a class="page-link" href="/adminPage/ad_prescription?page=${pageDto.page-1}">이전페이지</a>
    	 		    </li>
   			</c:if>
   			<c:if test="${pageDto.page == 1 }">
@@ -133,7 +128,7 @@ function dBtn(pno){
    	 		<c:forEach var="pN" begin="${pageDto.startPage}" end="${pageDto.endPage}" step="1">
     		<c:if test="${pN != pageDto.page}">
     			<li class="page-item">
-    				<a class="page-link" href="/adminPage/ex_notice?page=${pN}">${pN}</a>
+    				<a class="page-link" href="/adminPage/ad_prescription?page=${pN}">${pN}</a>
     			</li>
     		</c:if>
     		<c:if test="${pN == pageDto.page}">
@@ -146,7 +141,7 @@ function dBtn(pno){
    	 		
     		<c:if test="${pageDto.page<pageDto.maxPage }">
     			<li class="page-item">
-    				<a class="page-link" href="/adminPage/ex_notice?page=${pageDto.page+1}">다음페이지</a>
+    				<a class="page-link" href="/adminPage/ad_prescription?page=${pageDto.page+1}">다음페이지</a>
     			</li>
     		</c:if>	
     		<c:if test="${pageDto.page==pageDto.maxPage }">
@@ -157,13 +152,6 @@ function dBtn(pno){
  		    </ul>
 		  </nav>
                 <br>
-             <table>
-             <tr>
-             	<td>
-            		<button type="button" onclick="wBtn()" class="btn btn-block btn-primary">글 작성</button>
-             	</td>
-             </tr>
-             </table>
               </div>
               <!-- /.card-body -->
             </div>

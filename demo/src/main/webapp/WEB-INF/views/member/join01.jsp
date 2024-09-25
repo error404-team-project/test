@@ -31,8 +31,9 @@
 
 			<!-- contents -->
 			<form action="/member/join02" method="post" name="jFrm">
+			<input type="hidden" name="auth_id" value="${auth_id}">
 			<div id="contents">
-				<div id="member">
+				<div id="member" style="margin:0 0 0 80px;">
 					<h2><strong>회원가입</strong><span>회원으로 가입하시면 보다 더 다양한 혜택을 누리실 수 있습니다.</span></h2>
 					
 					<!-- STEP -->

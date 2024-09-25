@@ -16,14 +16,40 @@
 				<li class="last">의약품</li>
 			</ol>
 		</div>
-					
+<script>
+function store(){
+	var store_seq = $("#store").val();
+	console.log(store_seq);
+	location.href="/product/medical_list?store_seq="+store_seq+"";
+}
+</script>			
 		<!-- maxcontents -->
 		<div id="maxcontents">
 			<div class="banner"><img src="../images/img/medical_product.png" alt="원두커피, 원두커피 전문 기업 쟈뎅의 Coffee Master의 심혈을 기울인 엄선된 원두 선별, 일반 원두커피부터 간편하게 즐기는 원두커피백, POD까지 다양하게 구성되어 있습니다." class="web" /><img src="../images/img/product_banner01_m.jpg" alt="원두커피, 원두커피 전문 기업 쟈뎅의 Coffee Master의 심혈을 기울인 엄선된 원두 선별, 일반 원두커피부터 간편하게 즐기는 원두커피백, POD까지 다양하게 구성되어 있습니다." class="mobile" /></div>
 			
-			<h2 class="brand">의약품<span>다양한 의약품.</span></h2>
+			<h2 class="brand">의약품
+				<span>
+					<select id="store" onchange="store()">
+						<option value="0">전체</option>
+					<c:if test="${store_seq == 4}">
+						<option value="4" selected>미래로365</option>
+					</c:if>
+					<c:if test="${store_seq != 4}">
+						<option value="4">미래로365</option>
+					</c:if>
+					<c:if test="${store_seq == 7}">
+						<option value="7" selected>하나약국</option>
+					</c:if>
+					<c:if test="${store_seq != 7}">
+						<option value="7">하나약국</option>
+					</c:if>
+					</select>
+				</span>
+			</h2>
 
 			<div class="brandTab">
+			<form action="/product/medical_list" method="post" name="sFrm">
+			<input type="hidden" name="medical_category" value="${medical_category}">
 				<ul>
 				<c:if test="${medical_category == 0 }">
 					<li><a href="/product/medical_list" class="hover">전체</a></li>
@@ -32,52 +58,52 @@
 					<li><a href="/product/medical_list">전체</a></li>
 				</c:if>
 				<c:if test="${medical_category == 1 }">
-					<li><a href="/product/medical_list?medical_category=1" class="hover">항생제</a></li>
+					<li><a href="/product/medical_list?medical_category=1&store_seq=${store_seq}" class="hover">항생제</a></li>
 				</c:if>
 				<c:if test="${medical_category != 1 }">
-					<li><a href="/product/medical_list?medical_category=1" >항생제</a></li>
+					<li><a href="/product/medical_list?medical_category=1&store_seq=${store_seq}" >항생제</a></li>
 				</c:if>
 				<c:if test="${medical_category == 2 }">
-					<li><a href="/product/medical_list?medical_category=2" class="hover">소화제</a></li>
+					<li><a href="/product/medical_list?medical_category=2&store_seq=${store_seq}" class="hover">소화제</a></li>
 				</c:if>
 				<c:if test="${medical_category != 2 }">
-					<li><a href="/product/medical_list?medical_category=2">소화제</a></li>
+					<li><a href="/product/medical_list?medical_category=2&store_seq=${store_seq}">소화제</a></li>
 				</c:if>
 				<c:if test="${medical_category == 3 }">
-					<li><a href="/product/medical_list?medical_category=3" class="hover">비염</a></li>
+					<li><a href="/product/medical_list?medical_category=3&store_seq=${store_seq}" class="hover">비염</a></li>
 				</c:if>
 				<c:if test="${medical_category != 3 }">
-					<li><a href="/product/medical_list?medical_category=3">비염</a></li>
+					<li><a href="/product/medical_list?medical_category=3&store_seq=${store_seq}">비염</a></li>
 				</c:if>
 				<c:if test="${medical_category == 4 }">
-					<li><a href="/product/medical_list?medical_category=4" class="hover">진통/소염제</a></li>
+					<li><a href="/product/medical_list?medical_category=4&store_seq=${store_seq}" class="hover">진통/소염제</a></li>
 				</c:if>
 				<c:if test="${medical_category != 4 }">
-					<li><a href="/product/medical_list?medical_category=4">진통/소염제</a></li>
+					<li><a href="/product/medical_list?medical_category=4&store_seq=${store_seq}">진통/소염제</a></li>
 				</c:if>
 				<c:if test="${medical_category == 5 }">
-					<li><a href="/product/medical_list?medical_category=5" class="hover">항바이러스제</a></li>
+					<li><a href="/product/medical_list?medical_category=5&store_seq=${store_seq}" class="hover">항바이러스제</a></li>
 				</c:if>
 				<c:if test="${medical_category != 5 }">
-					<li><a href="/product/medical_list?medical_category=5">항바이러스제</a></li>
+					<li><a href="/product/medical_list?medical_category=5&store_seq=${store_seq}">항바이러스제</a></li>
 				</c:if>
 				<c:if test="${medical_category == 6 }">
-					<li><a href="/product/medical_list?medical_category=6" class="hover">항염증제</a></li>
+					<li><a href="/product/medical_list?medical_category=6&store_seq=${store_seq}" class="hover">항염증제</a></li>
 				</c:if>
 				<c:if test="${medical_category != 6 }">
-					<li><a href="/product/medical_list?medical_category=6">항염증제</a></li>
+					<li><a href="/product/medical_list?medical_category=6&store_seq=${store_seq}">항염증제</a></li>
 				</c:if>
 				<c:if test="${medical_category == 7 }">
-					<li><a href="/product/medical_list?medical_category=7" class="hover">연고</a></li>
+					<li><a href="/product/medical_list?medical_category=7&store_seq=${store_seq}" class="hover">연고</a></li>
 				</c:if>
 				<c:if test="${medical_category != 7 }">
-					<li><a href="/product/medical_list?medical_category=7">연고</a></li>
+					<li><a href="/product/medical_list?medical_category=7&store_seq=${store_seq}">연고</a></li>
 				</c:if>
 				<c:if test="${medical_category == 8 }">
-					<li><a href="/product/medical_list?medical_category=8" class="hover">밴드</a></li>
+					<li><a href="/product/medical_list?medical_category=8&store_seq=${store_seq}" class="hover">밴드</a></li>
 				</c:if>
 				<c:if test="${medical_category != 8 }">
-					<li><a href="/product/medical_list?medical_category=8">밴드</a></li>
+					<li><a href="/product/medical_list?medical_category=8&store_seq=${store_seq}">밴드</a></li>
 				</c:if>
 				</ul>
 			</div>
@@ -89,29 +115,51 @@
 					<c:forEach var="m" items="${mCList}">
 					<li>
 						<a href="/product/medical_view?p_num=${m.p_num}&medical_category=${medical_category}">
-							<c:if test="${m.stock != 0}">
 							<div class="img">
-							<img src="../images/img/${m.image}" alt="제품이미지" />
+							<img src="../image/${m.image}" alt="제품이미지" />
 							</div>
-							</c:if>
-							<c:if test="${m.stock == 0}">
-							<div class="img">
-							<img src="../images/img/stock0.png" alt="제품이미지" />
-							</div>
-							</c:if>
 							<div class="name">${m.name }</div>
-							<div class="price">${m.price }원</div>
+							<c:if test="${m.stock == 0}">
+							<div class="price">상품 입고 준비중</div>
+							</c:if>
+							<c:if test="${m.stock > 0}">
+							<div class="price">${m.price  }</div>
+							</c:if>
 						</a>
 					</li>
 					</c:forEach>
 					<!-- //반복 -->
 			</div>
+<script>
+function schBtn(){
+//	alert($("#category").val());
+//	alert($("#sWord").val());
+sFrm.submit();
+}
+</script>
+		
+					<div class="searchWrap">
+						<div class="search">
+							<ul>
+								<li class="web"><img src="../images/txt/txt_search.gif" alt="search" /></li>
+								<li class="se">
+									<select id="category" name="sCategory">
+										<option value="name" />이름</option>
+									</select>
+								</li>
+								<li><input type="text" id="sWord" name="sWord" class="searchInput" /></li>
+								<li class="web"><a onclick="schBtn()"><img src="../images/btn/btn_search.gif" alt="검색" /></a></li>
+								<li class="mobile"><a onclick="schBtn()"><img src="../images/btn/btn_search_m.gif" alt="검색" /></a></li>
+							</ul>
+						</div>
+					</div>
+				</form>
 			<div class="btnAreaList">
 						<!-- 페이징이동1 -->
 						<div class="allPageMoving1">
 					<!-- 처음페이지 -->
 					<c:if test="${pageDto.page > 1 }">
-						<a href="/product/medical_list?page=1&medical_category=${medical_category}" class="n">
+						<a href="/product/medical_list?page=1&medical_category=${medical_category}&sWord=${sWord}&store_seq=${store_seq}" class="n">
 							<img src="../images/btn/btn_pre2.gif" alt="처음으로"/>
 						</a>
 					</c:if>
@@ -122,7 +170,7 @@
 					
 					<!-- 이전페이지 -->
 					<c:if test="${pageDto.page>1}">
-						<a href="/product/medical_list?page=${pageDto.page-1}&medical_category=${medical_category}" class="pre">
+						<a href="/product/medical_list?page=${pageDto.page-1}&medical_category=${medical_category}&sWord=${sWord}&store_seq=${store_seq}" class="pre">
 							<img src="../images/btn/btn_pre1.gif" alt="앞페이지로"/>
 						</a>
 					</c:if>
@@ -134,7 +182,7 @@
 					<!-- 페이지 넘버링 -->	
 					<c:forEach var="pnum" begin="${pageDto.startPage}" end="${pageDto.endPage }" step="1">
 						<c:if test="${pnum != pageDto.page }">
-							<a href="/product/medical_list?page=${pnum}&medical_category=${medical_category}">${pnum}</a> 
+							<a href="/product/medical_list?page=${pnum}&medical_category=${medical_category}&sWord=${sWord}&store_seq=${store_seq}">${pnum}</a> 
 						</c:if>
 						<c:if test="${pnum == pageDto.page }">
 							<strong>${pnum}</strong>
@@ -144,7 +192,7 @@
 					
 					<!-- 다음페이지 -->
 					<c:if test="${pageDto.page < pageDto.maxPage }">
-						<a href="/product/medical_list?page=${pageDto.page + 1 }&medical_category=${medical_category}" class="next">
+						<a href="/product/medical_list?page=${pageDto.page + 1 }&medical_category=${medical_category}&sWord=${sWord}&store_seq=${store_seq}" class="next">
 							<img src="../images/btn/btn_next1.gif" alt="뒤페이지로"/>
 						</a>
 					</c:if>	
@@ -154,7 +202,7 @@
 					<!-- 다음페이지 -->
 					<!-- 마지막페이지 -->
 					<c:if test="${pageDto.page < pageDto.endPage }">
-						<a href="/product/medical_list?page=${pageDto.maxPage}&medical_category=${medical_category}" class="n">
+						<a href="/product/medical_list?page=${pageDto.maxPage}&medical_category=${medical_category}&sWord=${sWord}&store_seq=${store_seq}" class="n">
 							<img src="../images/btn/btn_next2.gif" alt="마지막페이지로"/>
 						</a>
 					</c:if>
@@ -181,10 +229,10 @@
 						<c:if test="${user_seq > 0}">
 							<c:forEach var="w" items="${wList}">
 							<c:if test="${w.product.product_category == 1 }">
-								<li><a href="/product/medical_view?p_num=${w.p_num}&medical_category=${w.product.medical_category}"><img src="../images/img/${w.product.image }" alt="상품페이지로 이동" style="width:78px;height:78px" /></a>
+								<li><a href="/product/medical_view?p_num=${w.p_num}&medical_category=${w.product.medical_category}"><img src="../image/${w.product.image }" alt="상품페이지로 이동" style="width:78px;height:78px" /></a>
 							</c:if>
 							<c:if test="${w.product.product_category == 2 }">
-								<li><a href="/product/household_view?p_num=${w.p_num}&health_category=${w.product.health_category}"><img src="../images/img/${w.product.image }" alt="상품페이지로 이동" style="width:78px;height:78px" /></a>
+								<li><a href="/product/household_view?p_num=${w.p_num}&health_category=${w.product.health_category}"><img src="../image/${w.product.image }" alt="상품페이지로 이동" style="width:78px;height:78px" /></a>
 							</c:if>
 						</c:forEach>
 						</c:if>

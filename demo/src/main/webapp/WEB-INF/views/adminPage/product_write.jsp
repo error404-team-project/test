@@ -78,6 +78,7 @@ function pWbtn(){
     <!-- Main content -->
     <h1>상품 등록</h1>
     <form action="/adminPage/product_write" name="pFrm" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="user_seq" value="${sessionSeq}">
     <section class="content">
       <div class="row">
         <div class="col-md-6">

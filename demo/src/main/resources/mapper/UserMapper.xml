@@ -13,14 +13,36 @@
 	</select>
 	
 	<update id="lastLogin">
-		update user_table set last_login = sysdate where user_id=#{user_id}
+		update user_table set login_date = sysdate where user_id=#{user_id}
 	</update>
 	
 	<insert id="joinOne">
-		insert into user_table values 
-			(user_seq.nextval,'user',#{user_id},#{user_pw},#{user_name},
+		<if test="auth_id == 'user'">
+			insert into user_table values 
+			(user_seq.nextval,#{auth_id},#{user_id},#{user_pw},#{user_name},
 			#{user_email},#{user_birth},#{user_phone},#{user_zip},#{user_addr},
-			sysdate,#{user_gender},#{svc_agree},#{ps_agree},#{mkt_agree},'N')
+			sysdate,#{user_gender},#{svc_agree},#{ps_agree},#{mkt_agree},null
+			,null,null,null,'Y')
+		</if>
+		<if test="auth_id == 'store'">
+			insert into user_table values 
+			(user_seq.nextval,#{auth_id},#{user_id},#{user_pw},#{user_name},
+			#{user_email},null,#{user_phone},#{user_zip},#{user_addr},
+			sysdate,null,#{svc_agree},#{ps_agree},'Y',null,
+			#{b_license},#{b_l_image},#{p_license},'N')
+		</if>
 	</insert>
-
+	
+	<select id="findPw" resultType="com.java.dto.User">
+		select * from user_table where user_id=#{user_id} and user_email=#{user_email}
+	</select>
+	
+	<update id="updatePw">
+		update user_table set user_pw=#{pwcode} where user_id=#{user_id} and user_email=#{user_email}
+	</update>
+	
+	<select id="findId" resultType="String">
+		select user_id from user_table where user_name=#{user_name} and user_email=#{user_email}
+	</select>
+	
 </mapper>

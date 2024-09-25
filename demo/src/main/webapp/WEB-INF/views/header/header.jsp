@@ -167,18 +167,18 @@ $(document).ready(function() {
 		            <a href="/customer/notice_list">공지사항</a>
 		            <a href="/customer/inquiry_list">1:1 문의</a>
 		            <a href="/customer/faq">FAQ</a>
-		            <a href="/event4">카카오톡 문의</a>
+		            <a href="/customer/prescription_list?user_seq=${sessionSeq}">처방전 목록</a>
 		        </div>
     		</div>
     		<div class="dropdown">    		
-            	<a href="/community" class="button">COMMUNITY</a>
+            	<!-- <a href="#" class="button"></a>
             	<div class="dropdown-content">
 		            <a href="/event1">자유 게시판</a>
 		            <a href="/event2">후기 게시판</a>
-		        </div>
+		        </div> -->
     		</div>
     		<div class="dropdown">
-	            <a href="/shop" class="button">SHOP</a>
+	            <a href="/product/medical_list" class="button">SHOP</a>
 	            <div class="dropdown-content">
 		            <a href="/product/medical_list">의약품</a>
 		            <a href="/product/household_list">건강기능식품</a>
@@ -188,7 +188,7 @@ $(document).ready(function() {
         </div>
         
         <!-- 중앙 로고 -->
-        <div class="logo">
+        <div class="logo" style="margin:0 0 0 80px;">
             <h3 class="logo-text"><a href="../"><span>Medison</span>.</a></h3>
         </div>
         
@@ -196,16 +196,22 @@ $(document).ready(function() {
         <div class="right-buttons">
         <c:if test="${sessionId == null }">
             <a href="/member/login" class="button">LOGIN</a>
-            <a href="/member/join01" class="button">JOIN</a>
-        </c:if>
-        <c:if test="${sessionId != null }">
-            <sapn class="button">${sessionName}님</sapn>
-            <a href="/member/logout" class="button">LOGOUT</a>
-        </c:if>
+            <a href="/member/join" class="button">JOIN</a>
             <a href="/mypage" class="button">MYPAGE</a>
             <a href="/product/cart" class="button">CART</a>
-        <c:if test="${sessionAuth == 'admin' }">
+        </c:if>
+        <c:if test="${sessionId != null && sessionAuth=='user'}">
+            <sapn class="button">${sessionName}님</sapn>
+            <a href="/member/logout" class="button">LOGOUT</a>
+            <a href="/mypage" class="button">MYPAGE</a>
+            <a href="/product/cart" class="button">CART</a>
+        </c:if>
+        <c:if test="${sessionAuth == 'admin' || sessionAuth=='store'}">
+        	<sapn class="button">${sessionName}님</sapn>
+        	 <a href="/member/logout" class="button">LOGOUT</a>
             <a href="/adminPage/admin_index" class="button">ADMIN</a>
+        	 <a href="" class="button"></a>
+        	 <a href="" class="button"></a>
         </c:if>
         </div>
     </div>

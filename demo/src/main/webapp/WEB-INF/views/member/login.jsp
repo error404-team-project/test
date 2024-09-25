@@ -36,6 +36,10 @@ if(result == 2){
 	alert("아이디 또는 비밀번호 틀림\n다시 로그인해주세요");
 	result = 1;
 }
+if(result == 3){
+	alert("아직 가입 승인이 나지 않았습니다. \n 최대한 빠르게 확인 후 이메일로 발송해드리겠습니다.");
+	result = 1;
+}
 function lBtn(){
 	if($("#user_pw").val() == ''){
 		alert("비밀번호를 입력해주세요");

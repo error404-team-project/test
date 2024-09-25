@@ -67,8 +67,8 @@
 	<select id="selectNextE" resultType="com.java.dto.Event">
 		<![CDATA[
 		select * from event where event_no =
-		(select prevDto from
-		(select event_no,lead(event_no,1,-1)over(order by event_end_date asc)as prevDto
+		(select nextDto from
+		(select event_no,lead(event_no,1,-1)over(order by event_end_date asc)as nextDto
 		from event where event_end_date > sysdate)
 		where event_no = #{event_no})
 		]]>
@@ -95,6 +95,10 @@
 	
 	<update id="modiE">
 		update event set event_title=#{event_title}, event_content=#{event_content}, event_image=#{event_image}, event_start_date=#{event_start_date}, event_end_date=#{event_end_date} where event_no=#{event_no}
+	</update>
+	
+	<update id="EHitUp">
+		update event set event_hit=event_hit+1 where event_no=#{event_no}
 	</update>
 	
 </mapper>

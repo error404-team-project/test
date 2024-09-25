@@ -6,41 +6,73 @@
 	<select id="selectMListCountAll" resultType="int">
 		<if test="medical_category == 0">
 			select count(*)from product where product_category = 1
+			<if test="store_seq > 0">
+				and user_seq = #{store_seq}
+			</if>
+			<if test="sWord != null">
+			and name like '%'|| #{sWord} ||'%'
+			</if>
 		</if>
 		<if test="medical_category > 0">
-		<![CDATA[
-			select count(*)from product where medical_category = #{medical_category}
-		]]>
+			select count(*)from product where medical_category = #{medical_category} 
+			<if test="store_seq > 0">
+				and user_seq = #{store_seq}
+			</if>
+			<if test="sWord != null">
+			and name like '%'|| #{sWord} ||'%'
+			</if>
 		</if>
 		
 	</select>
 	
 	<select id="selectDListCount" resultType="int">
-		<if test="medical_category == 0">
+		<if test="health_category == 0">
 			select count(*)from product where product_category = 2
+			<if test="store_seq > 0">
+				and user_seq = #{store_seq}
+			</if>
+			<if test="sWord != null">
+			and name like '%'|| #{sWord} ||'%'
+			</if>
 		</if>
-		<if test="medical_category > 0">
-		<![CDATA[
+		<if test="health_category > 0">
 			select count(*)from product where health_category = #{health_category}
-		]]>
+			<if test="store_seq > 0">
+				and user_seq = #{store_seq}
+			</if>
+			<if test="sWord != null">
+			and name like '%'|| #{sWord} ||'%'
+			</if>
 		</if>
 	</select>
 
 	<select id ="selectMList" resultType="com.java.dto.Product">
 		<if test="medical_category == 0">
-			<![CDATA[
 				select * from
 				(select rownum rnum, a.* from
 				(select * from Product where product_category = 1
+				<if test="store_seq > 0">
+					and user_seq = #{store_seq}
+				</if>
+				<if test="sWord != null">
+				and name like '%'|| #{sWord} ||'%'
+				</if>
+			<![CDATA[
 				 order by p_num asc) a ) 
 				where rnum >= #{pageDto.startRow} and rnum<= #{pageDto.endRow}
 			]]>
 		</if>
 		<if test="medical_category > 0">
-			<![CDATA[
 				select * from
 				(select rownum rnum, a.* from
 				(select * from Product where medical_category = #{medical_category}
+				<if test="store_seq > 0">
+					and user_seq = #{store_seq}
+				</if>
+				<if test="sWord != null">
+				and name like '%'|| #{sWord} ||'%'
+				</if>
+			<![CDATA[
 				 order by p_num asc	) a ) 
 				where rnum >= #{pageDto.startRow} and rnum<= #{pageDto.endRow}
 			]]>
@@ -53,19 +85,31 @@
 	
 	<select id="selectDList" resultType="com.java.dto.Product">
 		<if test="health_category == 0">
-			<![CDATA[
 				select * from
 				(select rownum rnum, a.* from
 				(select * from Product where product_category = 2
+				<if test="store_seq > 0">
+					and user_seq = #{store_seq}
+				</if>
+				<if test="sWord != null">
+				and name like '%'|| #{sWord} ||'%'
+				</if>
+			<![CDATA[
 				 order by p_num asc) a ) 
 				where rnum >= #{pageDto.startRow} and rnum<= #{pageDto.endRow}
 			]]>
 		</if>
 		<if test="health_category > 0">
-			<![CDATA[
 				select * from
 				(select rownum rnum, a.* from
 				(select * from Product where health_category = #{health_category}
+				<if test="store_seq > 0">
+					and user_seq = #{store_seq}
+				</if>
+				<if test="sWord != null">
+				and name like '%'|| #{sWord} ||'%'
+				</if>
+			<![CDATA[
 				 order by p_num asc	) a ) 
 				where rnum >= #{pageDto.startRow} and rnum<= #{pageDto.endRow}
 			]]>
@@ -104,7 +148,7 @@
 		select c.*, p.* from cart c
 		inner join product p
 		on c.p_num = p.p_num
-		where user_seq = #{user_seq}
+		where c.user_seq = #{user_seq}
 	</select>
 	
 	<resultMap id="cmap" type="com.java.dto.Cart">
@@ -123,7 +167,7 @@
 		select w.*, p.* from wishlist w
 		inner join product p
 		on w.p_num = p.p_num
-		where user_seq = #{user_seq}
+		where w.user_seq = #{user_seq}
 	</select>
 	
 	<resultMap id="wmap" type="com.java.dto.Wishlist">

@@ -22,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
 	// 의약품
 	@Override
-	public HashMap<String, Object> selectMList(int medical_category,Page pageDto) {
+	public HashMap<String, Object> selectMList(int medical_category,Page pageDto, String sWord,int store_seq) {
 	//	System.out.println("카테고리"+ medical_category);
 		HashMap<String, Object> map = new HashMap<>();
 		int user_seq;
@@ -31,9 +31,10 @@ public class ProductServiceImpl implements ProductService {
 		} else {
 			user_seq = (int) session.getAttribute("sessionSeq");
 		}
-		pageDto = mPageMethod(pageDto,medical_category);
-		ArrayList<Product> mCList = pMapper.selectMList(medical_category,pageDto);
+		pageDto = mPageMethod(pageDto,medical_category,sWord,store_seq);
+		ArrayList<Product> mCList = pMapper.selectMList(medical_category,pageDto,sWord,store_seq);
 		ArrayList<Wishlist> wList = pMapper.selectAllWish(user_seq);
+		System.out.println("검색된 단어"+sWord);
 	//	System.out.println("엔드페이지"+pageDto.getEndPage());
 	//	System.out.println("맥스페이지"+pageDto.getMaxPage());
 	//	System.out.println("리스트카운트"+pageDto.getListCount());
@@ -42,6 +43,7 @@ public class ProductServiceImpl implements ProductService {
 		map.put("pageDto", pageDto);
 		map.put("user_seq", user_seq);
 		map.put("medical_category", medical_category);
+		map.put("sWord", sWord);
 		
 		return map;
 	}
@@ -138,9 +140,9 @@ public class ProductServiceImpl implements ProductService {
 		pMapper.inCart(user_seq,p_num,count);
 	}
 	
-	public Page mPageMethod(Page pageDto, int medical_category) {
+	public Page mPageMethod(Page pageDto, int medical_category, String sWord, int store_seq) {
 		// 전체 게시글 수 저장 
-		pageDto.setListCount(   pMapper.selectMListCountAll(medical_category)   );
+		pageDto.setListCount(   pMapper.selectMListCountAll(medical_category,sWord,store_seq)   );
 		// 최대 넘버링 페이지 
 		pageDto.setMaxPage( (int)Math.ceil( (double)pageDto.getListCount()/15  ));
 		// 시작 넘버링페이지
@@ -166,7 +168,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public HashMap<String, Object> selectDlist(int health_category, Page pageDto) {
+	public HashMap<String, Object> selectDlist(int health_category, Page pageDto, String sWord,int store_seq) {
 		HashMap<String,Object> map = new HashMap<>();
 		int user_seq;
 		if(session.getAttribute("sessionSeq") == null) {
@@ -174,8 +176,8 @@ public class ProductServiceImpl implements ProductService {
 		} else {
 			user_seq = (int) session.getAttribute("sessionSeq");
 		}
-		pageDto = dPageMethod(pageDto,health_category);
-		ArrayList<Product> mDList = pMapper.selectDList(health_category,pageDto);
+		pageDto = dPageMethod(pageDto,health_category,sWord, store_seq);
+		ArrayList<Product> mDList = pMapper.selectDList(health_category,pageDto,sWord, store_seq);
 		ArrayList<Wishlist> wList = pMapper.selectAllWish(user_seq);
 		map.put("mDList", mDList);
 		map.put("wList", wList);
@@ -185,9 +187,9 @@ public class ProductServiceImpl implements ProductService {
 		return map;
 	}
 	
-	public Page dPageMethod(Page pageDto,int health_category) {
+	public Page dPageMethod(Page pageDto,int health_category,String sWord, int store_seq) {
 		// 전체 게시글 수 저장 
-		pageDto.setListCount(   pMapper.selectDListCount(health_category)   );
+		pageDto.setListCount(   pMapper.selectDListCount(health_category,sWord,store_seq)   );
 		// 최대 넘버링 페이지 
 		pageDto.setMaxPage( (int)Math.ceil( (double)pageDto.getListCount()/15  ));
 		// 시작 넘버링페이지

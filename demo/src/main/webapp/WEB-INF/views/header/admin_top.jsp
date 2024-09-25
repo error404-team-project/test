@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
   <!-- Tempusdominus Bootstrap 4 -->
  <link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
@@ -11,18 +12,16 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="/adminPage/admin_index" class="nav-link">Home</a>
+        <a href="/adminPage/admin_index" class="nav-link">관리자 홈</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="/ex_member" class="nav-link">Contact</a>
+        <a href="/" class="nav-link">판매사이트 홈</a>
       </li>
     </ul>
-
-    <!-- 상단고정바 _ 오른쪽 _ 검색 -->
     <ul class="navbar-nav ml-auto">
-
-      <!-- 상단고정바 _ 오른쪽 _ 메세지 -->
-     
+		<li class="nav-item d-none d-sm-inline-block">
+	       <a href="/member/logout" class="nav-link">로그아웃</a>
+	    </li>
     </ul>
   </nav>
   <!-- /.상단 고정바 끝 -->
@@ -44,7 +43,7 @@
           <img src="../../dist/img/person-circle-outline.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">관리자</a>
+          <a href="#" class="d-block">${sessionName}</a>
         </div>
       </div>
 
@@ -53,6 +52,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+       <c:if test="${sessionAuth == 'admin'}">
            <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -107,7 +107,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
+             <i class="nav-icon fas fa-truck"></i>
               <p>
                 주문/배송관리
                 <i class="right fas fa-angle-left"></i>
@@ -128,17 +128,19 @@
               </li>
             </ul>
           </li>
-           <li class="nav-item">
+          <li class="nav-item">
             <a href="/adminPage/ex_member" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
+              <i class="nav-icon far fa-user"></i>
               <p>
                 회원정보관리
               </p>
             </a>
           </li>
+       </c:if>
+       <c:if test="${sessionAuth == 'store'}">
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
+              <i class="nav-icon fas fa-pills"></i>
               <p>
                 상품정보 관리
                 <i class="fas fa-angle-left right"></i>
@@ -152,18 +154,27 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/adminPage/ad_medical" class="nav-link">
+                <a href="/adminPage/ad_medical?store_seq=${sessionSeq}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>의약품 관리</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/adminPage/ad_health" class="nav-link">
+                <a href="/adminPage/ad_health?store_seq=${sessionSeq}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>건강기능식품 관리</p>
                 </a>
               </li>
               </ul>
+          </li>
+          </c:if>
+           <li class="nav-item">
+            <a href="/adminPage/ad_prescription" class="nav-link">
+            	<i class="nav-icon far fa-clipboard"></i>
+              <p>
+                처방전
+              </p>
+            </a>
           </li>
       </nav>
       <!-- /.sidebar-menu -->
@@ -178,12 +189,6 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0"></h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="/admin_index">메인화면으로</a></li>
-              <li class="breadcrumb-item active">admin</li>
-            </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->

@@ -103,7 +103,7 @@
   <a href="../product/household_list" class="gallery-item">
     <img src="../images/img/daily_product.jpeg" alt="Household Items">
     <div class="overlay">
-      <div class="text">Household Items</div>
+      <div class="text">Health food</div>
     </div>
   </a>
   <a href="../product/em_delivery" class="gallery-item">

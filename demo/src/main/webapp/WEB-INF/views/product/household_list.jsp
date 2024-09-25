@@ -16,15 +16,52 @@
 				<li class="last">건강기능식품</li>
 			</ol>
 		</div>
+<script>
+function schBtn(){
+//	alert(12341234);
+	sFrm.submit();
+}
+function store(){
+	var store_seq = $("#store").val();
+	console.log(store_seq);
+	location.href="/product/household_list?store_seq="+store_seq+"";
+}
+
+</script>
 					
 		<!-- maxcontents -->
 		<div id="maxcontents">
-			<div class="banner"><img src="../images/img/dailyBanner.jpg" alt="원두커피, 원두커피 전문 기업 쟈뎅의 Coffee Master의 심혈을 기울인 엄선된 원두 선별, 일반 원두커피부터 간편하게 즐기는 원두커피백, POD까지 다양하게 구성되어 있습니다." class="web" /><img src="../images/img/product_banner01_m.jpg" alt="원두커피, 원두커피 전문 기업 쟈뎅의 Coffee Master의 심혈을 기울인 엄선된 원두 선별, 일반 원두커피부터 간편하게 즐기는 원두커피백, POD까지 다양하게 구성되어 있습니다." class="mobile" /></div>
+			<div class="banner">
+				<img src="../images/img/dailyBanner.jpg" alt="원두커피, 원두커피 전문 기업 쟈뎅의 Coffee Master의 심혈을 기울인 엄선된 원두 선별, 일반 원두커피부터 간편하게 즐기는 원두커피백, POD까지 다양하게 구성되어 있습니다." class="web" /><img src="../images/img/product_banner01_m.jpg" alt="원두커피, 원두커피 전문 기업 쟈뎅의 Coffee Master의 심혈을 기울인 엄선된 원두 선별, 일반 원두커피부터 간편하게 즐기는 원두커피백, POD까지 다양하게 구성되어 있습니다." class="mobile" />
 			
-			<h2 class="brand">건강기능식품<span></span></h2>
-
+			</div>
+			
+			<h2 class="brand">건강기능식품
+				<span>
+					<select id="store" onchange="store()">
+						<option value="0">전체</option>
+					<c:if test="${store_seq == 4}">
+						<option value="4" selected>미래로365</option>
+					</c:if>
+					<c:if test="${store_seq != 4}">
+						<option value="4">미래로365</option>
+					</c:if>
+					<c:if test="${store_seq == 7}">
+						<option value="7" selected>하나약국</option>
+					</c:if>
+					<c:if test="${store_seq != 7}">
+						<option value="7">하나약국</option>
+					</c:if>
+					</select>
+				</span>
+			</h2>
+			
 			<div class="brandTab">
+			
 				<ul>
+				<form action="/product/household_list" method="post" name="sFrm">
+				<input type="hidden" name="store_seq" id="stoer_seq" value="${store_seq }">
+				<input type="hidden" name="health_category" value="${health_category}">
 				<c:if test="${health_category == 0 }">
 					<li><a href="/product/household_list" class="hover">전체</a></li>
 				</c:if>
@@ -32,130 +69,130 @@
 					<li><a href="/product/household_list">전체</a></li>
 				</c:if>
 				<c:if test="${health_category == 1 }">
-					<li><a href="/product/household_list?health_category=1" class="hover">오메가3</a></li>
+					<li><a href="/product/household_list?health_category=1&store_seq=${store_seq}" class="hover">오메가3</a></li>
 				</c:if>
 				<c:if test="${health_category != 1 }">
-					<li><a href="/product/household_list?health_category=1" >오메가3</a></li>
+					<li><a href="/product/household_list?health_category=1&store_seq=${store_seq}" >오메가3</a></li>
 				</c:if>
 				<c:if test="${health_category == 2 }">
-					<li><a href="/product/household_list?health_category=2" class="hover">비타민</a></li>
+					<li><a href="/product/household_list?health_category=2&store_seq=${store_seq}" class="hover">비타민</a></li>
 				</c:if>
 				<c:if test="${health_category != 2 }">
-					<li><a href="/product/household_list?health_category=2">비타민</a></li>
+					<li><a href="/product/household_list?health_category=2&store_seq=${store_seq}">비타민</a></li>
 				</c:if>
 				<c:if test="${health_category == 3 }">
-					<li><a href="/product/household_list?health_category=3" class="hover">유산균</a></li>
+					<li><a href="/product/household_list?health_category=3&store_seq=${store_seq}" class="hover">유산균</a></li>
 				</c:if>
 				<c:if test="${health_category != 3 }">
-					<li><a href="/product/household_list?health_category=3">유산균</a></li>
+					<li><a href="/product/household_list?health_category=3&store_seq=${store_seq}">유산균</a></li>
 				</c:if>
 				<c:if test="${health_category == 4 }">
-					<li><a href="/product/household_list?health_category=4" class="hover">비오틴</a></li>
+					<li><a href="/product/household_list?health_category=4&store_seq=${store_seq}" class="hover">비오틴</a></li>
 				</c:if>
 				<c:if test="${health_category != 4 }">
-					<li><a href="/product/household_list?health_category=4">비오틴</a></li>
+					<li><a href="/product/household_list?health_category=4&store_seq=${store_seq}">비오틴</a></li>
 				</c:if>
 				<c:if test="${health_category == 5 }">
-					<li><a href="/product/household_list?health_category=5" class="hover">루테인/지아잔틴</a></li>
+					<li><a href="/product/household_list?health_category=5&store_seq=${store_seq}" class="hover">루테인/지아잔틴</a></li>
 				</c:if>
 				<c:if test="${health_category != 5 }">
-					<li><a href="/product/household_list?health_category=5">루테인/지아잔틴</a></li>
+					<li><a href="/product/household_list?health_category=5&store_seq=${store_seq}">루테인/지아잔틴</a></li>
 				</c:if>
 				<c:if test="${health_category == 6 }">
-					<li><a href="/product/household_list?health_category=6" class="hover">밀크씨슬/실리마린</a></li>
+					<li><a href="/product/household_list?health_category=6&store_seq=${store_seq}" class="hover">밀크씨슬/실리마린</a></li>
 				</c:if>
 				<c:if test="${health_category != 6 }">
-					<li><a href="/product/household_list?health_category=6">밀크씨슬/실리마린</a></li>
+					<li><a href="/product/household_list?health_category=6&store_seq=${store_seq}">밀크씨슬/실리마린</a></li>
 				</c:if>
 				<c:if test="${health_category == 7 }">
-					<li><a href="/product/household_list?health_category=7" class="hover">프로폴리스</a></li>
+					<li><a href="/product/household_list?health_category=7&store_seq=${store_seq}" class="hover">프로폴리스</a></li>
 				</c:if>
 				<c:if test="${health_category != 7 }">
-					<li><a href="/product/household_list?health_category=7">프로폴리스</a></li>
+					<li><a href="/product/household_list?health_category=7&store_seq=${store_seq}">프로폴리스</a></li>
 				</c:if>
 				<c:if test="${health_category == 8 }">
-					<li><a href="/product/household_list?health_category=8" class="hover">가르시니아/잔티젠</a></li>
+					<li><a href="/product/household_list?health_category=8&store_seq=${store_seq}" class="hover">가르시니아/잔티젠</a></li>
 				</c:if>
 				<c:if test="${health_category != 8 }">
-					<li><a href="/product/household_list?health_category=8">가르시니아/잔티젠</a></li>
+					<li><a href="/product/household_list?health_category=8&store_seq=${store_seq}">가르시니아/잔티젠</a></li>
 				</c:if>
 				<c:if test="${health_category == 9 }">
-					<li><a href="/product/household_list?health_category=9" class="hover">녹차추출물/카테킨</a></li>
+					<li><a href="/product/household_list?health_category=9&store_seq=${store_seq}" class="hover">녹차추출물/카테킨</a></li>
 				</c:if>
 				<c:if test="${health_category != 9 }">
-					<li><a href="/product/household_list?health_category=9">녹차추출물/카테킨</a></li>
+					<li><a href="/product/household_list?health_category=9&store_seq=${store_seq}">녹차추출물/카테킨</a></li>
 				</c:if>
 				<c:if test="${health_category == 10 }">
-					<li><a href="/product/household_list?health_category=10" class="hover">콜라겐</a></li>
+					<li><a href="/product/household_list?health_category=10&store_seq=${store_seq}" class="hover">콜라겐</a></li>
 				</c:if>
 				<c:if test="${health_category != 10 }">
-					<li><a href="/product/household_list?health_category=10">콜라겐</a></li>
+					<li><a href="/product/household_list?health_category=10&store_seq=${store_seq}">콜라겐</a></li>
 				</c:if>
 				<c:if test="${health_category == 11 }">
-					<li><a href="/product/household_list?health_category=11" class="hover">글루코사민/MSM</a></li>
+					<li><a href="/product/household_list?health_category=11&store_seq=${store_seq}" class="hover">글루코사민/MSM</a></li>
 				</c:if>
 				<c:if test="${health_category != 11 }">
-					<li><a href="/product/household_list?health_category=11">글루코사민/MSM</a></li>
+					<li><a href="/product/household_list?health_category=11&store_seq=${store_seq}">글루코사민/MSM</a></li>
 				</c:if>
 				<c:if test="${health_category == 12 }">
-					<li><a href="/product/household_list?health_category=12" class="hover">칼슘/마그네슘</a></li>
+					<li><a href="/product/household_list?health_category=12&store_seq=${store_seq}" class="hover">칼슘/마그네슘</a></li>
 				</c:if>
 				<c:if test="${health_category != 12 }">
-					<li><a href="/product/household_list?health_category=12">칼슘/마그네슘</a></li>
+					<li><a href="/product/household_list?health_category=12&store_seq=${store_seq}">칼슘/마그네슘</a></li>
 				</c:if>
 				<c:if test="${health_category == 13 }">
-					<li><a href="/product/household_list?health_category=13" class="hover">아연/철분</a></li>
+					<li><a href="/product/household_list?health_category=13&store_seq=${store_seq}" class="hover">아연/철분</a></li>
 				</c:if>
 				<c:if test="${health_category != 13 }">
-					<li><a href="/product/household_list?health_category=13">아연/철분</a></li>
+					<li><a href="/product/household_list?health_category=13&store_seq=${store_seq}">아연/철분</a></li>
 				</c:if>
 				<c:if test="${health_category == 14 }">
-					<li><a href="/product/household_list?health_category=14" class="hover">모나콜린K</a></li>
+					<li><a href="/product/household_list?health_category=14&store_seq=${store_seq}" class="hover">모나콜린K</a></li>
 				</c:if>
 				<c:if test="${health_category != 14 }">
-					<li><a href="/product/household_list?health_category=14">모나콜린K</a></li>
+					<li><a href="/product/household_list?health_category=14&store_seq=${store_seq}">모나콜린K</a></li>
 				</c:if>
 				<c:if test="${health_category == 15 }">
-					<li><a href="/product/household_list?health_category=15" class="hover">마카/쏘팔메토</a></li>
+					<li><a href="/product/household_list?health_category=15&store_seq=${store_seq}" class="hover">마카/쏘팔메토</a></li>
 				</c:if>
 				<c:if test="${health_category != 15 }">
-					<li><a href="/product/household_list?health_category=15">마카/쏘팔메토</a></li>
+					<li><a href="/product/household_list?health_category=15&store_seq=${store_seq}">마카/쏘팔메토</a></li>
 				</c:if>
 				<c:if test="${health_category == 16 }">
-					<li><a href="/product/household_list?health_category=16" class="hover">아르기닌</a></li>
+					<li><a href="/product/household_list?health_category=16&store_seq=${store_seq}" class="hover">아르기닌</a></li>
 				</c:if>
 				<c:if test="${health_category != 16 }">
-					<li><a href="/product/household_list?health_category=16">아르기닌</a></li>
+					<li><a href="/product/household_list?health_category=16&store_seq=${store_seq}">아르기닌</a></li>
 				</c:if>
 				<c:if test="${health_category == 17}">
-					<li><a href="/product/household_list?health_category=17" class="hover">포스파티딜</a></li>
+					<li><a href="/product/household_list?health_category=17&store_seq=${store_seq}" class="hover">포스파티딜</a></li>
 				</c:if>
 				<c:if test="${health_category != 17 }">
-					<li><a href="/product/household_list?health_category=17">포스파티딜</a></li>
+					<li><a href="/product/household_list?health_category=17&store_seq=${store_seq}">포스파티딜</a></li>
 				</c:if>
 				<c:if test="${health_category == 18 }">
-					<li><a href="/product/household_list?health_category=18" class="hover">옥타코사놀/폴리코사놀</a></li>
+					<li><a href="/product/household_list?health_category=18&store_seq=${store_seq}" class="hover">옥타코사놀/폴리코사놀</a></li>
 				</c:if>
 				<c:if test="${health_category != 18 }">
-					<li><a href="/product/household_list?health_category=18">옥타코사놀/폴리코사놀</a></li>
+					<li><a href="/product/household_list?health_category=18&store_seq=${store_seq}">옥타코사놀/폴리코사놀</a></li>
 				</c:if>
 				<c:if test="${health_category == 19 }">
-					<li><a href="/product/household_list?health_category=19" class="hover">스피루라나</a></li>
+					<li><a href="/product/household_list?health_category=19&store_seq=${store_seq}" class="hover">스피루라나</a></li>
 				</c:if>
 				<c:if test="${health_category != 19 }">
-					<li><a href="/product/household_list?health_category=19">스피루라나</a></li>
+					<li><a href="/product/household_list?health_category=19&store_seq=${store_seq}">스피루라나</a></li>
 				</c:if>
 				<c:if test="${health_category == 20 }">
-					<li><a href="/product/household_list?health_category=20" class="hover">글루타치온</a></li>
+					<li><a href="/product/household_list?health_category=20&store_seq=${store_seq}" class="hover">글루타치온</a></li>
 				</c:if>
 				<c:if test="${health_category != 20 }">
-					<li><a href="/product/household_list?health_category=20">글루타치온</a></li>
+					<li><a href="/product/household_list?health_category=20&store_seq=${store_seq}">글루타치온</a></li>
 				</c:if>
 				<c:if test="${health_category == 21 }">
-					<li><a href="/product/household_list?health_category=21" class="hover">기타건강식품</a></li>
+					<li><a href="/product/household_list?health_category=21&store_seq=${store_seq}" class="hover">기타건강식품</a></li>
 				</c:if>
 				<c:if test="${health_category != 21 }">
-					<li><a href="/product/household_list?health_category=21">기타건강식품</a></li>
+					<li><a href="/product/household_list?health_category=21&store_seq=${store_seq}">기타건강식품</a></li>
 				</c:if>
 				</ul>
 			</div>
@@ -166,29 +203,43 @@
 					<c:forEach var="d" items="${mDList}">
 					<li>
 						<a href="/product/household_view?p_num=${d.p_num}&health_category=${health_category}">
-							<c:if test="${d.stock != 0}">
 							<div class="img">
 								<img src="../image/${d.image}" alt="제품이미지" />
 							</div>
-							</c:if>
-							<c:if test="${d.stock == 0}">
-							<div class="img">
-								<img src="../images/img/stock0.png" alt="제품이미지" />
-							</div>
-							</c:if>
 							<div class="name">${d.name}</div>
-							<div class="price">${d.price }원</div>
+							<c:if test="${d.stock != 0 }">
+								<div class="price">${d.price }원</div>
+							</c:if>
+							<c:if test="${d.stock == 0 }">
+								<div class="price">상품 입고 준비중</div>
+							</c:if>
 						</a>
 					</li>
 					</c:forEach>
 					<!-- //반복 -->
 			</div>
+			<div class="searchWrap">
+						<div class="search">
+							<ul>
+								<li class="web"><img src="../images/txt/txt_search.gif" alt="search" /></li>
+								<li class="se">
+									<select id="category" name="sCategory">
+										<option value="name" />이름</option>
+									</select>
+								</li>
+								<li><input type="text" id="sWord" name="sWord" class="searchInput" /></li>
+								<li class="web"><a onclick="schBtn()"><img src="../images/btn/btn_search.gif" alt="검색" /></a></li>
+								<li class="mobile"><a onclick="schBtn()"><img src="../images/btn/btn_search_m.gif" alt="검색" /></a></li>
+							</ul>
+						</div>
+					</div>
+				</form>
 			<div class="btnAreaList">
 						<!-- 페이징이동1 -->
 						<div class="allPageMoving1">
 					<!-- 처음페이지 -->
 					<c:if test="${pageDto.page > 1 }">
-						<a href="/product/household_list?page=1&health_category=${health_category}" class="n">
+						<a href="/product/household_list?page=1&health_category=${health_category}&sWord=${sWord}&store_seq=${store_seq}" class="n">
 							<img src="../images/btn/btn_pre2.gif" alt="처음으로"/>
 						</a>
 					</c:if>
@@ -199,7 +250,7 @@
 					
 					<!-- 이전페이지 -->
 					<c:if test="${pageDto.page>1}">
-						<a href="/product/household_list?page=${pageDto.page-1}&health_category=${health_category}" class="pre">
+						<a href="/product/household_list?page=${pageDto.page-1}&health_category=${health_category}&sWord=${sWord}&store_seq=${store_seq}" class="pre">
 							<img src="../images/btn/btn_pre1.gif" alt="앞페이지로"/>
 						</a>
 					</c:if>
@@ -211,7 +262,7 @@
 					<!-- 페이지 넘버링 -->	
 					<c:forEach var="pnum" begin="${pageDto.startPage}" end="${pageDto.endPage }" step="1">
 						<c:if test="${pnum != pageDto.page }">
-							<a href="/product/household_list?page=${pnum}&health_category=${health_category}">${pnum}</a> 
+							<a href="/product/household_list?page=${pnum}&health_category=${health_category}&sWord=${sWord}&store_seq=${store_seq}">${pnum}</a> 
 						</c:if>
 						<c:if test="${pnum == pageDto.page }">
 							<strong>${pnum}</strong>
@@ -221,7 +272,7 @@
 					
 					<!-- 다음페이지 -->
 					<c:if test="${pageDto.page < pageDto.maxPage }">
-						<a href="/product/household_list?page=${pageDto.page + 1 }&health_category=${health_category}" class="next">
+						<a href="/product/household_list?page=${pageDto.page + 1 }&health_category=${health_category}&sWord=${sWord}&store_seq=${store_seq}" class="next">
 							<img src="../images/btn/btn_next1.gif" alt="뒤페이지로"/>
 						</a>
 					</c:if>	
@@ -231,7 +282,7 @@
 					<!-- 다음페이지 -->
 					<!-- 마지막페이지 -->
 					<c:if test="${pageDto.page < pageDto.endPage }">
-						<a href="/product/household_list?page=${pageDto.maxPage}&health_category=${health_category}" class="n">
+						<a href="/product/household_list?page=${pageDto.maxPage}&health_category=${health_category}&sWord=${sWord}&store_seq=${store_seq}" class="n">
 							<img src="../images/btn/btn_next2.gif" alt="마지막페이지로"/>
 						</a>
 					</c:if>
@@ -257,10 +308,10 @@
 						<c:if test="${user_seq > 0}">
 							<c:forEach var="w" items="${wList}">
 							<c:if test="${w.product.product_category == 1 }">
-								<li><a href="/product/medical_view?p_num=${w.p_num}&medical_category=${w.product.medical_category}"><img src="../images/img/${w.product.image }" alt="상품페이지로 이동" style="width:78px;height:78px" /></a>
+								<li><a href="/product/medical_view?p_num=${w.p_num}&medical_category=${w.product.medical_category}"><img src="../image/${w.product.image }" alt="상품페이지로 이동" style="width:78px;height:78px" /></a>
 							</c:if>
 							<c:if test="${w.product.product_category == 2 }">
-								<li><a href="/product/household_view?p_num=${w.p_num}&health_category=${w.product.health_category}"><img src="../images/img/${w.product.image }" alt="상품페이지로 이동" style="width:78px;height:78px" /></a>
+								<li><a href="/product/household_view?p_num=${w.p_num}&health_category=${w.product.health_category}"><img src="../image/${w.product.image }" alt="상품페이지로 이동" style="width:78px;height:78px" /></a>
 							</c:if>
 						</c:forEach>
 						</c:if>

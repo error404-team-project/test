@@ -13,13 +13,13 @@ import com.java.dto.Wishlist;
 public interface ProductMapper {
 
 
-	ArrayList<Product> selectDList(int health_category, Page pageDto);
+	ArrayList<Product> selectDList(int health_category, Page pageDto, String sWord, int store_seq);
 
-	ArrayList<Product> selectMList(int medical_category,Page pageDto);
+	ArrayList<Product> selectMList(int medical_category,Page pageDto, String sWord, int store_seq);
 
-	int selectMListCountAll(int medical_category);
+	int selectMListCountAll(int medical_category, String sWord, int store_seq);
 
-	int selectDListCount(int health_category);
+	int selectDListCount(int health_category, String sWord, int store_seq);
 
 	Product mediView(int p_num);
 

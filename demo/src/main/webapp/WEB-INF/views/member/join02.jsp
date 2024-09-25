@@ -64,17 +64,32 @@
 
 <script>
 var result;
+var auth_id = $("#auth_id").val();
 function joinBtn(){
 	// 이름은 한글만 입력가능
 	let nameCheck = /^[가-힣]+$/;
+	// 약국이름은 한글 + 숫자 가능
+	let nameCheck2 = /^[가-힣0-9a-zA-Z]+$/;
 	// 아이디는 첫글자는 영문. 영어, 숫자, _ 포함해서 4~16자리까지 만들 수 있음
 	let idCheck = /^[a-zA-Z]{1}[a-zA-Z0-9_]{3,15}$/;
 	// 비밀번호는 영어 대문자를 반드시 포함해야하며 첫글자 영문. 영어, 숫자, 특수기호 아래와 같이 4~20자리까지 만들 수 있음
 	let pwCheck = /^(?=.*[A-Z])[a-zA-z]{1}[a-zA-Z0-9!@#$%^&*-_]{3,19}$/;
 	
-/* 	if(!nameCheck.test($("#name").val()) ){
-		alert("이름은 한글만 입력가능합니다.");
+	if(auth_id == "user"){
+	 	if(!nameCheck.test($("#name").val()) ){
+			alert("이름은 한글만 입력가능합니다.");
+		}
+		if($("#year").val() == "#" || $("#month").val() == "#" || $("#day").val() == "#"){
+			alert("생년월일을 선택해주세요");
+		}
 	}
+	
+	if(auth_id == "store"){
+		if(!nameCheck.test($("#name2").val()) ){
+			alert("약국명은 한글,영어,숫자만 입력가능합니다.");
+		}
+	}
+ 	
 	if(!idCheck.test($("#id").val()) ){
 		alert("아이디가 조건에 부합하지 않음\n 다시 입력해주세요");
 	}
@@ -82,16 +97,12 @@ function joinBtn(){
 		alert("비밀번호가 조건에 부합하지 않음\n 다시 입력해주세요");
 	}
 	
-	if($("#year").val() == "#" || $("#month").val() == "#" || $("#day").val() == "#"){
-		alert("생년월일을 선택해주세요");
-	}
-	
 	
 	if(result != 1){
 		alert("아이디 중복확인을 하셔야 합니다.");
 	} else {
-	} */
 		jFrm.submit();
+	} 
 } // joinBtn()
 
 function pwCk(){
@@ -144,9 +155,10 @@ function idChk(){
 } // idChk
 </script>
 
-					<form action="/member/join03" method="post" name="jFrm">
+					<form action="/member/join03" method="post" name="jFrm" enctype="multipart/form-data">
 						<input type="hidden" name="ps_agree" id="ps_agree" value="${ps_agree}">
 						<input type="hidden" name="svc_agree" id="svc_agree" value="${svc_agree}">
+						<input type="hidden" name="auth_id" id="auth_id" value="${auth_id}">
 					<div class="memberbd">
 						<table summary="이름, 아이디, 비밀번호, 비밀번호 확인, 이메일, 이메일수신여부, 주소, 휴대폰, 생년월일 순으로 회원가입 정보를 등록할수 있습니다." class="memberWrite" border="1" cellspacing="0">
 							<caption>회원가입 입력</caption>
@@ -155,6 +167,7 @@ function idChk(){
 							<col width="*" />
 							</colgroup>
 							<tbody>
+							<c:if test="${auth_id == 'user'}">
 								<tr>
 									<th scope="row"><span>이름 *</span></th>
 									<td><input type="text" id="name" name="user_name">
@@ -163,6 +176,17 @@ function idChk(){
 										</ul>
 									</td>
 								</tr>
+							</c:if>
+							<c:if test="${auth_id == 'store'}">
+								<tr>
+									<th scope="row"><span>약국이름 *</span></th>
+									<td><input type="text" id="name2" name="user_name">
+										<ul class="pta">
+											<li class="pt5"><span class="mvalign">약국명은 한글,숫자,영어만 입력 가능합니다.</span></li>
+										</ul>
+									</td>
+								</tr>
+							</c:if>
 								<tr>
 									<th scope="row"><span>아이디 *</span></th>
 									<td>
@@ -222,6 +246,7 @@ function idChk(){
 										</ul>
 									</td>
 								</tr>
+								<c:if test="${auth_id == 'user'}">
 								<tr>
 									<th scope="row"><span>이메일 수신여부 *</span></th>
 									<td>
@@ -237,6 +262,7 @@ function idChk(){
 										<p class="gray">* 거래관련 정보는 고객님의 거래안전을 위하여 이메일 수신거부와 관계없이 발송됩니다.</p>
 									</td>
 								</tr>
+								</c:if>
 								<tr>
 									<th scope="row"><span>주소 *</span></th>
 									<td>
@@ -272,6 +298,34 @@ function idChk(){
 										</ul>
 									</td>
 								</tr>
+								<c:if test="${auth_id == 'store'}">
+								<tr>
+									<th scope="row"><span>사업자등록번호</span></th>
+									<td>
+										<ul class="pta">
+											<p>ex) 123-45-678912</p>
+											<li class="r10"><input type="text" name="b_license" id="b_license" class="w134" /></li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><span>사업자등록증</span></th>
+									<td>
+										<ul class="pta">
+											<li class="r10"><input type="file" name="bFile" id="b_l_image" class="w134" /></li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><span>약사면허증</span></th>
+									<td>
+										<ul class="pta">
+											<li class="r10"><input type="file" name="pFile" id="p_license" class="w134" /></li>
+										</ul>
+									</td>
+								</tr>
+								</c:if>
+								<c:if test="${auth_id == 'user'}">
 								<tr>
 									<th scope="row"><span>성별 *</span></th>
 									<td>
@@ -351,6 +405,7 @@ function idChk(){
 										</ul>
 									</td>
 								</tr>
+								</c:if>
 							</tbody>
 							</table>
 						</div>

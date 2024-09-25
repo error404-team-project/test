@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"  %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,80 +45,213 @@
         <div class="row">
           <div class="col-12">
 
+<script>
+function cate(){
+	if($("#cate").val() == 1){
+		var str = '';
+		str += '<c:forEach var="u" items="${uList}">';
+		str += '<tr><td>${u.user_seq}</td>';
+		str += '<td>${u.user_id}</td>';
+		str += '<td>${u.user_name}</td>';
+		str += '<td>${u.user_email}</td>';
+		str += '<td>${u.user_phone}</td>';
+		str += '<td><fmt:formatDate value="${u.user_joindate}" pattern="yyyy-MM-dd"/></td>';
+		str += '<td><fmt:formatDate value="${u.login_date}" pattern="yyyy-MM-dd"/></td>';
+		str += '<td>${u.mkt_agree}</td>';
+		if(${u.auth_id == 'store' && u.approval == 'N'}){
+			str += '<td>';
+			str += '<input type="button" onclick="mBtn(${e.event_no})" style="width:46px; height:31px;" class="btn btn-sm btn-primary" value="승인"> ';
+			str += '<input type="button" onclick="dBtn(${e.event_no})" class="btn btn-sm btn-secondary" value="삭제">';
+			str += '</td></tr>';
+		} else {
+			str += '<td><button type="button" onclick="dBtn()" class="btn btn-sm btn-secondary">탈퇴</button></td> </tr>';
+		}
+		str += '</c:forEach>';
+		$("#chageUser").html(str);
+		var page = '';
+		page += '<c:if test="${upageDto.page>1 }"><li class="page-item disabled"><a class="page-link" href="/adminPage/ex_member?page=${upageDto.page-1}">이전페이지</a></li></c:if>';
+		page += '<c:if test="${upageDto.page == 1 }"><li class="page-item"><a class="page-link">이전페이지</a></li></c:if>';
+		page += '<c:forEach var="pN" begin="${upageDto.startPage}" end="${npageDto.endPage}" step="1">';
+		page += '<c:if test="${pN != upageDto.page}"><li class="page-item"><a class="page-link" href="/adminPage/ex_member?page=${pN}">${pN}</a></li></c:if>';
+		page += '<c:if test="${pN == upageDto.page}"><li class="page-item"><a class="page-link"><strong>${pN}</strong></a></li></c:if>';
+		page += '</c:forEach>';
+		page += '<c:if test="${upageDto.page<upageDto.maxPage }"><li class="page-item"><a class="page-link" href="/adminPage/ex_member?page=${upageDto.page+1}">다음페이지</a></li></c:if>';
+		page += '<c:if test="${upageDto.page==upageDto.maxPage }"><li class="page-item"><a class="page-link">다음페이지</a></li></c:if>';
+		$(".pagination").html(page);
+        
+         
+	}
+	if($("#cate").val() == 2){
+		var str = '';
+		str += '<c:forEach var="u" items="${nList}">';
+		str += '<tr><td>${u.user_seq}</td>';
+		str += '<td>${u.user_id}</td>';
+		str += '<td>${u.user_name}</td>';
+		str += '<td>${u.user_email}</td>';
+		str += '<td>${u.user_phone}</td>';
+		str += '<td><fmt:formatDate value="${u.user_joindate}" pattern="yyyy-MM-dd"/></td>';
+		str += '<td><fmt:formatDate value="${u.login_date}" pattern="yyyy-MM-dd"/></td>';
+		str += '<td>${u.mkt_agree}</td>';
+		str += '<td><button type="button" onclick="dBtn()" class="btn btn-sm btn-secondary">탈퇴</button></td> </tr></c:forEach>';
+		$("#chageUser").html(str);
+		var page = '';
+		page += '<c:if test="${npageDto.page>1 }"><li class="page-item disabled"><a class="page-link" href="/adminPage/ex_event?page=${npageDto.page-1}">이전페이지</a></li></c:if>';
+		page += '<c:if test="${npageDto.page == 1 }"><li class="page-item"><a class="page-link">이전페이지</a></li></c:if>';
+		page += '<c:forEach var="pN" begin="${npageDto.startPage}" end="${npageDto.endPage}" step="1">';
+		page += '<c:if test="${pN != npageDto.page}"><li class="page-item"><a class="page-link" href="/adminPage/ex_event?page=${pN}">${pN}</a></li></c:if>';
+		page += '<c:if test="${pN == npageDto.page}"><li class="page-item"><a class="page-link"><strong>${pN}</strong></a></li></c:if>';
+		page += '</c:forEach>';
+		page += '<c:if test="${npageDto.page<npageDto.maxPage }"><li class="page-item"><a class="page-link" href="/adminPage/ex_event?page=${npageDto.page+1}">다음페이지</a></li></c:if>';
+		page += '<c:if test="${npageDto.page==npageDto.maxPage }"><li class="page-item"><a class="page-link">다음페이지</a></li></c:if>';
+		$(".pagination").html(page);
+	}
+	if($("#cate").val() == 3){
+		var str = '';
+		str += '<c:forEach var="u" items="${sList}">';
+		str += '<tr><td>${u.user_seq}</td>';
+		str += '<td>${u.user_id}</td>';
+		str += '<td>${u.user_name}</td>';
+		str += '<td>${u.user_email}</td>';
+		str += '<td>${u.user_phone}</td>';
+		str += '<td><fmt:formatDate value="${u.user_joindate}" pattern="yyyy-MM-dd"/></td>';
+		str += '<td><fmt:formatDate value="${u.login_date}" pattern="yyyy-MM-dd"/></td>';
+		str += '<td>${u.mkt_agree}</td>';
+		str += '<td>';
+		if(${u.approval == 'N'}){
+			str += '<input type="button" onclick="jBtn()" style="width:46px; height:31px;" class="btn btn-sm btn-primary" value="승인"> ';
+		}
+		str += '<input type="button" onclick="dBtn()" class="btn btn-sm btn-secondary" value="삭제">';
+		str += '</td></tr></c:forEach>';
+		$("#chageUser").html(str);
+		var page = '';
+		page += '<c:if test="${spageDto.page>1 }"><li class="page-item disabled"><a class="page-link" href="/adminPage/ex_event?page=${spageDto.page-1}">이전페이지</a></li></c:if>';
+		page += '<c:if test="${spageDto.page == 1 }"><li class="page-item"><a class="page-link">이전페이지</a></li></c:if>';
+		page += '<c:forEach var="pN" begin="${spageDto.startPage}" end="${spageDto.endPage}" step="1">';
+		page += '<c:if test="${pN != spageDto.page}"><li class="page-item"><a class="page-link" href="/adminPage/ex_event?page=${pN}">${pN}</a></li></c:if>';
+		page += '<c:if test="${pN == spageDto.page}"><li class="page-item"><a class="page-link"><strong>${pN}</strong></a></li></c:if>';
+		page += '</c:forEach>';
+		page += '<c:if test="${spageDto.page<spageDto.maxPage }"><li class="page-item"><a class="page-link" href="/adminPage/ex_event?page=${spageDto.page+1}">다음페이지</a></li></c:if>';
+		page += '<c:if test="${spageDto.page==spageDto.maxPage }"><li class="page-item"><a class="page-link">다음페이지</a></li></c:if>';
+		$(".pagination").html(page);
+	}
+}
+function jBtn(uno){
+	//alert(uno);
+	location.href="/adminPage/store_approval?user_seq="+uno;
+}
+</script>
+
+
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">회원정보 리스트</h3>
+                <select style="margin :0 0 0 60px;" id="cate" onchange="cate()">
+                	<option value="1" selected>전체회원보기</option>
+                	<option value="2">일반회원보기</option>
+                	<option value="3">사업자회원보기</option>
+                </select>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                  <colgroup>
 					<col width="6%"/>
-					<col width="10%" />
-					<col width="10%"/>
-					<col width="20%"/>
-					<col width="10%"/>
 					<col width="7%"/>
 					<col width="7%"/>
-					<col width="4%"/>
+					<col width="*"/>
+					<col width="10%"/>
+					<col width="7%"/>
+					<col width="8%"/>
+					<col width="7%"/>
+					<col width="10%"/>
 				</colgroup>
                   <thead>
                   <tr>
-                    <th>일련번호</th>
+                    <th>회원번호</th>
                     <th>아이디</th>
                     <th>이름</th>
                     <th>이메일</th>
                   	<th>전화번호</th>
                   	<th>가입일</th>
+                  	<th>마지막 로그인</th>
                   	<th>마케팅 동의</th>
-                  	<th>선택</th>
+                  	<th>가입승인/탈퇴처리</th>
                   </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="chageUser">
                   <!-- 반복 -->
+                  <c:forEach var="u" items="${uList}">
                   <tr>
-                    <td>1</td>
-                    <td>aaa</td>
-                    <td>홍길동</td>
-                    <td>aaa@naver.com</td>
-                  	<td>010-1234-1234</td>
-                  	<td>22-02-02</td>
-                  	<td> Y </td>
-                  	<td><input type="checkbox">
+                    <td>${u.user_seq}</td>
+                    <td>${u.user_id}</td>
+                    <td>${u.user_name}</td>
+                    <td>${u.user_email}</td>
+                  	<td>${u.user_phone}</td>
+                  	<td><fmt:formatDate value="${u.user_joindate}" pattern="yyyy-MM-dd"/></td>
+                  	<td><fmt:formatDate value="${u.login_date}" pattern="yyyy-MM-dd"/></td>
+                  	<td>${u.mkt_agree}</td>
+                  	<c:if test="${u.auth_id == 'store' && u.approval == 'N' }">
+                  	<td>
+                  	<input type="button" onclick="jBtn(${u.user_seq})" style="width:46px; height:31px;" class="btn btn-sm btn-primary" value="승인">
+                  	<button type="button" class="btn btn-sm btn-secondary">탈퇴</button>
+                  	</td>
+                  	</c:if>
+                  	<c:if test="${u.auth_id == 'store' && u.approval == 'Y' }">
+                  	<td>
+                  	<button type="button" class="btn btn-sm btn-secondary">탈퇴</button>
+                  	</td>
+                  	</c:if>
+                  	<c:if test="${u.auth_id == 'user'||u.auth_id == 'admin' }">
+                  	<td>
+                  	<button type="button" class="btn btn-sm btn-secondary">탈퇴</button>
+                  	</td>
+                  	</c:if>
                   </tr>
+                  </c:forEach>
                   <!-- 반복 -->
                 </table>
                 <br>
          <nav aria-label="...">
   			<ul class="pagination">
-    			<li class="page-item disabled">
+  			<c:if test="${pageDto.page>1 }">
+    			<li class="page-item">
+     				<a class="page-link" href="/adminPage/ex_member?page=${pageDto.page-1}">이전페이지</a>
+   	 		    </li>
+  			</c:if>
+  			<c:if test="${pageDto.page == 1 }">
+    			<li class="page-item">
      				<a class="page-link">이전페이지</a>
    	 		    </li>
+  			</c:if>
+  			
+   	 		<!-- 페이지 넘버링 -->
+   	 		<c:forEach var="pN" begin="${pageDto.startPage}" end="${pageDto.endPage}" step="1">
+    		<c:if test="${pN != pageDto.page}">
     			<li class="page-item">
-    				<a class="page-link" href="#">1</a>
+    				<a class="page-link" href="/adminPage/ex_member?page=${pN}">${pN}</a>
     			</li>
-   				<li class="page-item">
-   					<a class="page-link" href="#">2</a>
-   				</li>
+    		</c:if>
+    		<c:if test="${pN == pageDto.page}">
     			<li class="page-item">
-    				<a class="page-link" href="#">3</a>
+    				<a class="page-link"><strong>${pN}</strong></a>
     			</li>
+    		</c:if>
+   	 		</c:forEach>
+   	 		<!-- 페이지 넘버링 -->
+   	 		
+    		<c:if test="${pageDto.page<pageDto.maxPage }">
     			<li class="page-item">
-    				<a class="page-link" href="#">다음페이지</a>
+    				<a class="page-link" href="/adminPage/ex_member?page=${pageDto.page+1}">다음페이지</a>
     			</li>
+    		</c:if>	
+    		<c:if test="${pageDto.page==pageDto.maxPage }">
+    			<li class="page-item">
+    				<a class="page-link">다음페이지</a>
+    			</li>
+    		</c:if>
  		    </ul>
 		  </nav>
                 <br>
-            	<table>
-             <tr>
-             	<td>
-            		<button type="button" class="btn btn-block btn-primary">회원정보 수정</button>
-             	</td>
-             	<td>
-             		<button type="button" class="btn btn-block btn-secondary">탈퇴처리</button>
-             	</td>
-             </tr>
-             </table>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->

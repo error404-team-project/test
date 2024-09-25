@@ -30,26 +30,30 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/medical_list")
-	public String medical_list(Model model,@RequestParam(defaultValue = "0")int medical_category, Page pageDto) {
-		HashMap<String, Object> map = pservice.selectMList(medical_category,pageDto);
-		
+	public String medical_list(@RequestParam(defaultValue= "0")int store_seq,Model model,@RequestParam(defaultValue = "0")int medical_category, Page pageDto, String sWord) {
+		HashMap<String, Object> map = pservice.selectMList(medical_category,pageDto,sWord,store_seq);
+	//	System.out.println("컨트롤러 : "+sWord);
 		model.addAttribute("mCList", map.get("mCList"));
 		model.addAttribute("wList", map.get("wList"));
 		model.addAttribute("pageDto", map.get("pageDto"));
 		model.addAttribute("user_seq", map.get("user_seq"));
 		model.addAttribute("medical_category", map.get("medical_category"));
+		model.addAttribute("sWord", sWord);
+		model.addAttribute("store_seq", store_seq);
 		return "/product/medical_list";
 	}
 	
 	@RequestMapping("/household_list")
-	public String household_list(Model model,@RequestParam(defaultValue= "0")int health_category, Page pageDto) {
-		HashMap<String, Object> map = pservice.selectDlist(health_category,pageDto);
-		
+	public String household_list(@RequestParam(defaultValue= "0")int store_seq, Model model,@RequestParam(defaultValue= "0")int health_category, Page pageDto, String sWord) {
+		HashMap<String, Object> map = pservice.selectDlist(health_category,pageDto,sWord,store_seq);
+		System.out.println(store_seq);
 		model.addAttribute("mDList", map.get("mDList"));
 		model.addAttribute("wList", map.get("wList"));
 		model.addAttribute("pageDto", map.get("pageDto"));
 		model.addAttribute("user_seq", map.get("user_seq"));
 		model.addAttribute("health_category", map.get("health_category"));
+		model.addAttribute("sWord", sWord);
+		model.addAttribute("store_seq", store_seq);
 		return "/product/household_list";
 	}
 	

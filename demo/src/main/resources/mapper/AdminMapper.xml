@@ -7,6 +7,7 @@
 	 <select id="selectListCount" resultType="int">
 		select count(*) from product
 	 </select>
+	 
 	
 	 <insert id="insertP">
 	 	<if test="medical_category == null">
@@ -14,14 +15,14 @@
 				null,#{health_category},#{name},
 				#{company},#{price},#{stock},#{image},
 				#{howuse},#{description},#{precautions},#{side_effects},
-				#{storage},#{becareful},#{row_material},0)
+				#{storage},#{becareful},#{row_material},0,#{user_seq})
 	 	</if>
 	 	<if test="health_category == null">
 		insert into product values(product_seq.nextval,#{product_category},
 				#{medical_category},null,#{name},
 				#{company},#{price},#{stock},#{image},
 				#{howuse},#{description},#{precautions},#{side_effects},
-				#{storage},#{becareful},#{row_material},0)
+				#{storage},#{becareful},#{row_material},0,#{user_seq})
 	 	</if>
 	</insert>
 	 
@@ -62,5 +63,61 @@
 	 <delete id="deleteNotice">
 	 	delete from notice where notice_no = #{notice_no}
 	 </delete>
+	 
+	 <select id="allUser" resultType="com.java.dto.User">
+ 			select * from
+			(select rownum rnum, a.* from
+			(select * from user_table
+		<![CDATA[
+			 order by user_seq asc) a ) 
+			where rnum >= #{startRow} and rnum<= #{endRow}
+		]]>
+	 </select>
+	 
+	 <select id="storeUser" resultType="com.java.dto.User">
+ 			select * from
+			(select rownum rnum, a.* from
+			(select * from user_table
+			where auth_id = 'store'
+		<![CDATA[
+			 order by user_seq asc, approval asc) a ) 
+			where rnum >= #{startRow} and rnum<= #{endRow}
+		]]>
+	 </select>
+	 
+	 <select id="NomalUser" resultType="com.java.dto.User">
+ 			select * from
+			(select rownum rnum, a.* from
+			(select * from user_table
+			where auth_id = 'user'
+		<![CDATA[
+			 order by user_seq asc, approval asc) a ) 
+			where rnum >= #{startRow} and rnum<= #{endRow}
+		]]>
+	 </select>
+	 
+	 <select id="selectUListCount" resultType="int">
+	 	select count(*) from user_table
+	 </select>
+	 
+	 <select id="selectSListCount" resultType="int">
+	 	select count(*) from  user_table where auth_id = 'store'
+	 </select>
+	 
+	 <select id="selectNListCount" resultType="int">
+	 	select count(*) from  user_table where auth_id = 'user'
+	 </select>
+	 
+	 <select id="checkApproval" resultType="com.java.dto.User">
+	 	select * from user_table where user_seq= #{user_seq}
+	 </select>
+	 
+	 <update id="updateApproval">
+	 	update user_table set approval = 'Y' where user_seq=#{user_seq}
+	 </update>
+	 
+	 <update id="checkPre">
+	 	update prescription set store_check = 'Y', prescription_price=#{prescription_price} where prescription_no=#{prescription_no}
+	 </update>
 	 
 </mapper>

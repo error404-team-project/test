@@ -85,6 +85,7 @@ public class EventServiceImpl implements EventService {
 		Event eve = eMapper.selectOneE(event_no);
 		Event next = eMapper.selectNextE(event_no);
 		Event prev = eMapper.selectPrevE(event_no);
+		eMapper.EHitUp(event_no);
 	//	System.out.println("이전게시글번호"+eve.getEvent_no());
 		//System.out.println("ee"+eve.getEvent_start_date());
 		Timestamp s_date = eve.getEvent_start_date();

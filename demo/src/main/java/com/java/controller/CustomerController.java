@@ -38,14 +38,8 @@ public class CustomerController {
 	}
 	
 	@RequestMapping("/prescription_list")
-	public String prescription_list(Model model,Page pageDto,@RequestParam(defaultValue= "0")int user_seq) {
+	public String prescription_list(Model model,Page pageDto,int user_seq) {
 	//	System.out.println("처방전 목록"+user_seq);
-		int result;
-		if(user_seq == 0) {
-			result=4;
-			model.addAttribute("result", result);
-			return "/member/login";
-		}
 		
 		HashMap<String, Object> map = cservice.selectMyPrescription(pageDto,user_seq);
 		model.addAttribute("list", map.get("list"));

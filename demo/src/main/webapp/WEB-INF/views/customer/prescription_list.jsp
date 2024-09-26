@@ -9,12 +9,6 @@
 <link rel="stylesheet" type="text/css" href="../css/content.css?v=Y" />
 <link rel="stylesheet" type="text/css" href="../css/inquiry.css?v=Y" />
 <script type="text/javascript" src="../js/left_navi.js"></script>
-<script>
-if("${user_seq == null}"){
-	alert("로그인 후 이용 가능합니다.");
-	location.href="/member/login";
-}
-</script>
 	<!-- container -->
 	<div id="container">
 

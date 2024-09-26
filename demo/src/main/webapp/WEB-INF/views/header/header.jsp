@@ -167,7 +167,9 @@ $(document).ready(function() {
 		            <a href="/customer/notice_list">공지사항</a>
 		            <a href="/customer/inquiry_list">1:1 문의</a>
 		            <a href="/customer/faq">FAQ</a>
+		         <c:if test="${sessionSeq != null }">
 		            <a href="/customer/prescription_list?user_seq=${sessionSeq}">처방전 목록</a>
+		         </c:if>  
 		        </div>
     		</div>
     		<div class="dropdown">    		

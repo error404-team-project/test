@@ -40,6 +40,10 @@ if(result == 3){
 	alert("아직 가입 승인이 나지 않았습니다. \n 최대한 빠르게 확인 후 이메일로 발송해드리겠습니다.");
 	result = 1;
 }
+if(result == 4){
+	alert("처방전 리스트는 로그인 후 이용 가능합니다.");
+	result = 1;
+}
 function lBtn(){
 	if($("#user_pw").val() == ''){
 		alert("비밀번호를 입력해주세요");

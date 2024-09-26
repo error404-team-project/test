@@ -15,14 +15,14 @@
 				null,#{health_category},#{name},
 				#{company},#{price},#{stock},#{image},
 				#{howuse},#{description},#{precautions},#{side_effects},
-				#{storage},#{becareful},#{row_material},0,#{user_seq})
+				#{storage},#{becareful},#{row_material},0,#{user_seq},#{weight})
 	 	</if>
 	 	<if test="health_category == null">
 		insert into product values(product_seq.nextval,#{product_category},
 				#{medical_category},null,#{name},
 				#{company},#{price},#{stock},#{image},
 				#{howuse},#{description},#{precautions},#{side_effects},
-				#{storage},#{becareful},#{row_material},0,#{user_seq})
+				#{storage},#{becareful},#{row_material},0,#{user_seq},#{weight})
 	 	</if>
 	</insert>
 	 

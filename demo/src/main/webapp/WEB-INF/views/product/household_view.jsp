@@ -119,6 +119,9 @@
 								<div class="stit">남은수량</div> <div>${daily.stock }</div>
 							</li>
 							<li>
+								<div class="stit">무게</div> <div>${medi.weight }kg</div>
+							</li>
+							<li>
 								<c:if test="${daily.stock != 0}">
 									<div class="stit">수량</div> <div class="num"><input name="p_count" id="spinner" value="1" /></div>
 						  		</c:if>
@@ -184,6 +187,10 @@ function inCart(){
 		}) // ajax
 	}
 } // inCart
+
+function onCart(){
+	alert("이미 장바구니에 담김!");
+}
 </script>
 					<!-- 판매중 -->
 					<c:if test="${daily.stock != 0}">
@@ -191,7 +198,7 @@ function inCart(){
 						<ul>
 							<li><a href="#" class="ty1">바로 <span>구매하기</span></a></li>
 						  <c:if test="${cp_num == p_num}">
-							<li id="pl"><a href="#" class="ty2">장바구니에 <span>담김</span></a></li>
+							<li id="pl"><a onclick="onCart()" class="ty2">장바구니에 <span>담김</span></a></li>
 						  </c:if>
 						  <c:if test="${cp_num != p_num}">
 							<li id="pl"><a onclick="inCart()" class="ty2">장바구니 <span>담기</span></a></li>

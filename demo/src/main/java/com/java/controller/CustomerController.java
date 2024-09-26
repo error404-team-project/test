@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,11 +38,19 @@ public class CustomerController {
 	}
 	
 	@RequestMapping("/prescription_list")
-	public String prescription_list(Model model,Page pageDto,int user_seq) {
+	public String prescription_list(Model model,Page pageDto,@RequestParam(defaultValue= "0")int user_seq) {
 	//	System.out.println("처방전 목록"+user_seq);
+		int result;
+		if(user_seq == 0) {
+			result=4;
+			model.addAttribute("result", result);
+			return "/member/login";
+		}
+		
 		HashMap<String, Object> map = cservice.selectMyPrescription(pageDto,user_seq);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("pageDto", map.get("pageDto"));
+		model.addAttribute("user_seq", user_seq);
 		return "/customer/prescription_list";
 	}
 	

@@ -3,6 +3,20 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.java.mapper.ProductMapper">
 
+<delete id="deleteById">
+<!-- 카트에서 지우기 -->
+        DELETE FROM CART
+        WHERE p_num = #{p_num}
+    </delete>
+
+ <update id="updateQuantity">
+<!-- 수량 onchange -->
+        UPDATE CART
+        SET count = #{count}
+        WHERE p_num = #{p_num} and user_seq=#{user_seq}
+    </update>
+
+
 	<select id="selectMListCountAll" resultType="int">
 		<if test="medical_category == 0">
 			select count(*)from product where product_category = 1
@@ -133,7 +147,7 @@
 	</select>
 	
 	<insert id="inCart">
-		insert into cart values(#{user_seq},#{p_num},#{count})
+		insert into cart values(#{user_seq},#{p_num},#{count},null)
 	</insert>
 
 	<select id="selectCart" resultType="com.java.dto.Cart">

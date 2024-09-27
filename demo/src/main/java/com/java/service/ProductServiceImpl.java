@@ -2,6 +2,7 @@ package com.java.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -228,6 +229,25 @@ public class ProductServiceImpl implements ProductService {
 		return map;
 	}
 
+	@Override
+	public void updateProductQuantity(int p_num, int count) {
+		System.out.println(count);
+		int user_seq;
+		if(session.getAttribute("sessionSeq") == null) {
+			user_seq = 0;
+		} else {
+			user_seq = (int) session.getAttribute("sessionSeq");
+		}
+	     // 데이터베이스에서 상품 수량 업데이트 로직
+		pMapper.updateQuantity(user_seq,p_num, count);
+	}
+
+	@Override
+	public void deleteCartItems(List<Long> ids) {
+		 for (Long id : ids) {
+			 pMapper.deleteById(id); // 매퍼를 통해 데이터베이스에서 삭제
+	        }
+	}
 
 
 

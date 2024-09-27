@@ -1,11 +1,15 @@
 package com.java.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +23,42 @@ import com.java.service.ProductService;
 public class ProductController {
 	
 	@Autowired ProductService pservice;
+	
+	
+	
+	
+
+	@PostMapping("/cartdelete")
+	 public ResponseEntity<?> cartdelete(@RequestBody List<Long> ids) {
+		
+		//System.out.println(ids);
+        try {
+        	pservice.deleteCartItems(ids);
+            return ResponseEntity.ok("삭제 성공");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("삭제 실패");
+        }
+    }	
+	@RequestMapping("/onchange")
+	@ResponseBody
+	public String onchange(@RequestParam("p_num") int p_num, 
+            @RequestParam("p_count") int count) {
+		
+		/*
+		 * System.out.println(p_num); System.out.println(count);
+		 */
+try {
+// 수량 업데이트 로직
+	pservice.updateProductQuantity(p_num, count);
+return "수량이 업데이트되었습니다.";
+} catch (Exception e) {
+e.printStackTrace();
+return "수량 업데이트 실패";
+}
+	}
+	
+///////////////////////////////////////////////////////////////////////////////////////	
+	
 	
 	@RequestMapping("/cart")
 	public String cart(Model model) {

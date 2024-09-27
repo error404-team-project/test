@@ -21,12 +21,36 @@ public class UserServiceImpl implements UserService {
 	@Autowired JavaMailSender mailSender;
 	
 	
+	
+	
+
+	@Override
+	public User userInfo(String id) {
+		User user =uMapper.userInfo(id);
+	
+	   String user_addr = user.getUser_addr();
+		String[] addrParts = user_addr.split("/");
+		user.setAddr1(addrParts[0]);
+		user.setAddr2(addrParts[1]);
+		
+		String user_phone =user.getUser_phone();
+		String[] phoneParts = user_phone.split("-");
+		user.setPhone1(phoneParts[0]);
+		user.setPhone2(phoneParts[1]);
+		user.setPhone3(phoneParts[2]);
+		
+	
+		
+		
+		return user;
+	}
+		
+	///////////////////////////////////////////////////////////////////////////
 	@Override
 	public String selectId(String id) {
 		String uid = uMapper.selectId(id);
 		return uid;
 	}
-
 
 	@Override
 	public void joinOne(User user) {

@@ -38,6 +38,11 @@ public interface ProductMapper {
 	Product dailyView(int p_num);
 
 	ArrayList<Wishlist> selectAllWish(int user_seq);
+	
+	void updateQuantity(int user_seq, int p_num, int count);
+
+	void deleteById(Long id);
+
 
 
 

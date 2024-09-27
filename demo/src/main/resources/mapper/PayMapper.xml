@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.mapper.PayMapper">
+
+
+<update id="state_return">
+        UPDATE cart
+        SET state = 0
+        WHERE state = 1
+</update>
+<insert id="orderInsert">
+    INSERT INTO ORDER_table (user_seq, order_date, order_status, order_request, emergency, p_num, order_no, carry_zip,order_count)
+    VALUES (
+        #{user_seq},                              <!-- USER_SEQ --> 
+        #{order_date},                        <!-- ORDER_DATE (현재 시간) -->
+        #{order_status},                          <!-- ORDER_STATUS --> 
+        #{order_request},                         <!-- ORDER_REQUEST -->  
+        #{emergency},                             <!-- EMERGENCY (긴급 여부) --> 
+        #{p_num},  <!-- P_NUM -->
+        #{order_no},                              <!-- ORDER_NO -->
+        #{carry_zip},                          <!-- carry_zip -->
+        #{order_count}
+    )
+</insert>
+
+ <update id="updateStateByPNum">
+        UPDATE cart
+        SET state = #{state}
+        WHERE p_num = #{p_num}
+        
+        
+    </update>
+    
+    <select id="cartview" resultMap="cmap">    
+    select c.*, p.* from cart c
+		inner join product p
+		on c.p_num = p.p_num
+		where c.user_seq = #{user_seq} and state=1
+    </select>
+    
+    <resultMap id="cmap" type="com.java.dto.Cart">
+		<result column="user_seq" property="user_seq" />
+		<result column="p_num" property="p_num" />	
+		<result column="count" property="count" />	
+		<association property="product" column="p_num" javaType="com.java.dto.Product">
+			<id column="p_num" property="p_num" />
+			<result column="name" property="name" />
+			<result column="price" property="price" />
+			<result column="image" property="image" />
+		</association>
+	</resultMap>
+
+</mapper>

@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cart {
-	private int user_seq, p_num,count; 
+	private int user_seq, p_num,count ;
+	private String state;
 	private Product product;
 	
 }

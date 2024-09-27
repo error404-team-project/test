@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.mapper.MyMapper">
+
+<select id="selectOrder" resultMap="order">
+	<![CDATA[
+select * from (
+		select rownum rnum, a.* from
+		(select * from ORDER_table O
+		inner join product P
+		on O.p_num=P.p_num
+        order by O.order_no desc, O.order_date desc) a )e
+		where rnum>=#{startRow} and rnum<=#{endRow}
+        ]]>
+
+</select> 
+	<resultMap id="order" type="com.java.dto.Porder">
+		<result column="user_seq" property="user_seq" />
+		<result column="p_num" property="p_num" />	
+		<result column="DRONE_ID" property="drone_id" />	
+		<result column="ORDER_DATE" property="order_date" />	
+		<result column="ORDER_STATUS" property="order_status" />	
+		<result column="ORDER_REQUEST" property="order_request" />	
+		<result column="carry_zip" property="carry_zip" />	
+		<result column="EMERGENCY" property="emergency" />	
+		<result column="ORDER_NO" property="order_no" />	
+		<result column="order_count" property="order_count" />	
+		<association property="product" column="p_num" javaType="com.java.dto.Product">
+			<id column="p_num" property="p_num" />
+			<result column="name" property="name" />
+			<result column="price" property="price" />
+			<result column="image" property="image" />
+		</association>
+	</resultMap>
+	
+
+<select id="selectListCount" resultType="int">
+		select count(*) from ORDER_table
+	</select>
+	
+	
+<select id="selectone"	resultType="com.java.dto.Member">
+select * from user_table where  user_id=#{user_id}
+</select>
+
+<delete id="deletemember" >
+DELETE FROM user_table WHERE user_id=#{user_id}
+</delete>
+
+<update id="updateone">
+
+UPDATE user_table   SET 
+    user_name = #{user_name},
+    user_pw = #{user_pw},
+    user_zip = #{user_zip},
+    user_addr = #{user_addr},
+    user_email = #{user_email},
+    user_phone = #{user_phone},
+    mkt_agree = #{mkt_agree}
+WHERE   user_id = #{user_id}
+
+</update>
+
+<select id="selectInquiry" resultType="com.java.dto.Inquiry">
+	<![CDATA[
+select * from
+(select rownum rnum, a.* from
+(select * from INQUIRY_BOARD
+order by INQUIRY_NO desc) a ) 
+where rnum >= #{startRow} and rnum<= #{endRow}
+        ]]>
+</select> 
+
+<select id="select_InquiryListCount" resultType="int">
+		select count(*) from INQUIRY_BOARD
+	</select>
+	
+	
+	<!--  게시글 -->	
+	<select id="selectOne_inquiry"  resultType="com.java.dto.Inquiry">
+		select * from INQUIRY_BOARD where inquiry_no = #{inquiry_no}
+	</select>
+	
+	<!-- inquiry_no 이전 게시글 -->	
+	<select id="selectPrev_inquiry" resultType="com.java.dto.Inquiry">
+		select * from INQUIRY_BOARD where inquiry_no = 
+		(select prevDto from 
+		(select inquiry_no, lag(inquiry_no, 1, -1) over(order by INQUIRY_DATE desc) as prevDto
+		from INQUIRY_BOARD order by user_seq desc) where inquiry_no=#{inquiry_no})
+	</select>
+	
+	<!-- inquiry_no 이후 게시글 -->	
+	<select id="selectNext_inquiry" resultType="com.java.dto.Inquiry">
+		select * from INQUIRY_BOARD where inquiry_no = 
+		(select nextDto from 
+		(select inquiry_no, lead(inquiry_no, 1, -1) over(order by INQUIRY_DATE desc) as nextDto
+		from INQUIRY_BOARD order by user_seq desc) where inquiry_no=#{inquiry_no})
+	</select>
+
+
+<insert id="insert_Inqury" >ㅇ
+		insert into INQUIRY_BOARD (   
+	INQUIRY_NO,    INQUIRY_TITLE,    INQUIRY_DATE,
+    INQUIRY_CATEGORY,    INQUIRY_CONTENT,    INQUIRY_IMAGE
+)  VALUES (
+inquiry_seq.nextval, #{inquiry_title}, sysdate, 
+#{inquiry_category}, #{inquiry_content},#{inquiry_image})
+</insert>
+
+<update id="modi_inquiry">
+UPDATE INQUIRY_BOARD
+SET 
+inquiry_category =#{inquiry_category},
+inquiry_title = #{inquiry_title},
+inquiry_date = sysdate,
+inquiry_content = #{inquiry_content},
+inquiry_image = #{inquiry_image}
+
+WHERE 
+     inquiry_no= #{inquiry_no}
+    
+</update>
+
+<delete id="Inquiry_deleteone">
+delete from inquiry_board where inquiry_no=${inquiry_no}
+</delete>
+
+
+<select id="selectoneReturn" resultMap="reorder">
+	<![CDATA[
+
+SELECT p.name , p.price,p.image, o.* FROM order_table o
+inner join product p
+on o.p_num = p.p_num
+WHERE o.order_no=#{orderNos}and o.p_num =#{order_p_nums}
+        ]]>
+
+</select>
+
+	<resultMap id="reorder" type="com.java.dto.Porder">
+		<result column="user_seq" property="user_seq" />
+		<result column="p_num" property="p_num" />	
+		<result column="DRONE_ID" property="drone_id" />	
+		<result column="ORDER_DATE" property="order_date" />	
+		<result column="ORDER_STATUS" property="order_status" />	
+		<result column="ORDER_REQUEST" property="order_request" />	
+		<result column="carry_zip" property="carry_zip" />	
+		<result column="EMERGENCY" property="emergency" />	
+		<result column="ORDER_NO" property="order_no" />	
+		<result column="order_count" property="order_count" />	
+		<association property="product" column="p_num" javaType="com.java.dto.Product">
+			<id column="p_num" property="p_num" />
+			<result column="name" property="name" />
+			<result column="price" property="price" />
+			<result column="image" property="image" />
+		</association>
+	</resultMap>
+
+<!-- <select id="selectReturn" resultType="com.java.dto.Return1">
+	<![CDATA[
+select * from
+(select rownum rnum, a.* from
+(select * from return
+order by return_id desc) a ) 
+where rnum >= #{startRow} and rnum<= #{endRow}
+        ]]>
+</select> 
+
+<select id="select_returnListCount" resultType="int">
+		select count(*) from return
+	</select>
+ -->
+
+<insert id="insert_return">
+	INSERT INTO return_table (
+    ORDER_NO,
+    RETURN_REASON,
+    RETURN_STATE,
+    REQUEST_DATE,
+    DORETURN_DATE,
+    P_NUM,
+    RETURN_NO
+) VALUES (
+    #{order_no},              
+    #{return_reason},           
+    #{return_state},             
+   #{request_date} ,              
+    NULL,                   
+    #{p_num},               
+    #{return_no}             
+)
+</insert>
+ 
+</mapper>

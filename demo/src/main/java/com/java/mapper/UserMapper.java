@@ -20,5 +20,8 @@ public interface UserMapper {
 	void updatePw(String user_id, String user_email,String pwcode);
 
 	String findId(String user_name, String user_email);
+	
+
+	User userInfo(String id);
 
 }

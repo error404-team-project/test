@@ -205,7 +205,7 @@ $(document).ready(function() {
         <c:if test="${sessionId != null && sessionAuth=='user'}">
             <sapn class="button">${sessionName}님</sapn>
             <a href="/member/logout" class="button">LOGOUT</a>
-            <a href="/mypage" class="button">MYPAGE</a>
+            <a href="/mypage/order" class="button">MYPAGE</a>
             <a href="/product/cart" class="button">CART</a>
         </c:if>
         <c:if test="${sessionAuth == 'admin' || sessionAuth=='store'}">

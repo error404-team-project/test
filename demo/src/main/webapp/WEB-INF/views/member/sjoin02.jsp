@@ -155,7 +155,7 @@ function idChk(){
 } // idChk
 </script>
 
-					<form action="/member/join03" method="post" name="jFrm" enctype="multipart/form-data">
+					<form action="/member/sjoin03" method="post" name="jFrm" enctype="multipart/form-data">
 						<input type="hidden" name="ps_agree" id="ps_agree" value="${ps_agree}">
 						<input type="hidden" name="svc_agree" id="svc_agree" value="${svc_agree}">
 						<input type="hidden" name="auth_id" id="auth_id" value="${auth_id}">
@@ -167,17 +167,6 @@ function idChk(){
 							<col width="*" />
 							</colgroup>
 							<tbody>
-							<c:if test="${auth_id == 'user'}">
-								<tr>
-									<th scope="row"><span>이름 *</span></th>
-									<td><input type="text" id="name" name="user_name">
-										<ul class="pta">
-											<li class="pt5"><span class="mvalign">이름은 한글만 입력 가능합니다.</span></li>
-										</ul>
-									</td>
-								</tr>
-							</c:if>
-							<c:if test="${auth_id == 'store'}">
 								<tr>
 									<th scope="row"><span>약국이름 *</span></th>
 									<td><input type="text" id="name2" name="user_name">
@@ -186,7 +175,6 @@ function idChk(){
 										</ul>
 									</td>
 								</tr>
-							</c:if>
 								<tr>
 									<th scope="row"><span>아이디 *</span></th>
 									<td>
@@ -246,23 +234,6 @@ function idChk(){
 										</ul>
 									</td>
 								</tr>
-								<c:if test="${auth_id == 'user'}">
-								<tr>
-									<th scope="row"><span>이메일 수신여부 *</span></th>
-									<td>
-										<p>메디슨에서 진행되는 이벤트와 쇼핑에 대한 정보를 이메일로 받아보시겠습니까?</p>
-										<ul class="question">
-											<li>
-												<input type="radio" name="mkt_agree" id="mkt_yes" class="radio_t" checked="checked" value="Y"/><label for="receive_yes">예</label>
-											</li>
-											<li>
-												<input type="radio" name="mkt_agree" id="mkt_no" class="radio_t"/ value="N"><label for="receive_no">아니오</label>
-											</li>
-										</ul>
-										<p class="gray">* 거래관련 정보는 고객님의 거래안전을 위하여 이메일 수신거부와 관계없이 발송됩니다.</p>
-									</td>
-								</tr>
-								</c:if>
 								<tr>
 									<th scope="row"><span>주소 *</span></th>
 									<td>
@@ -298,7 +269,6 @@ function idChk(){
 										</ul>
 									</td>
 								</tr>
-								<c:if test="${auth_id == 'store'}">
 								<tr>
 									<th scope="row"><span>사업자등록번호</span></th>
 									<td>
@@ -324,96 +294,10 @@ function idChk(){
 										</ul>
 									</td>
 								</tr>
-								</c:if>
-								<c:if test="${auth_id == 'user'}">
-								<tr>
-									<th scope="row"><span>성별 *</span></th>
-									<td>
-										<ul class="pta">
-											<li>
-												<input type="radio" name="user_gender" id="male" value="M" checked="checked"/>
-												<label for="male">남성</label>
-											</li>
-											<li>
-												<input type="radio" name="user_gender" id="female" value="F"/>
-												<label for="female">여성</label>
-											</li>
-										</ul>
-									</td>
-								</tr>
-								<tr>
-									<th scope="row"><span>생년월일 *</span></th>
-									<td>
-										<ul class="pta">
-											<li>
-												<select name="year">
-													<option value='#' selected="selected">선택하세요</option>
-													<script type="text/javascript">
-													//<![CDATA[
-														for(var i=1940; i<=2020; i++){
-															document.write("<option value='"+i+"'>" + i + "년"+ "</option>");	
-														};
-													//]]>
-													</script>
-												</select>
-											</li>
-											<li>&nbsp;<span class="valign">년</span>&nbsp;&nbsp;&nbsp;</li>
-											<li>
-												<select name="month">
-													<option value='#' selected="selected">선택하세요</option>
-													<script type="text/javascript">
-													//<![CDATA[
-														for(var i=1; i<=12; i++){
-															if(i<10){
-																document.write("<option value='"+i+"'>0" + i + "월"+"</option>");
-															}else{
-																document.write("<option value='"+i+"'>" + i + "월"+ "</option>");
-															};
-														};
-													//]]>
-													</script>
-												</select>
-											</li>
-											<li>&nbsp;<span class="valign">월</span>&nbsp;&nbsp;&nbsp;</li>
-											<li>
-												<select name="day">
-													<option value='#' selected="selected">선택하세요</option>
-													<script type="text/javascript">
-													//<![CDATA[
-														for(var i=1; i<=31; i++){
-															if(i<10){
-																document.write("<option value='"+i+"'>0" + i + "일"+"</option>");
-															}else{
-																document.write("<option value='"+i+"'>" + i + "일"+ "</option>");
-															};
-														};
-													//]]>
-													</script>
-												</select>
-											</li>
-											<li class="r20">&nbsp;<span class="valign">일</span></li>
-											<li class="pt5">
-												<ul class="baseQues">
-													<li>
-														<input type="radio" name="birth" id="solar" class="radio_t" checked="checked"/><label for="solar">양력</label>
-													</li>
-													<li>
-														<input type="radio" name="birth" id="lunar" class="radio_t"/><label for="lunar">음력</label>
-													</li>
-												</ul>
-											</li>
-										</ul>
-									</td>
-								</tr>
-								</c:if>
 							</tbody>
 							</table>
 						</div>
-						
-
 					</div>
-
-					
 					<!-- Btn Area -->
 					<div class="btnArea">
 						<div class="bCenter">

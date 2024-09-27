@@ -81,14 +81,14 @@ public class MemberController {
 		return "/member/join";
 	}
 	
-	@RequestMapping("/join01")
+	@RequestMapping("/sjoin01")
 	public String join01(Model model,String auth_id) {
 		System.out.println(auth_id);
 		model.addAttribute("auth_id", auth_id);
-		return "/member/join01";
+		return "/member/sjoin01";
 	}
 	
-	@RequestMapping("/join02")
+	@RequestMapping("/sjoin02")
 	public String join02(Model model,User user) {
 		System.out.println(user.getSvc_agree());
 		System.out.println(user.getPs_agree());
@@ -96,10 +96,10 @@ public class MemberController {
 		model.addAttribute("svc_agree", user.getSvc_agree());
 		model.addAttribute("ps_agree", user.getPs_agree());
 		model.addAttribute("auth_id", user.getAuth_id());
-		return "/member/join02";
+		return "/member/sjoin02";
 	}
 	
-	@RequestMapping("/join03")
+	@RequestMapping("/sjoin03")
 	public String join03(User user,@RequestPart MultipartFile bFile,
 			@RequestPart MultipartFile pFile) {
 	//	System.out.println(user.getUser_id());
@@ -134,6 +134,31 @@ public class MemberController {
 		}
 		System.out.println("약사면허증"+user.getP_license());
 		System.out.println("사업자등록증"+user.getB_license());
+		uservice.joinOne(user);
+		return "/member/join03";
+	}
+	
+	
+	@RequestMapping("/ujoin01")
+	public String ujoin01(Model model,String auth_id) {
+		System.out.println(auth_id);
+		model.addAttribute("auth_id", auth_id);
+		return "/member/ujoin01";
+	}
+	
+	@RequestMapping("/ujoin02")
+	public String ujoin02(Model model,User user) {
+		System.out.println(user.getSvc_agree());
+		System.out.println(user.getPs_agree());
+		System.out.println(user.getAuth_id());
+		model.addAttribute("svc_agree", user.getSvc_agree());
+		model.addAttribute("ps_agree", user.getPs_agree());
+		model.addAttribute("auth_id", user.getAuth_id());
+		return "/member/ujoin02";
+	}
+	
+	@RequestMapping("/ujoin03")
+	public String ujoin03(User user) {
 		uservice.joinOne(user);
 		return "/member/join03";
 	}

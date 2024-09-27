@@ -35,16 +35,15 @@
 			<h2><strong>회원가입</strong><span>가입유형을 선택해주세요.</span></h2>
 			</div>
 			
-			<input type="hidden" name="auth_id" id="auth_id" value="">
 <script>
 function uBtn(){
 	$("#auth_id").val("user");
-	jFrm.submit();
+	location.href="/member/ujoin01?auth_id=user";
 }
 
 function sBtn(){
 	$("#auth_id").val("store");
-	jFrm.submit();
+	location.href="/member/sjoin01?auth_id=store";
 }
 </script>
 

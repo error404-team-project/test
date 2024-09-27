@@ -30,7 +30,7 @@
 
 
 			<!-- contents -->
-			<form action="/member/join02" method="post" name="jFrm">
+			<form action="/member/sjoin02" method="post" name="jFrm">
 			<input type="hidden" name="auth_id" value="${auth_id}">
 			<div id="contents">
 				<div id="member" style="margin:0 0 0 80px;">

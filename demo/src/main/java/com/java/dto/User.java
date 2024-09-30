@@ -26,6 +26,8 @@ public class User {
 	private String b_l_image; // 사업자 등록증
 	private String p_license; // 약사면허증
 	private String approval; // 약국 가입승인여부
+	private String x; // 경도
+	private String y; // 위도
 	private Timestamp user_birth, user_joindate, login_date;
 					//    생년월일			가입일		로그인날짜
 	

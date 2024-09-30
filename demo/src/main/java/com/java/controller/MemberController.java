@@ -159,6 +159,7 @@ public class MemberController {
 	
 	@RequestMapping("/ujoin03")
 	public String ujoin03(User user) {
+		
 		uservice.joinOne(user);
 		return "/member/join03";
 	}

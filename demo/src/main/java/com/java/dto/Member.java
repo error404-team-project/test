@@ -22,6 +22,8 @@ public class Member {
 	  private	 String   user_phone   ;
 	  private  String user_zip   ;
 	  private String user_addr      ;
+	  private String x; // 경도
+	  private String y; // 위도
 	  private  Timestamp user_joindate  ;     
 	  private char user_gender        ;
 	  private char svc_agree  ;

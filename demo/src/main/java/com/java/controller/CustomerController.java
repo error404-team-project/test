@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,16 +17,24 @@ import com.java.dto.Notice;
 import com.java.dto.Page;
 import com.java.dto.Prescription;
 import com.java.service.CustomerService;
+import com.java.service.myService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
 	
 	@Autowired CustomerService cservice;
+	@Autowired myService myservice;
+	@Autowired HttpSession session;
 	
 	@RequestMapping("/inquiry_list")
-	public String inquiry_list() {
-		
+	public String inquiry_list(Page pageDto,Model model) {
+		int user_seq = (int) session.getAttribute("sessionSeq");
+		HashMap<String, Object> InquiryMap = myservice.selectInquiry(pageDto,user_seq);
+		model.addAttribute("list", InquiryMap.get("list"));
+		model.addAttribute("pageDto", InquiryMap.get("pageDto"));
 		return "customer/inquiry_list";
 	}
 	

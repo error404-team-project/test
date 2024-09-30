@@ -11,7 +11,7 @@ import com.java.dto.Return_table;
 
 public interface myService {
 
-	HashMap<String, Object> selectOrder(Page pageDto);
+	HashMap<String, Object> selectOrder(Page pageDto, int user_seq);
 
 	Member selectone(Member mem);
 
@@ -19,7 +19,7 @@ public interface myService {
 
 	void updateone(Member mem);
 
-	HashMap<String, Object> selectInquiry(Page pageDto);
+	HashMap<String, Object> selectInquiry(Page pageDto, int user_seq);
 
 	HashMap<String, Object> selectOne_inquiry(int inquiry_no, Page pageDto);
 
@@ -36,9 +36,9 @@ public interface myService {
 
 	
 
-	/*
-	 * HashMap<String, Object> selectReturn(Page pageDto);
-	 */
+	
+	HashMap<String, Object> selectReturn(Page pageDto);
+	 
 
 
 

@@ -28,7 +28,7 @@
                 <li><a href="/customer/notice_list" id="leftNavi1">공지사항</a></li>
                 <li><a href="/customer/inquiry_list" id="leftNavi2">1:1문의</a></li>
                 <li><a href="/customer/faq" id="leftNavi3">자주 묻는 질문</span></a></li>
-                <li class="last"><a href="#" id="leftNavi4">카카오톡 문의</a></li>
+                <li class="last"><a href="/customer/prescription_list?user_seq=${sessionSeq }" id="leftNavi4">처방전</a></li>
             </ul>            
         </div>
         <script type="text/javascript">initSubmenu(1,0);</script>
@@ -135,25 +135,6 @@
 						</div>
 						<!-- //페이징이동1 -->
 					</div>
-
-					<div class="searchWrap">
-						<div class="search">
-							<ul>
-								<li class="web"><img src="../images/txt/txt_search.gif" alt="search" /></li>
-								<li class="se">
-									<select>
-										<option value="" />제목</option>
-									</select>
-								</li>
-								<li><input type="text" class="searchInput" /></li>
-								<li class="web"><a href="#"><img src="../images/btn/btn_search.gif" alt="검색" /></a></li>
-								<li class="mobile"><a href="#"><img src="../images/btn/btn_search_m.gif" alt="검색" /></a></li>
-							</ul>
-						</div>
-					</div>
-					<!-- //포토 구매후기 -->
-
-
 				</div>
 			</div>
 			<!-- //contents -->

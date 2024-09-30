@@ -13,9 +13,9 @@ import com.java.dto.Return_table;
 @Mapper
 public interface MyMapper {
 
-	ArrayList<Porder> selectOrder(Page pageDto);
+	ArrayList<Porder> selectOrder(Page pageDto, int user_seq);
 
-	int selectListCount();
+	int selectListCount(int user_seq);
 
 	Member selectone(Member mem);
 
@@ -23,9 +23,9 @@ public interface MyMapper {
 
 	void updateone(Member mem);
 
-	ArrayList<Inquiry> selectInquiry(Page pageDto);
+	ArrayList<Inquiry> selectInquiry(Page pageDto, int user_seq);
 
-	int select_InquiryListCount();
+	int select_InquiryListCount(int user_seq);
 
 	Inquiry selectOne_inquiry(int inquiry_no);
 

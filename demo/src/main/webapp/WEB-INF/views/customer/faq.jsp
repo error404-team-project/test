@@ -28,7 +28,7 @@
                 <li><a href="/customer/notice_list" id="leftNavi1">공지사항</a></li>
                 <li><a href="/customer/inquiry_list" id="leftNavi2">1:1문의</a></li>
                 <li><a href="/customer/faq" id="leftNavi3">FAQ</a></li>
-                <li class="last"><a href="#" id="leftNavi4">카카오톡 문의</a></li>
+                <li class="last"><a href="/customer/prescription_list?user_seq=${sessionSeq }" id="leftNavi4">처방전</a></li>
             </ul>            
         </div><script type="text/javascript">initSubmenu(3,0);</script>
         

@@ -5,14 +5,15 @@
 <mapper namespace="com.java.mapper.MyMapper">
 
 <select id="selectOrder" resultMap="order">
-	<![CDATA[
-select * from (
+		select * from (
 		select rownum rnum, a.* from
 		(select * from ORDER_table O
 		inner join product P
 		on O.p_num=P.p_num
+		where o.user_seq=#{user_seq}
+	<![CDATA[
         order by O.order_no desc, O.order_date desc) a )e
-		where rnum>=#{startRow} and rnum<=#{endRow}
+		where rnum>=#{pageDto.startRow} and rnum<=#{pageDto.endRow}
         ]]>
 
 </select> 
@@ -37,7 +38,7 @@ select * from (
 	
 
 <select id="selectListCount" resultType="int">
-		select count(*) from ORDER_table
+		select count(*) from ORDER_table where user_seq=#{user_seq}
 	</select>
 	
 	
@@ -58,23 +59,26 @@ UPDATE user_table   SET
     user_addr = #{user_addr},
     user_email = #{user_email},
     user_phone = #{user_phone},
-    mkt_agree = #{mkt_agree}
+    mkt_agree = #{mkt_agree},
+    x	=	#{x},
+    y	=	#{y}
 WHERE   user_id = #{user_id}
 
 </update>
 
 <select id="selectInquiry" resultType="com.java.dto.Inquiry">
+	select * from
+	(select rownum rnum, a.* from
+	(select * from INQUIRY_BOARD
+	where user_seq=#{user_seq}
 	<![CDATA[
-select * from
-(select rownum rnum, a.* from
-(select * from INQUIRY_BOARD
-order by INQUIRY_NO desc) a ) 
-where rnum >= #{startRow} and rnum<= #{endRow}
-        ]]>
+		order by INQUIRY_NO desc) a ) 
+		where rnum >= #{pageDto.startRow} and rnum<= #{pageDto.endRow}
+    ]]>
 </select> 
 
-<select id="select_InquiryListCount" resultType="int">
-		select count(*) from INQUIRY_BOARD
+	<select id="select_InquiryListCount" resultType="int">
+		select count(*) from INQUIRY_BOARD where user_seq=#{user_seq}
 	</select>
 	
 	
@@ -100,12 +104,12 @@ where rnum >= #{startRow} and rnum<= #{endRow}
 	</select>
 
 
-<insert id="insert_Inqury" >ㅇ
+<insert id="insert_Inqury" >
 		insert into INQUIRY_BOARD (   
-	INQUIRY_NO,    INQUIRY_TITLE,    INQUIRY_DATE,
+	INQUIRY_NO, user_seq,   INQUIRY_TITLE,    INQUIRY_DATE,
     INQUIRY_CATEGORY,    INQUIRY_CONTENT,    INQUIRY_IMAGE
 )  VALUES (
-inquiry_seq.nextval, #{inquiry_title}, sysdate, 
+inquiry_seq.nextval, #{user_seq}, #{inquiry_title}, sysdate, 
 #{inquiry_category}, #{inquiry_content},#{inquiry_image})
 </insert>
 

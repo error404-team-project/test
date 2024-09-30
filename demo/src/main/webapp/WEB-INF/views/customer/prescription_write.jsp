@@ -24,12 +24,12 @@
             <div id="title2">CUSTOMER<span>고객센터</span></div>
             <ul>    
                 <li><a href="/customer/notice_list" id="leftNavi1">공지사항</a></li>
-                <li><a href="/customer/prescription_list?user_seq=${sessionSeq }" id="leftNavi2">처방전 목록</a></li>
+                <li><a href="/customer/inquiry_list" id="leftNavi2">1:1문의</a></li>
                 <li><a href="/customer/faq" id="leftNavi3">자주 묻는 질문</span></a></li>
-                <li class="last"><a href="#" id="leftNavi4">카카오톡 문의</a></li>
-            </ul>            
+                <li class="last"><a href="#" id="leftNavi4">처방전</a></li>
+            </ul>             
         </div>
-        <script type="text/javascript">initSubmenu(2,0);</script>
+        <script type="text/javascript">initSubmenu(4,0);</script>
 <script>
 if(${sessionSeq == null}){
 	alert("로그인 후 이용 가능합니다.");

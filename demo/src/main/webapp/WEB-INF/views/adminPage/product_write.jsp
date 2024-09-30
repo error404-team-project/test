@@ -170,7 +170,7 @@ function pWbtn(){
                 <input type="number" name ="stock" id="stock" class="form-control">
               </div>
               <div class="form-group">
-                <label for="weight">무게</label>
+                <label for="weight">무게 (단위:kg)</label>
                 <input type="number" name ="weight" id="weight" class="form-control">
               </div>
             </div>

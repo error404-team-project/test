@@ -28,7 +28,7 @@
                 <li><a href="/customer/notice_list" id="leftNavi1">공지사항</a></li>
                 <li><a href="/customer/inquiry_list" id="leftNavi2">1:1문의</a></li>
                 <li><a href="/customer/faq" id="leftNavi3">자주 묻는 질문</span></a></li>
-                <li class="last"><a href="#" id="leftNavi4">카카오톡 문의</a></li>
+                <li class="last"><a href="/customer/prescription_list?user_seq=${sessionSeq }" id="leftNavi4">처방전</a></li>
             </ul>            
         </div>
         <script type="text/javascript">initSubmenu(2,0);</script>
@@ -40,7 +40,7 @@
 					<div class="wbtnArea">
                     <div class="wCenter">
                         <ul>                                                                
-                            <li><a href="/customer/inquiry_write" class="writebtn">글작성</a></li>
+                            <li><a href="/mypage/inquiry_write" class="writebtn">글작성</a></li>
                         </ul>
                     </div>
                 </div>
@@ -49,108 +49,44 @@
 						<table summary="NO, 제목, 등록일, 조회수 순으로 공지사항을 조회 하실수 있습니다." class="orderTable2" border="1" cellspacing="0">
 							<caption>공지사항 보기</caption>
 							<colgroup>
-							<col width="10%" class="tnone" />
+							<col width="9%" class="tnone" />
+							<col width="14%" class="tw20" />
 							<col width="*" />
-							<col width="14%" class="tw25" />
-							<col width="14%" class="tnone" />
+							<col width="15%" class="tnone" />
+							<col width="15%" class="tw30" />
 							</colgroup>
 							<thead>
 								<th scope="col" class="tnone">NO.</th>
+								<th scope="col">분류</th>
 								<th scope="col">제목</th>
-								<th scope="col">등록일</th>
-								<th scope="col" class="tnone">조회수</th>
+								<th scope="col" class="tnone">등록일</th>
+								<th scope="col">처리상태</th>
 							</thead>
 							<tbody>
+								<c:forEach var="inquiry" items="${list}">
 								<tr>
-									<td class="tnone">1</td>
-									<td class="left">
-										<a href="#">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-										<img src="../images/ico/ico_new.gif" alt="NEW" />
+									<td class="tnone">${inquiry.inquiry_no}</td>
+									<td>${inquiry.inquiry_category}</td>
+									<td class="left"><a href="/mypage/inquiry_view?inquiry_no=${inquiry.inquiry_no }"> ${inquiry.inquiry_title}</a></td>
+									<td class="tnone">${inquiry.inquiry_date }</td>
+									<td>
+									<!-- 관리자 답변이 없을때 -->
+										<c:if test="${inquiry.answer_content == null}">
+										<ul class="state">
+											<li><div class="nbtnMini iw83">답변대기</div></li>
+										</ul>
+										</c:if>
+										
+									<!-- 관리자 답변이 있을때 -->
+										<c:if test="${inquiry.answer_content != null}">
+										<ul class="state">
+											<li><div class="obtnMini iw83"> 답변완료</div></li>
+										</ul>
+										</c:if>
 									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
 								</tr>
+							</c:forEach>
 
-								<tr>
-									<td class="tnone">2</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">3</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">4</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">5</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">6</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">7</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">8</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">9</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">10</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -158,15 +94,19 @@
 
 
 					<div class="btnAreaList">
-						<!-- 페이징이동1 -->
+					<!-- 페이징이동1 -->
 						<div class="allPageMoving1">
 
 						<a href="#" class="n"><img src="../images/btn/btn_pre2.gif" alt="처음으로"/></a><a href="#" class="pre"><img src="../images/btn/btn_pre1.gif" alt="앞페이지로"/></a>
-						<strong>1</strong>
-						<a href="#">2</a>
-						<a href="#">3</a>
-						<a href="#">4</a>
-						<a href="#">5</a>
+							<c:forEach var="num" begin="${pageDto.startPage }" 
+											end="${pageDto.maxPage }" step="1">
+						<c:if test="${num != pageDto.page }">
+							<a href="/mypage/inquiry?page=${num }">${num }</a>
+						</c:if>
+						<c:if test="${num == pageDto.page }">
+							<strong>${num }</strong>
+						</c:if>
+					</c:forEach>
 						<a href="#" class="next"><img src="../images/btn/btn_next1.gif" alt="뒤페이지로"/></a><a href="#" class="n"><img src="../images/btn/btn_next2.gif" alt="마지막페이지로"/></a>
 
 						</div>

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../header/header.jsp" %>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ssl.daumcdn.net/dapi/postcode.v2.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/join.css?v=Y" />
 <script type="text/javascript" src="../js/left_navi.js"></script>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -125,14 +127,49 @@ function mailTval(){
 	}
 } // mailTval
 
+var address='';
 function zipBtn(){
 	new daum.Postcode({
         oncomplete: function(data) {
           $("#zip").val(data.zonecode);
           $("#addr1").val(data.address);
+          address = data.address;
+          console.log(address);
+          getCoordinates(address); // 주소가 설정된 후 위도와 경도를 가져옵니다.
         }
     }).open();
 } // zipBtn
+
+function getCoordinates(address) {
+    var apiKey = 'a9bc0a2eeb1937f6e9ec22ef39ceb2b5'; // 여기에 카카오 REST API 키를 입력하세요.
+    // JSP에서 주소를 URL 인코딩
+     var encodedAddress = encodeURIComponent(address); // JavaScript에서 주소 인코딩
+
+    // 백틱 대신 문자열 연결 사용
+    var geocodeUrl = 'https://dapi.kakao.com/v2/local/search/address.json?query=' + encodedAddress;
+    
+     $.ajax({
+        url: geocodeUrl,
+        type: 'GET',
+        headers: {
+            'Authorization': 'KakaoAK ' + apiKey // 카카오 API 키를 Authorization 헤더에 추가
+        },
+        success: function(data) {
+            if (data.documents.length > 0) {
+                var location = data.documents[0].address;
+                console.log("위도: " + location.y);
+                console.log("경도: " + location.x);
+                $("#x").val(location.x);
+                $("#y").val(location.y);
+            } else {
+                console.error("주소를 찾을 수 없습니다.");
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("API 요청 실패: " + error);
+        }
+    });
+}
 
 function idChk(){
 	$.ajax({
@@ -159,6 +196,8 @@ function idChk(){
 						<input type="hidden" name="ps_agree" id="ps_agree" value="${ps_agree}">
 						<input type="hidden" name="svc_agree" id="svc_agree" value="${svc_agree}">
 						<input type="hidden" name="auth_id" id="auth_id" value="${auth_id}">
+						<input type="hidden" name="x" id="x" value="">
+						<input type="hidden" name="y" id="y" value="">
 					<div class="memberbd">
 						<table summary="이름, 아이디, 비밀번호, 비밀번호 확인, 이메일, 이메일수신여부, 주소, 휴대폰, 생년월일 순으로 회원가입 정보를 등록할수 있습니다." class="memberWrite" border="1" cellspacing="0">
 							<caption>회원가입 입력</caption>

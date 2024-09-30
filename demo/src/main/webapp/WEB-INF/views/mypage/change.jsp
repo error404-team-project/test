@@ -1,6 +1,8 @@
 .<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ include file="../header/header.jsp" %>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ssl.daumcdn.net/dapi/postcode.v2.js"></script>
 	
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -47,6 +49,9 @@ function modiFrm() {  // 이거 수정 최종 버튼
 	 var Pw= $("#newPw2").val();	 
 	 var newzip = $("#zip").val();
      var newaddr =	$("#ziip").val();
+     
+     var x = $("#x").val();
+     var y = $("#y").val();
 	 
 	var marketing = $("input[name=receive1]:checked").val() ;
     
@@ -77,10 +82,10 @@ function modiFrm() {  // 이거 수정 최종 버튼
 		url:"/mypage/updateM",
 		method:"post",
 		data:{"user_id":Id,"user_name":Name,"user_pw":Pw,"user_email":Email,"mkt_agree":marketing,
-			"user_zip":newzip,"user_addr":newaddr,"user_phone":newPhone},
+			"user_zip":newzip,"user_addr":newaddr,"user_phone":newPhone,"x":x,"y":y},
 		success: function(data){	
 		alert("회원 정보 수정이 완료되었습니다.")
-		location.href="/main";
+		location.href="../";
 		},
 		error:function(){
 			alert("실패");
@@ -203,26 +208,61 @@ function modiFrm() {  // 이거 수정 최종 버튼
 									<td>
 										<ul class="pta">
 											<li><a onclick="zipBtn()" class="addressBtn"><span>우편번호 찾기</span></a></li>
-											<li class="pt5"><input type="text" class="addressType" id="zip" value="${member.user_zip}" /></li>
+											<li class="pt5"><input type="text" class="w134" class="addressType" id="zip" value="${member.user_zip}" /></li>
 											<li>
-												<input type="text" class="w134" id="ziip" value="${member.user_addr}"/>&nbsp;
+												<input type="text" class="addressType" id="ziip" value="${member.user_addr}"/>&nbsp;
+												<input type="hidden" name="x" id="x" value="">
+												<input type="hidden" name="y" id="y" value="">
 											</li>		
 											<li>
 											<c:if test=""></c:if>
 											<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+
+var address='';
 function zipBtn() {
-	
     new daum.Postcode({
         oncomplete: function(data) {
-        	
-       var newzip = $("#zip").val(data.address);
-
-            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+        $("#zip").val(data.zonecode);
+        $("#ziip").val(data.address);
+        address = data.address;
+        console.log(address);
+        getCoordinates(address); // 주소가 설정된 후 위도와 경도를 가져옵니다.
         }
     }).open();
+} // zipBtn
+
+function getCoordinates(address) {
+    var apiKey = 'a9bc0a2eeb1937f6e9ec22ef39ceb2b5'; // 여기에 카카오 REST API 키를 입력하세요.
+    // JSP에서 주소를 URL 인코딩
+     var encodedAddress = encodeURIComponent(address); // JavaScript에서 주소 인코딩
+
+    // 백틱 대신 문자열 연결 사용
+    var geocodeUrl = 'https://dapi.kakao.com/v2/local/search/address.json?query=' + encodedAddress;
+    
+     $.ajax({
+        url: geocodeUrl,
+        type: 'GET',
+        headers: {
+            'Authorization': 'KakaoAK ' + apiKey // 카카오 API 키를 Authorization 헤더에 추가
+        },
+        success: function(data) {
+            if (data.documents.length > 0) {
+                var location = data.documents[0].address;
+                console.log("위도: " + location.y);
+                console.log("경도: " + location.x);
+                $("#x").val(location.x);
+                $("#y").val(location.y);
+            } else {
+                console.error("주소를 찾을 수 없습니다.");
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("API 요청 실패: " + error);
+        }
+    });
 }
+
 </script>
 												<span class="mvalign">※ 상품 배송 시 받으실 주소입니다. 주소를 정확히 적어 주세요.</span>
 											</li>

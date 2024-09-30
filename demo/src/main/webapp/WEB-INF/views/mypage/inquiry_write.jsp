@@ -20,16 +20,23 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 function writeBtn() {
-
-	var category= $("#category").val();
+	
+	wFrm.submit();
+	
+	/* var category= $("#category").val();
 	var title= $("#Ititle").val();
 	var image= $("#image").val();
 	var content= $("#content").val();
+	var user_seq = $("#user_seq").val();
 	
 	$.ajax({
 		url:"/mypage/Inqury_dowrite",
 		method:"post",
-		data:{ "inquiry_category":category,"inquiry_title":title,"inquiry_image":image,"inquiry_content":content},
+		data:{	"inquiry_category":category,
+				"inquiry_title":title,
+				"inquiry_image":image,
+				"inquiry_content":content,
+				"user_seq":user_seq},
 		success: function(data){
 			location.href="/mypage/inquiry";
 			alert("1:1 문의 글 작성 완료 .");
@@ -37,9 +44,7 @@ function writeBtn() {
 		error:function(){
 			alert("실패");
 		}
-		});  //ajax
-
-
+		});  //ajax */
 }
 
 </script>
@@ -56,11 +61,11 @@ function writeBtn() {
 
 			<!-- contents -->
 			<div id="contents">
-				<div id="mypage">
+				<div id="mypage" >
 					<h2><strong>1:1문의 글 작성</strong><span>쟈뎅에 궁금하신 사항을 남겨주시면 답변해드립니다.</span></h2>
 					
 			
-
+					<form action="/mypage/Inqury_dowrite" method="post" name="wFrm" enctype="multipart/form-data">
 					<div class="checkDiv">
 						<table summary="분류, 제목, 상세내용, 첨부파일 순으로 궁금하신 점을 문의 하실수 있습니다." class="checkTable" border="1" cellspacing="0">
 							<caption>1:1문의</caption>
@@ -72,7 +77,7 @@ function writeBtn() {
 							<tr>
 									<th scope="row"><span>분류</span></th>
 									<td>
-										<select id="category" name="category">
+										<select id="category" name="inquiry_category">
 											<option value="일반 문의">일반 문의</option>
 											<option value="기술 오류 문의">기술 오류 문의</option>
 											<option value="주문 관련 문의">주문 관련 문의</option>
@@ -85,19 +90,20 @@ function writeBtn() {
 								<tr>
 									<th scope="row"><span>제목</span></th>
 									<td>
-										<input type="text" class="wlong"  id="Ititle" name="Ititle"/>
+										<input type="hidden" name="user_seq" id="user_seq" value="${sessionSeq}">
+										<input type="text" class="wlong"  id="Ititle" name="inquiry_title"/>
 									</td>
 								</tr>
 								<tr>
 									<th scope="row"><span>상세 내용</span></th>
 									<td>
-										<textarea class="tta" id="content" name="content"></textarea>
+										<textarea class="tta" id="content" name="inquiry_content"></textarea>
 									</td>
 								</tr>
 								<tr>
 									<th scope="row"><span>첨부파일</span></th>
 									<td>
-										<input type="file" id="image" name="image"class="fileType" />
+										<input type="file" id="image" name="file"class="fileType" />
 									</td>
 								</tr>
 							</tbody>
@@ -115,6 +121,7 @@ function writeBtn() {
 						</div>
 					</div>
 					<!-- //Btn Area -->
+					</form>
 					
 				</div>
 			</div>

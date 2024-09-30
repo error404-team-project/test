@@ -27,14 +27,14 @@
 			(user_seq.nextval,#{auth_id},#{user_id},#{user_pw},#{user_name},
 			#{user_email},#{user_birth},#{user_phone},#{user_zip},#{user_addr},
 			sysdate,#{user_gender},#{svc_agree},#{ps_agree},#{mkt_agree},null
-			,null,null,null,'Y')
+			,null,null,null,'Y',#{x},#{y})
 		</if>
 		<if test="auth_id == 'store'">
 			insert into user_table values 
 			(user_seq.nextval,#{auth_id},#{user_id},#{user_pw},#{user_name},
 			#{user_email},null,#{user_phone},#{user_zip},#{user_addr},
 			sysdate,null,#{svc_agree},#{ps_agree},'Y',null,
-			#{b_license},#{b_l_image},#{p_license},'N')
+			#{b_license},#{b_l_image},#{p_license},'N',#{x},#{y})
 		</if>
 	</insert>
 	

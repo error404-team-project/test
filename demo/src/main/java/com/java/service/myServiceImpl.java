@@ -21,12 +21,12 @@ public class myServiceImpl implements myService {
 	MyMapper mymapper;
 
 	@Override
-	public HashMap<String, Object> selectOrder(Page pageDto) {
+	public HashMap<String, Object> selectOrder(Page pageDto, int user_seq) {
 		
-		pageDto = pageMethod(pageDto);
+		pageDto = pageMethod(pageDto,user_seq);
 		
 		HashMap<String, Object> ordermap = new HashMap<>();
-		ArrayList<Porder> orderlist = mymapper.selectOrder(pageDto);
+		ArrayList<Porder> orderlist = mymapper.selectOrder(pageDto,user_seq);
 		
 		ordermap.put("list", orderlist);
 		ordermap.put("pageDto", pageDto);
@@ -36,9 +36,9 @@ public class myServiceImpl implements myService {
 		return ordermap;
 	}
 	
-	private Page pageMethod(Page pageDto) {
+	private Page pageMethod(Page pageDto, int user_seq) {
 		// 전체 게시글 수 저장 
-		pageDto.setListCount(   mymapper.selectListCount()   );
+		pageDto.setListCount(   mymapper.selectListCount(user_seq)   );
 		// 최대 넘버링 페이지 
 		pageDto.setMaxPage( (int)Math.ceil( (double)pageDto.getListCount()/10  ));
 		// 시작 넘버링페이지
@@ -73,20 +73,20 @@ public class myServiceImpl implements myService {
 	}
 
 	@Override
-	public HashMap<String, Object> selectInquiry(Page pageDto) {
+	public HashMap<String, Object> selectInquiry(Page pageDto,int user_seq) {
 		
-pageDto = pageMethod1(pageDto);
+		pageDto = pageMethod1(pageDto,user_seq);
 		
 		HashMap<String, Object> InquiryMap = new HashMap<>();
-		ArrayList<Inquiry> Inquirylist = mymapper.selectInquiry(pageDto);
+		ArrayList<Inquiry> Inquirylist = mymapper.selectInquiry(pageDto,user_seq);
 		
 		InquiryMap.put("list", Inquirylist);
 		InquiryMap.put("pageDto", pageDto);
 		return InquiryMap;
 	}
-	private Page pageMethod1(Page pageDto) {
+	private Page pageMethod1(Page pageDto, int user_seq) {
 		// 전체 게시글 수 저장 
-		pageDto.setListCount(   mymapper.select_InquiryListCount()   );
+		pageDto.setListCount(   mymapper.select_InquiryListCount(user_seq)   );
 		// 최대 넘버링 페이지 
 		pageDto.setMaxPage( (int)Math.ceil( (double)pageDto.getListCount()/10  ));
 		// 시작 넘버링페이지
@@ -119,7 +119,7 @@ pageDto = pageMethod1(pageDto);
 	@Override
 	public void insert_Inqury(Inquiry inquiry) {
 //		System.out.println("");
- mymapper.insert_Inqury(inquiry);
+		mymapper.insert_Inqury(inquiry);
 	}
 
 	@Override
@@ -179,27 +179,30 @@ pageDto = pageMethod1(pageDto);
 
 	
 
-	/*
-	 * @Override public HashMap<String, Object> selectReturn(Page pageDto) {
-	 * 
-	 * pageDto = pageMethod2(pageDto);
-	 * 
-	 * HashMap<String, Object> ReturnMap = new HashMap<>(); ArrayList<Inquiry>
-	 * Returnlist = mymapper.selectReturn(pageDto);
-	 * 
-	 * ReturnMap.put("list", Returnlist); ReturnMap.put("pageDto", pageDto);
-	 * 
-	 * return ReturnMap; } private Page pageMethod2(Page pageDto) { // 전체 게시글 수 저장
-	 * pageDto.setListCount( mymapper.select_returnListCount() ); // 최대 넘버링 페이지
-	 * pageDto.setMaxPage( (int)Math.ceil( (double)pageDto.getListCount()/10 )); //
-	 * 시작 넘버링페이지 pageDto.setStartPage( (int)((pageDto.getPage()-1)/10)*10 +1 ); // 끝
-	 * 넘버링 페이지 pageDto.setEndPage( pageDto.getStartPage() + 10 - 1 ); // 게시글 시작번호
-	 * pageDto.setStartRow( (pageDto.getPage() - 1 ) * 10 + 1 ); // 게시글 끝나는 번호
-	 * pageDto.setEndRow( pageDto.getStartRow() + 10 - 1 );
-	 * 
-	 * 
-	 * return pageDto; }
-	 */
+	
+	  @Override 
+	  public HashMap<String, Object> selectReturn(Page pageDto) {
+	  
+	  pageDto = pageMethod2(pageDto);
+	  
+	  HashMap<String, Object> ReturnMap = new HashMap<>(); 
+	  ArrayList<Inquiry> Returnlist = mymapper.selectReturn(pageDto);
+	  
+	  ReturnMap.put("list", Returnlist); ReturnMap.put("pageDto", pageDto);
+	  
+	  return ReturnMap; 
+	  } 
+	  
+	  private Page pageMethod2(Page pageDto) { // 전체 게시글 수 저장
+	  pageDto.setListCount( mymapper.select_returnListCount() ); // 최대 넘버링 페이지
+	  pageDto.setMaxPage( (int)Math.ceil( (double)pageDto.getListCount()/10 )); // 시작 넘버링페이지
+	  pageDto.setStartPage( (int)((pageDto.getPage()-1)/10)*10 +1 ); // 끝넘버링 페이지 
+	  pageDto.setEndPage( pageDto.getStartPage() + 10 - 1 ); // 게시글 시작번호
+	  pageDto.setStartRow( (pageDto.getPage() - 1 ) * 10 + 1 ); // 게시글 끝나는 번호
+	  pageDto.setEndRow( pageDto.getStartRow() + 10 - 1 );
+	  return pageDto; 
+	  }
+	 
 	
 
 

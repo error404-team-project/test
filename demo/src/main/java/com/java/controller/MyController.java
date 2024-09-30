@@ -1,8 +1,10 @@
 package com.java.controller;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.java.dto.Inquiry;
 import com.java.dto.Member;
@@ -36,10 +40,11 @@ public class MyController {
 //---------------------------------------------------------------------------------------------
 	@RequestMapping("/order")
 	public String order(Model model, Page pageDto, Porder order) {
-
-		HashMap<String, Object> ordermap = myservice.selectOrder(pageDto);
+		int user_seq = (int) session.getAttribute("sessionSeq");
+	//	System.out.println("마이페이지"+user_seq);
+		HashMap<String, Object> ordermap = myservice.selectOrder(pageDto,user_seq);
 		// System.out.println(order.getP_num());
-		int allcount = mymapper.selectListCount();
+		int allcount = mymapper.selectListCount(user_seq);
 
 		model.addAttribute("list", ordermap.get("list"));
 		model.addAttribute("pageDto", ordermap.get("pageDto"));
@@ -153,10 +158,10 @@ public class MyController {
 
 	@RequestMapping("/inquiry")
 	public String inquiry(Model model, Page pageDto) {
+		int user_seq = (int) session.getAttribute("sessionSeq");
+		HashMap<String, Object> InquiryMap = myservice.selectInquiry(pageDto,user_seq);
 
-		HashMap<String, Object> InquiryMap = myservice.selectInquiry(pageDto);
-
-		int allcount = mymapper.select_InquiryListCount();
+		int allcount = mymapper.select_InquiryListCount(user_seq);
 
 		model.addAttribute("list", InquiryMap.get("list"));
 		model.addAttribute("pageDto", InquiryMap.get("pageDto"));
@@ -179,17 +184,29 @@ public class MyController {
 	}
 
 // -----------------------------------------------------
-	@RequestMapping("/inquiry_write")
+	@GetMapping("/inquiry_write")
 	public String inquiry_write() {
 		return "/mypage/inquiry_write";
 	}
 
-	@RequestMapping("/Inqury_dowrite")
-	@ResponseBody
-	public String Inqury_dowrite(Inquiry inquiry) {
-
+	@PostMapping("/Inqury_dowrite")
+	public String Inqury_dowrite(Inquiry inquiry, @RequestPart MultipartFile file) {
+		String fileName="";
+		// 파일이 있을경우 저장
+		if(!file.isEmpty()) {
+			String ori_fileName = file.getOriginalFilename();// 실제 파일이름
+			UUID uuid = UUID.randomUUID(); // 랜덤숫자 생성
+			fileName = uuid+"_"+ori_fileName; // 파일이름 변경(중복방지)
+			System.out.println(fileName);
+			String uploadUrl = "c:/upload/"; // 파일 업로드 위치
+			File f = new File(uploadUrl+fileName);
+			try {
+				file.transferTo(f); // 파일 저장
+			} catch(Exception e) {e.printStackTrace();}
+		}
+		inquiry.setInquiry_image(fileName); // write일땐 if 밖에 modi일땐 if 안에
 		myservice.insert_Inqury(inquiry);
-		return "성공";
+		return "redirect:/mypage/inquiry";
 	}
 
 // -----------------------------------------------------

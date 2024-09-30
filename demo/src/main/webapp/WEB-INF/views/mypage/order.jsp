@@ -157,7 +157,10 @@
 
 <script type="text/javascript">
 // order 리스트 출력
-
+if(${result == 2}){
+	alert("로그인 후 이용 가능합니다");
+	location.href="/member/login";
+}
 		var orderlist=[];
 		var order = [];
 		'<c:forEach var="order" items="${list }">'

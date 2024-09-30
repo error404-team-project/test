@@ -198,7 +198,7 @@ $(document).ready(function() {
         <c:if test="${sessionId == null }">
             <a href="/member/login" class="button">LOGIN</a>
             <a href="/member/join" class="button">JOIN</a>
-            <a href="/mypage" class="button">MYPAGE</a>
+            <a href="/mypage/order" class="button">MYPAGE</a>
             <a href="/product/cart" class="button">CART</a>
         </c:if>
         <c:if test="${sessionId != null && sessionAuth=='user'}">

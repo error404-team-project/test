@@ -47,7 +47,7 @@ var hCate = ["오메가3","비타민","유산균","비오틴","루테인/자이�
 var mCate = ["항생제","소화제","비염","진통/소염제","항바이러스제","항염증제","연고","밴드"];
 $(document).ready(function() {
 	var str = '';
-	str += '<option selected disabled>선택하세요</option>';
+	str += '<option value="0" selected>선택하세요</option>';
 	for(let i = 0; i < hCate.length; i++){
 		if(${health_category}==i+1){
 			str += '<option value="'+(i+1)+'" selected>'+hCate[i]+'</option>';
@@ -135,7 +135,7 @@ function schBtn(){
                 <table id="example1" class="table table-bordered table-striped">
                    <colgroup>
 					<col width="5%"/>
-					<col width="10%" />
+					<col width="11%" />
 					<col width="20%"/>
 					<col width="20%"/>
 					<col width="5%"/>
@@ -161,7 +161,71 @@ function schBtn(){
                   <input type="hidden" name="p_num" class="p_num${l.p_num}" value="${l.p_num}">
                   <tr class="up${l.p_num}">
                     <td>${l.p_num }</td>
-                    <td>${l.health_category}</td>
+                    <td>
+                    	<c:if test="${l.health_category == 1 }">
+                   			오메가3
+                      	</c:if>
+                    	<c:if test="${l.health_category == 2 }">
+                   			비타민
+                      	</c:if>
+                    	<c:if test="${l.health_category == 3 }">
+                   			유산균
+                      	</c:if>
+                    	<c:if test="${l.health_category == 4 }">
+                   			비오틴
+                      	</c:if>
+                    	<c:if test="${l.health_category == 5 }">
+                   			루테인/지아잔틴
+                      	</c:if>
+                    	<c:if test="${l.health_category == 6 }">
+                   			밀크씨슬/실리마린
+                      	</c:if>
+                    	<c:if test="${l.health_category == 7 }">
+                   			프로폴리스
+                      	</c:if>
+                    	<c:if test="${l.health_category == 8 }">
+                   			가르시니아/잔티젠
+                      	</c:if>
+                    	<c:if test="${l.health_category == 9 }">
+                   			녹차추출물/카테킨
+                      	</c:if>
+                    	<c:if test="${l.health_category == 10 }">
+                   			콜라겐
+                      	</c:if>
+                    	<c:if test="${l.health_category == 11 }">
+                   			글루코사민/MSM
+                      	</c:if>
+                    	<c:if test="${l.health_category == 12 }">
+                   			칼슘/마그네슘
+                      	</c:if>
+                    	<c:if test="${l.health_category == 13 }">
+                   			아연/철분
+                      	</c:if>
+                    	<c:if test="${l.health_category == 14 }">
+                   			모나콜린K
+                      	</c:if>
+                    	<c:if test="${l.health_category == 15 }">
+                   			마카/쏘팔메토
+                      	</c:if>
+                    	<c:if test="${l.health_category == 16 }">
+                   			아르기닌
+                      	</c:if>
+                    	<c:if test="${l.health_category == 17 }">
+                   			포스파티딜
+                      	</c:if>
+                    	<c:if test="${l.health_category == 18 }">
+                   			옥타코사놀/<br/>폴리코사놀
+                      	</c:if>
+                    	<c:if test="${l.health_category == 19 }">
+                   			스피루라나
+                      	</c:if>
+                    	<c:if test="${l.health_category == 20 }">
+                   			글루타치온
+                      	</c:if>
+                    	<c:if test="${l.health_category == 21 }">
+                   			기타건강식품
+                      	</c:if>
+                    </td>
                     <td>${l.name }</td>
                     <td>${l.company }</td>
                   	<td><input type="number" name="price" class="price${l.p_num}" value="${l.price }" /></td>

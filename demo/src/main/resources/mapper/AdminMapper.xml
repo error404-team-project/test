@@ -120,4 +120,8 @@
 	 	update prescription set store_check = 'Y', prescription_price=#{prescription_price} where prescription_no=#{prescription_no}
 	 </update>
 	 
+	 <delete id="deleteU">
+	 	delete user_table where user_seq = #{user_seq}
+	 </delete>
+	 
 </mapper>

@@ -40,4 +40,6 @@ public interface AdminMapper {
 
 	void checkPre(int prescription_no, int prescription_price);
 
+	void deleteU(int user_seq);
+
 }

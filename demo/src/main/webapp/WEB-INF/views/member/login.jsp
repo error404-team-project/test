@@ -21,11 +21,8 @@
             <div id="title2">MEMBER<span>회원</span></div>
             <ul>    
                 <li><a href="/member/login" id="leftNavi1">로그인</a></li>
-                <li><a href="/member/join01" id="leftNavi2">회원가입</a></li>
+                <li><a href="/member/join" id="leftNavi2">회원가입</a></li>
                 <li><a href="/member/idsearch" id="leftNavi3">아이디/<span>비밀번호 찾기</span></a></li>
-                <li><a href="#" id="leftNavi4">회원약관</a></li>
-				<li><a href="#" id="leftNavi5">개인정보<span>취급방침</span></a></li>
-				<li class="last"><a href="#" id="leftNavi6">이메일무단<span>수집거부</span></a></li>
             </ul>            
         </div>
         <script type="text/javascript">initSubmenu(1,0);</script>
@@ -79,30 +76,9 @@ function lBtn(){
 						</div>
 					</div>
 					</form>
-
-
-
-					<h3>비회원 주문 조회</h3>
-					<div class="informbox">
-						<div class="inform">
-							<ul>
-								<li><input type="text" class="ordererType" onfocus="this.className='idfocus'" onblur="if (this.value.length==0) {this.className='ordererType'}else {this.className='idfocusnot'}" /></li>
-								<li><input type="text" class="ordernumType" onfocus="this.className='pwfocus'" onblur="if (this.value.length==0) {this.className='ordernumType'}else {this.className='pwfocusnot'}" /></li>
-							</ul>
-
-							<div class="btn"><a href="#" class="nbtnbig">조회하기</a></div>
-							<div class="point">
-								<p>아직 Medison 회원이 아니신가요? <span>회원가입 후 다양한 상품을 배송받아보세요</span></p>
-								<a href="/member/join01" class="nbtn">회원가입</a>
-							</div>
-						</div>
-					</div>
-
 				</div>
 			</div>
 			<!-- //contents -->
-
-
 		</div>
 	</div>
 	<!-- //container -->

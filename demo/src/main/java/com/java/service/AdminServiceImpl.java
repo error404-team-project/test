@@ -207,6 +207,12 @@ public class AdminServiceImpl implements AdminService {
 		mailSender.send(message);
 		System.out.println("메일이 발송되었습니다.");
 	}
+
+	@Override
+	public void deleteU(int user_seq) {
+		adMapper.deleteU(user_seq);
+		
+	}
 	
 	
 }

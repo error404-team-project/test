@@ -161,7 +161,32 @@ function schBtn(){
                  <input type="hidden" name="p_num" class="p_num${l.p_num}" value="${l.p_num}">
                   <tr class="up${l.p_num}">
                     <td>${l.p_num }</td>
-                    <td>${l.medical_category}</td>
+                    <td>
+                      <c:if test="${l.medical_category == 1 }">
+                   		항생제
+                      </c:if>
+                      <c:if test="${l.medical_category == 2 }">
+                   		소화제
+                      </c:if>
+                      <c:if test="${l.medical_category == 3 }">
+                   		비염
+                      </c:if>
+                      <c:if test="${l.medical_category == 4 }">
+                   		진통/소염제
+                      </c:if>
+                      <c:if test="${l.medical_category == 5 }">
+                   		항바이러스제
+                      </c:if>
+                      <c:if test="${l.medical_category == 6 }">
+                   		항염증제
+                      </c:if>
+                      <c:if test="${l.medical_category == 7 }">
+                   		연고
+                      </c:if>
+                      <c:if test="${l.medical_category == 8 }">
+                   		밴드
+                      </c:if>
+                    </td>
                     <td>${l.name }</td>
                     <td>${l.company }</td>
                   	<td><input type="number" name="price" class="price${l.p_num}" value="${l.price }" /></td>

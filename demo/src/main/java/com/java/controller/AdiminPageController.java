@@ -170,6 +170,14 @@ public class AdiminPageController {
 		return pre;
 	}
 	
+	@PostMapping("/deleteU")
+	@ResponseBody
+	public String deleteU(int user_seq) {
+	//	System.out.println("컨트롤러"+user_seq);
+		adservice.deleteU(user_seq);
+		return "탈퇴처리 되었습니다.";
+	}
+	
 	@PostMapping("/deleteNotice")
 	@ResponseBody
 	public String deleteNotice(int notice_no) {

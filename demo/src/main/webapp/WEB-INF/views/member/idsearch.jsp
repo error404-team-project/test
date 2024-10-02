@@ -20,11 +20,8 @@
 				<div id="title2">MEMBER<span>회원</span></div>
 				<ul>	
 					<li><a href="/member/login" id="leftNavi1">로그인</a></li>
-					<li><a href="/member/join01" id="leftNavi2">회원가입</a></li>
+					<li><a href="/member/join" id="leftNavi2">회원가입</a></li>
 					<li><a href="#" id="leftNavi3" class="hover">아이디/<span>비밀번호 찾기</span></a></li>
-					<li><a href="#" id="leftNavi4">회원약관</a></li>
-					<li><a href="#" id="leftNavi5">개인정보<span>취급방침</span></a></li>
-					<li class="last"><a href="#" id="leftNavi6">이메일무단<span>수집거부</span></a></li>
 				</ul>			
 			</div><script type="text/javascript">initSubmenu(3,0);</script>
 

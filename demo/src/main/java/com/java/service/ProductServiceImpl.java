@@ -23,7 +23,7 @@ public class ProductServiceImpl implements ProductService {
 
 	// 의약품
 	@Override
-	public HashMap<String, Object> selectMList(int medical_category,Page pageDto, String sWord,int store_seq) {
+	public HashMap<String, Object> selectMList(int medical_category,Page pageDto, String sWord,int store_seq,int sorting) {
 	//	System.out.println("카테고리"+ medical_category);
 		HashMap<String, Object> map = new HashMap<>();
 		int user_seq;
@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
 			user_seq = (int) session.getAttribute("sessionSeq");
 		}
 		pageDto = mPageMethod(pageDto,medical_category,sWord,store_seq);
-		ArrayList<Product> mCList = pMapper.selectMList(medical_category,pageDto,sWord,store_seq);
+		ArrayList<Product> mCList = pMapper.selectMList(medical_category,pageDto,sWord,store_seq,sorting);
 		ArrayList<Wishlist> wList = pMapper.selectAllWish(user_seq);
 		System.out.println("검색된 단어"+sWord);
 	//	System.out.println("엔드페이지"+pageDto.getEndPage());
@@ -169,7 +169,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public HashMap<String, Object> selectDlist(int health_category, Page pageDto, String sWord,int store_seq) {
+	public HashMap<String, Object> selectDlist(int health_category, Page pageDto, String sWord,int store_seq,int sorting) {
 		HashMap<String,Object> map = new HashMap<>();
 		int user_seq;
 		if(session.getAttribute("sessionSeq") == null) {
@@ -178,7 +178,7 @@ public class ProductServiceImpl implements ProductService {
 			user_seq = (int) session.getAttribute("sessionSeq");
 		}
 		pageDto = dPageMethod(pageDto,health_category,sWord, store_seq);
-		ArrayList<Product> mDList = pMapper.selectDList(health_category,pageDto,sWord, store_seq);
+		ArrayList<Product> mDList = pMapper.selectDList(health_category,pageDto,sWord, store_seq,sorting);
 		ArrayList<Wishlist> wList = pMapper.selectAllWish(user_seq);
 		map.put("mDList", mDList);
 		map.put("wList", wList);

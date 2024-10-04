@@ -36,7 +36,6 @@
 			and name like '%'|| #{sWord} ||'%'
 			</if>
 		</if>
-		
 	</select>
 	
 	<select id="selectDListCount" resultType="int">
@@ -71,8 +70,22 @@
 				<if test="sWord != null">
 				and name like '%'|| #{sWord} ||'%'
 				</if>
-			<![CDATA[
+				<if test="sorting == 0">
 				 order by p_num asc) a ) 
+				</if>
+				<if test="sorting == 1">
+				 order by stock asc) a ) 
+				</if>
+				<if test="sorting == 2">
+				 order by stock desc) a ) 
+				</if>
+				<if test="sorting == 3">
+				 order by p_count asc) a ) 
+				</if>
+				<if test="sorting == 4">
+				 order by p_count desc) a ) 
+				</if>
+			<![CDATA[
 				where rnum >= #{pageDto.startRow} and rnum<= #{pageDto.endRow}
 			]]>
 		</if>
@@ -86,8 +99,22 @@
 				<if test="sWord != null">
 				and name like '%'|| #{sWord} ||'%'
 				</if>
+				<if test="sorting == 0">
+				 order by p_num asc) a ) 
+				</if>
+				<if test="sorting == 1">
+				 order by stock asc) a ) 
+				</if>
+				<if test="sorting == 2">
+				 order by stock desc) a ) 
+				</if>
+				<if test="sorting == 3">
+				 order by p_count asc) a ) 
+				</if>
+				<if test="sorting == 4">
+				 order by p_count desc) a ) 
+				</if>
 			<![CDATA[
-				 order by p_num asc	) a ) 
 				where rnum >= #{pageDto.startRow} and rnum<= #{pageDto.endRow}
 			]]>
 		</if>
@@ -108,8 +135,22 @@
 				<if test="sWord != null">
 				and name like '%'|| #{sWord} ||'%'
 				</if>
-			<![CDATA[
+				<if test="sorting == 0">
 				 order by p_num asc) a ) 
+				</if>
+				<if test="sorting == 1">
+				 order by stock asc) a ) 
+				</if>
+				<if test="sorting == 2">
+				 order by stock desc) a ) 
+				</if>
+				<if test="sorting == 3">
+				 order by p_count asc) a ) 
+				</if>
+				<if test="sorting == 4">
+				 order by p_count desc) a ) 
+				</if>
+			<![CDATA[
 				where rnum >= #{pageDto.startRow} and rnum<= #{pageDto.endRow}
 			]]>
 		</if>
@@ -123,8 +164,22 @@
 				<if test="sWord != null">
 				and name like '%'|| #{sWord} ||'%'
 				</if>
+				<if test="sorting == 0">
+				 order by p_num asc) a ) 
+				</if>
+				<if test="sorting == 1">
+				 order by stock asc) a ) 
+				</if>
+				<if test="sorting == 2">
+				 order by stock desc) a ) 
+				</if>
+				<if test="sorting == 3">
+				 order by p_count asc) a ) 
+				</if>
+				<if test="sorting == 4">
+				 order by p_count desc) a ) 
+				</if>
 			<![CDATA[
-				 order by p_num asc	) a ) 
 				where rnum >= #{pageDto.startRow} and rnum<= #{pageDto.endRow}
 			]]>
 		</if>

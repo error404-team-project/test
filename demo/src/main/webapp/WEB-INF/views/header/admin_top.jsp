@@ -12,9 +12,6 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="/adminPage/admin_index" class="nav-link">관리자 홈</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
         <a href="/" class="nav-link">판매사이트 홈</a>
       </li>
     </ul>

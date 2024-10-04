@@ -13,9 +13,9 @@ import com.java.dto.Wishlist;
 public interface ProductMapper {
 
 
-	ArrayList<Product> selectDList(int health_category, Page pageDto, String sWord, int store_seq);
+	ArrayList<Product> selectDList(int health_category, Page pageDto, String sWord, int store_seq, int sorting);
 
-	ArrayList<Product> selectMList(int medical_category,Page pageDto, String sWord, int store_seq);
+	ArrayList<Product> selectMList(int medical_category,Page pageDto, String sWord, int store_seq, int sorting);
 
 	int selectMListCountAll(int medical_category, String sWord, int store_seq);
 

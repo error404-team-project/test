@@ -198,7 +198,7 @@ $(document).ready(function() {
         <c:if test="${sessionId == null }">
             <a href="/member/login" class="button">LOGIN</a>
             <a href="/member/join" class="button">JOIN</a>
-            <a href="/mypage/order" class="button">MYPAGE</a>
+            <a href="/mypage" class="button">MYPAGE</a>
             <a href="/product/cart" class="button">CART</a>
         </c:if>
         <c:if test="${sessionId != null && sessionAuth=='user'}">
@@ -210,7 +210,12 @@ $(document).ready(function() {
         <c:if test="${sessionAuth == 'admin' || sessionAuth=='store'}">
         	<sapn class="button">${sessionName}님</sapn>
         	 <a href="/member/logout" class="button">LOGOUT</a>
-            <a href="/adminPage/admin_index" class="button">ADMIN</a>
+       		<c:if test="${sessionAuth == 'admin' }">
+             <a href="/adminPage/ex_member" class="button">ADMIN</a>
+       		</c:if>
+       		<c:if test="${sessionAuth == 'store' }">
+             <a href="/adminPage/ad_medical?store_seq=${sessionSeq}" class="button">ADMIN</a>
+       		</c:if>
         	 <a href="" class="button"></a>
         	 <a href="" class="button"></a>
         </c:if>

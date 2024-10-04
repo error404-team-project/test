@@ -62,25 +62,27 @@ public class AdiminPageController {
 	}
 	
 	@RequestMapping ("/ad_medical")
-	public String ad_medical (Model model,Page pageDto,@RequestParam(defaultValue = "0")int medical_category,String sWord,@RequestParam(defaultValue= "0")int store_seq) {// 상품정보관리 - 상품현황
-		HashMap<String, Object> map = pservice.selectMList(medical_category,pageDto, sWord,store_seq);
+	public String ad_medical (Model model,Page pageDto,@RequestParam(defaultValue = "0")int medical_category,String sWord,@RequestParam(defaultValue= "0")int store_seq,@RequestParam(defaultValue= "0")int sorting) {// 상품정보관리 - 상품현황
+		HashMap<String, Object> map = pservice.selectMList(medical_category,pageDto, sWord,store_seq,sorting);
 		System.out.println(medical_category);
 		model.addAttribute("mCList", map.get("mCList"));
 		model.addAttribute("pageDto", map.get("pageDto"));
 		model.addAttribute("medical_category", map.get("medical_category"));
 		model.addAttribute("sWord", sWord);
 		model.addAttribute("store_seq", store_seq);
+		model.addAttribute("sorting", sorting);
 		return "/adminPage/ad_medical";
 	}
 	
 	@RequestMapping ("/ad_health")
-	public String ad_health (Model model,Page pageDto,@RequestParam(defaultValue = "0")int health_category,String sWord,@RequestParam(defaultValue= "0")int store_seq) {// 상품정보관리 - 상품현황
-		HashMap<String, Object> map = pservice.selectDlist(health_category,pageDto,sWord,store_seq);
+	public String ad_health (Model model,Page pageDto,@RequestParam(defaultValue = "0")int health_category,String sWord,@RequestParam(defaultValue= "0")int store_seq,@RequestParam(defaultValue= "0")int sorting) {// 상품정보관리 - 상품현황
+		HashMap<String, Object> map = pservice.selectDlist(health_category,pageDto,sWord,store_seq,sorting);
 		model.addAttribute("mDList", map.get("mDList"));
 		model.addAttribute("pageDto", map.get("pageDto"));
 		model.addAttribute("health_category", map.get("health_category"));
 		model.addAttribute("sWord", sWord);
 		model.addAttribute("store_seq", store_seq);
+		model.addAttribute("sorting", sorting);
 		return "/adminPage/ad_health";
 	}
 	

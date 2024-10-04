@@ -70,8 +70,8 @@ return "수량 업데이트 실패";
 	}
 	
 	@RequestMapping("/medical_list")
-	public String medical_list(@RequestParam(defaultValue= "0")int store_seq,Model model,@RequestParam(defaultValue = "0")int medical_category, Page pageDto, String sWord) {
-		HashMap<String, Object> map = pservice.selectMList(medical_category,pageDto,sWord,store_seq);
+	public String medical_list(@RequestParam(defaultValue= "0")int store_seq,Model model,@RequestParam(defaultValue = "0")int medical_category, Page pageDto, String sWord,@RequestParam(defaultValue= "0")int sorting) {
+		HashMap<String, Object> map = pservice.selectMList(medical_category,pageDto,sWord,store_seq,sorting);
 	//	System.out.println("컨트롤러 : "+sWord);
 		model.addAttribute("mCList", map.get("mCList"));
 		model.addAttribute("wList", map.get("wList"));
@@ -84,8 +84,8 @@ return "수량 업데이트 실패";
 	}
 	
 	@RequestMapping("/household_list")
-	public String household_list(@RequestParam(defaultValue= "0")int store_seq, Model model,@RequestParam(defaultValue= "0")int health_category, Page pageDto, String sWord) {
-		HashMap<String, Object> map = pservice.selectDlist(health_category,pageDto,sWord,store_seq);
+	public String household_list(@RequestParam(defaultValue= "0")int store_seq, Model model,@RequestParam(defaultValue= "0")int health_category, Page pageDto, String sWord,@RequestParam(defaultValue= "0")int sorting) {
+		HashMap<String, Object> map = pservice.selectDlist(health_category,pageDto,sWord,store_seq,sorting);
 		System.out.println(store_seq);
 		model.addAttribute("mDList", map.get("mDList"));
 		model.addAttribute("wList", map.get("wList"));

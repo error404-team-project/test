@@ -8,7 +8,7 @@ import com.java.dto.Product;
 
 public interface ProductService {
 
-	HashMap<String, Object> selectMList(int medical_category, Page pageDto, String sWord, int store_seq);
+	HashMap<String, Object> selectMList(int medical_category, Page pageDto, String sWord, int store_seq, int sorting);
 
 	HashMap<String, Object> mediView(int p_num);
 
@@ -20,7 +20,7 @@ public interface ProductService {
 
 	HashMap<String, Object> seletCart();
 
-	HashMap<String, Object> selectDlist(int health_category, Page pageDto, String sWord, int store_seq);
+	HashMap<String, Object> selectDlist(int health_category, Page pageDto, String sWord, int store_seq, int sorting);
 
 	HashMap<String, Object> dailyView(int p_num);
 

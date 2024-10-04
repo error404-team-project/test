@@ -45,6 +45,7 @@
 <script>
 var hCate = ["오메가3","비타민","유산균","비오틴","루테인/자이잔틴","밀크씨슬/실리마린","프로폴리스","가르시니아/잔티젠","녹차추출물/카테킨","콜라겐","글루코사민/MSM","칼슘/마그네슘","아연/철분","모나콜린K","마카/쏘팔메토","아르기닌","포스파티딜","옥타코사놀/폴리코사놀","스피루라나","글루타치온","기타건강식품"];
 var mCate = ["항생제","소화제","비염","진통/소염제","항바이러스제","항염증제","연고","밴드"];
+var sCate = ["재고 적은순","재고 많은순","판매량 적은순","판매량 많은순"];
 $(document).ready(function() {
 	var str = '';
 	str += '<option value="0" selected>선택하세요</option>';
@@ -56,11 +57,30 @@ $(document).ready(function() {
 		}
 	}
 	$("#pCateDt").html(str);
+	var sort = '';
+	sort += '<option selected value="0">정렬</option>';
+	for(let i = 0; i < sCate.length; i++){
+		if(${sorting} == i+1){
+			sort += '<option value="'+(i+1)+'" selected >'+sCate[i]+'</option>';
+		} else {
+			sort += '<option value="'+(i+1)+'">'+sCate[i]+'</option>';
+		}
+	}
+	$("#sorting").html(sort);
 });
 function cbtn(){
 	var health_category = $("#pCateDt").val();
 	var store_seq = $("#store_seq").val();
-	location.href="/adminPage/ad_health?health_category="+health_category+"&store_seq="+store_seq+"";
+	var sorting = $("#sorting").val();
+	location.href="/adminPage/ad_health?health_category="+health_category+"&store_seq="+store_seq+"&sorting="+sorting+"";
+}
+
+function soBtn(){
+	var sorting = $("#sorting").val();
+	var health_category = $("#pCateDt").val();
+	var store_seq = $("#store_seq").val();
+	location.href="/adminPage/ad_health?health_category="+health_category+"&store_seq="+store_seq+"&sorting="+sorting+"";
+	//alert(sorting);
 }
 
 function sbtn(pno){
@@ -75,20 +95,6 @@ function sbtn(pno){
 				"price" : price,
 				"stock" : stock},
 		success : function(data){
-			console.log(data);
-			var str = '';
-			str += '<td>'+data.p_num+'</td>';
-			str += '<td>'+data.health_category+'</td>';
-			str += '<td>'+data.name+'</td>';
-			str += '<td>'+data.company+'</td>';
-			str += '<td><input type="number" name="price" class="price'+pno+'" value="'+data.price+'" /></td>';
-			str += '<td><input type="number" name="stock" class="stock'+pno+'" value="'+data.stock+'" /></td>';
-			str += '<td>'+data.p_count+'</td>';
-			str += '<td>';
-			str += '<input type="button" onclick="sbtn('+pno+')" class="btn btn-sm btn-primary" value="저장"> ';
-			str += '<input type="button" onclick="dbtn('+pno+')" class="btn btn-sm btn-secondary" value="삭제">';
-			str += '</td>';
-			$(".up"+pno).html(str) 
 			alert("변경 저장되었습니다.");
 		},
 		error : function(){
@@ -124,6 +130,9 @@ function schBtn(){
                 <form action="/adminPage/ad_health" name="sFrm" method="get">
                 <input type="hidden" name="store_seq" id="store_seq" value="${sessionSeq}">
                 <select id="pCateDt" name="health_category" onchange="cbtn()">
+                </select>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select id="sorting" name="sorting" onchange="soBtn()">
                 </select>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <input type="text" name="sWord" id="sWord" >

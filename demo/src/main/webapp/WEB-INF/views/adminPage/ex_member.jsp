@@ -50,7 +50,8 @@ function cate(){
 	if($("#cate").val() == 1){
 		var str = '';
 		str += '<c:forEach var="u" items="${uList}">';
-		str += '<tr><td>${u.user_seq}</td>';
+		str += '<input type="hidden" name="user_seq" class="user_seq${u.user_seq}" value="${u.user_seq}">';
+		str += '<tr class="up${user_seq}"><td>${u.user_seq}</td>';
 		str += '<td>${u.user_id}</td>';
 		str += '<td>${u.user_name}</td>';
 		str += '<td>${u.user_email}</td>';
@@ -60,11 +61,11 @@ function cate(){
 		str += '<td>${u.mkt_agree}</td>';
 		if(${u.auth_id == 'store' && u.approval == 'N'}){
 			str += '<td>';
-			str += '<input type="button" onclick="mBtn(${e.event_no})" style="width:46px; height:31px;" class="btn btn-sm btn-primary" value="승인"> ';
-			str += '<input type="button" onclick="dBtn(${e.event_no})" class="btn btn-sm btn-secondary" value="삭제">';
+			str += '<input type="button" onclick="mBtn(${u.user_seq})" style="width:46px; height:31px;" class="btn btn-sm btn-primary" value="승인"> ';
+			str += '<input type="button" onclick="dBtn(${u.user_seq})" class="btn btn-sm btn-secondary" value="탈퇴">';
 			str += '</td></tr>';
 		} else {
-			str += '<td><button type="button" onclick="dBtn()" class="btn btn-sm btn-secondary">탈퇴</button></td> </tr>';
+			str += '<td><button type="button" onclick="dBtn(${u.user_seq})" class="btn btn-sm btn-secondary">탈퇴</button></td> </tr>';
 		}
 		str += '</c:forEach>';
 		$("#chageUser").html(str);
@@ -84,7 +85,8 @@ function cate(){
 	if($("#cate").val() == 2){
 		var str = '';
 		str += '<c:forEach var="u" items="${nList}">';
-		str += '<tr><td>${u.user_seq}</td>';
+		str += '<input type="hidden" name="user_seq" class="user_seq${u.user_seq}" value="${u.user_seq}">';
+		str += '<tr class="up${user_seq}"><td>${u.user_seq}</td>';
 		str += '<td>${u.user_id}</td>';
 		str += '<td>${u.user_name}</td>';
 		str += '<td>${u.user_email}</td>';
@@ -92,7 +94,7 @@ function cate(){
 		str += '<td><fmt:formatDate value="${u.user_joindate}" pattern="yyyy-MM-dd"/></td>';
 		str += '<td><fmt:formatDate value="${u.login_date}" pattern="yyyy-MM-dd"/></td>';
 		str += '<td>${u.mkt_agree}</td>';
-		str += '<td><button type="button" onclick="dBtn()" class="btn btn-sm btn-secondary">탈퇴</button></td> </tr></c:forEach>';
+		str += '<td><button type="button" onclick="dBtn(${u.user_seq})" class="btn btn-sm btn-secondary">탈퇴</button></td> </tr></c:forEach>';
 		$("#chageUser").html(str);
 		var page = '';
 		page += '<c:if test="${npageDto.page>1 }"><li class="page-item disabled"><a class="page-link" href="/adminPage/ex_event?page=${npageDto.page-1}">이전페이지</a></li></c:if>';
@@ -108,7 +110,8 @@ function cate(){
 	if($("#cate").val() == 3){
 		var str = '';
 		str += '<c:forEach var="u" items="${sList}">';
-		str += '<tr><td>${u.user_seq}</td>';
+		str += '<input type="hidden" name="user_seq" class="user_seq${u.user_seq}" value="${u.user_seq}">';
+		str += '<tr class="up${user_seq}"><td>${u.user_seq}</td>';
 		str += '<td>${u.user_id}</td>';
 		str += '<td>${u.user_name}</td>';
 		str += '<td>${u.user_email}</td>';
@@ -118,9 +121,9 @@ function cate(){
 		str += '<td>${u.mkt_agree}</td>';
 		str += '<td>';
 		if(${u.approval == 'N'}){
-			str += '<input type="button" onclick="jBtn()" style="width:46px; height:31px;" class="btn btn-sm btn-primary" value="승인"> ';
+			str += '<input type="button" onclick="jBtn(${u.user_seq})" style="width:46px; height:31px;" class="btn btn-sm btn-primary" value="승인"> ';
 		}
-		str += '<input type="button" onclick="dBtn()" class="btn btn-sm btn-secondary" value="삭제">';
+		str += '<input type="button" onclick="dBtn(${u.user_seq})" class="btn btn-sm btn-secondary" value="탈퇴">';
 		str += '</td></tr></c:forEach>';
 		$("#chageUser").html(str);
 		var page = '';
@@ -138,6 +141,23 @@ function cate(){
 function jBtn(uno){
 	//alert(uno);
 	location.href="/adminPage/store_approval?user_seq="+uno;
+}
+
+function dBtn(uno){
+//	alert("asdfasdfsadfasdfasdfsdaf");
+	var user_seq = $(".user_seq"+uno).val();
+	$.ajax({
+		url : "/adminPage/deleteU",
+		data : {"user_seq" : user_seq},
+		method : "post",
+		success : function(data){
+			alert(data);
+			$(".up"+uno).remove();
+		},
+		error : function(){
+			alert("실패");
+		}
+	})// ajax
 }
 </script>
 
@@ -181,7 +201,8 @@ function jBtn(uno){
                   <tbody id="chageUser">
                   <!-- 반복 -->
                   <c:forEach var="u" items="${uList}">
-                  <tr>
+                  <input type="hidden" name="user_seq" class="user_seq${u.user_seq}" value="${u.user_seq}">
+                  <tr class="up${u.user_seq}">
                     <td>${u.user_seq}</td>
                     <td>${u.user_id}</td>
                     <td>${u.user_name}</td>
@@ -198,12 +219,12 @@ function jBtn(uno){
                   	</c:if>
                   	<c:if test="${u.auth_id == 'store' && u.approval == 'Y' }">
                   	<td>
-                  	<button type="button" class="btn btn-sm btn-secondary">탈퇴</button>
+                  	<button type="button" onclick="dBtn(${u.user_seq})" class="btn btn-sm btn-secondary">탈퇴</button>
                   	</td>
                   	</c:if>
                   	<c:if test="${u.auth_id == 'user'||u.auth_id == 'admin' }">
                   	<td>
-                  	<button type="button" class="btn btn-sm btn-secondary">탈퇴</button>
+                  	<button type="button" onclick="dBtn(${u.user_seq})" class="btn btn-sm btn-secondary">탈퇴</button>
                   	</td>
                   	</c:if>
                   </tr>

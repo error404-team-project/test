@@ -19,7 +19,13 @@
 			<li class="last">처방전</li>
 		</ol>
 	</div>
-    
+<script>
+if(${user_seq == 0}){
+	alert("로그인 후 이용 가능합니다.");
+	location.href="/member/login";
+} //if
+
+</script>  
     <div id="outbox">        
         <div class="box" id="left">
             <div id="title2">CUSTOMER<span>고객센터</span></div>

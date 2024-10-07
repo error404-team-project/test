@@ -42,11 +42,11 @@ public class MyController {
 	@RequestMapping("/order")
 	public String order(Model model, Page pageDto, Porder order) {
 		Integer user_seq = (Integer)session.getAttribute("sessionSeq");
-		if(session.getAttribute("sessionSeq") == null) {
-			model.addAttribute("user_seq", 0);
-			user_seq = 0;
-		} else {
+		System.out.println("왜안되냐이거어머라이럼아sfj"+user_seq);
+		if(session.getAttribute("sessionSeq") != null) {
 			user_seq = (Integer) session.getAttribute("sessionSeq");
+		} else {
+			user_seq = 0;
 			model.addAttribute("user_seq", user_seq);
 		}
 	//	System.out.println("마이페이지"+user_seq);
@@ -56,9 +56,10 @@ public class MyController {
 
 		model.addAttribute("list", ordermap.get("list"));
 		model.addAttribute("pageDto", ordermap.get("pageDto"));
+		model.addAttribute("user_seq", user_seq);
 		model.addAttribute("allcount", allcount);
 
-		return ("/mypage/order");
+		return "/mypage/order";
 	}
 
 //----------------------------------------------------------------------------------------------

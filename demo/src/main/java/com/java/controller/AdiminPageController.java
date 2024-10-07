@@ -191,6 +191,7 @@ public class AdiminPageController {
 	@PostMapping ("/product_write")
 	public String doproduct_write (@RequestPart MultipartFile pimage, Product product) {
 	//	System.out.println(product.getCompany());
+		int store_seq=(int)session.getAttribute("sessionSeq");
 		String fileName="";
 		// 파일이 있을경우 저장
 		if(!pimage.isEmpty()) {
@@ -207,7 +208,7 @@ public class AdiminPageController {
 		}	
 	//	System.out.println(fileName);
 		adservice.insertP(product);
-		return "/adminPage/admin_index";
+		return "/adminPage/product_write";
 	}
 	
 	@RequestMapping ("/ad_medical")

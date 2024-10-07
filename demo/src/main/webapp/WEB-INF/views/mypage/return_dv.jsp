@@ -169,7 +169,7 @@
 							alert("반품 요청 완료되었습니다.");
 							console.log(data);
 							
-					//		location.href="/mypage/return_state";
+						location.href="/mypage/return_state";
 							},
 							error:function(){
 								alert("실패");

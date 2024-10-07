@@ -184,10 +184,10 @@ public class myServiceImpl implements myService {
 	public void insert_return(Return_table r1, int user_seq) {
 
 		mymapper.delete_order(r1, user_seq);
-		for (int i = 0;; i++) {
+		
 
 			mymapper.insert_return(r1, user_seq);
-		}
+		
 	}
 
 	@Override

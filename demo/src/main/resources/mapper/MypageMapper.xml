@@ -195,7 +195,7 @@ delete from inquiry_board where inquiry_no=${inquiry_no}
 <select id="selectReturn" resultMap="reorder2">
 		select * from (
 		select rownum rnum, a.* from
-		(select * from return_table r
+		(select r.* ,P.p_num r_num, P.name  from return_table r
 		inner join product P
 		on r.p_num=P.p_num
 		<if test="authId == 'user'">
@@ -221,7 +221,7 @@ delete from inquiry_board where inquiry_no=${inquiry_no}
 		<result column="doreturn_date" property="doreturn_date" />
 		<result column="return_no" property="return_no" />
 		<association property="product" column="p_num" javaType="com.java.dto.Product">
-			<id column="p_num" property="p_num" />
+			<id column="r_num" property="p_num" />
 			<result column="name" property="name" />
 			<result column="price" property="price" />
 			<result column="image" property="image" />

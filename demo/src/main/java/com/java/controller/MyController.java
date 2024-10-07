@@ -329,19 +329,22 @@ public class MyController {
 		  String[] order_dates = order_date.split(",");
 		  String[] statuss = status.split(",");
 		  
-		 
-		  
-//		  ArrayList<Return_table> r1 = new ArrayList<>();
-//		  for(int i=0; i<p_nums.length; i++) {
-//			  r1.add(i,p_nums[i]);
-//			  r1.setOrder_no(order_nos[i]);
-//			  r1.setReturn_state(statuss[i]);
-//			  r1.setReturn_reason(reason);
-//			  r1.setReturn_no(return_no+i);
-//			  
-//			  myservice.insert_return(r1,user_seq);
+		
+		  for(int i=0; i<p_nums.length; i++) {
 			  
-//		  }
+			  Return_table r1 = new Return_table();
+		  r1.setP_num(p_nums[i]);
+		  
+		  r1.setReturn_state(statuss[i]);
+	  r1.setOrder_no(order_nos[i]);
+		  r1.setReturn_reason(reason);
+		  r1.setReturn_no(return_no+i);
+		  
+		
+		  
+		  myservice.insert_return(r1,user_seq);
+			  
+	  }
 		 
 		return "ss";
 	}

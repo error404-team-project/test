@@ -22,6 +22,6 @@ public class Inquiry {
 	private String inquiry_content;
 	private String inquiry_image;
 	
-
+	User user;
 
 }

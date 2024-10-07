@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-    
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
     <%@ include file="../header/header.jsp" %>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="description" content="JARDIN SHOP" />
@@ -51,8 +51,8 @@
 									<td >
 										<select>
 										    <option value="product">전체</option>
-											<option value="medicine">의약품</option>
-											<option value="daily_product">생필품</option>
+											<option value="medicine">하나약국</option>
+											<option value="daily_product">미래로365약국</option>
 										</select>
 									</td>
 								</tr>
@@ -84,10 +84,9 @@
 							
 						</table>
 
-						<div class="noData">
-							등록된 상품이 없습니다.
-						</div>
+						<br><br><br><br><br>
 					</div>
+			
 					<script type="text/javascript">
 					// 반품 신청 하기
 					function returnFrm() {
@@ -97,6 +96,7 @@
 						
 						var order_num=[];
 						var order_p_num="";
+						var user_seq = $("#user_seq").val()
 					
 						// console.log($("input[name=return]:checked").length)
 						if($("input[name=return]:checked").length != 0){
@@ -121,7 +121,7 @@
 		
 					}
 					 console.log(order_p_num);
-						  var url = "/mypage/return_dv?order_list="+order_list+ "&order_p_num=" + order_p_num ; 
+						  var url = "/mypage/return_dv?order_list="+order_list+ "&order_p_num=" + order_p_num+"&user_seq="+user_seq+""; 
 				 		   location.href=url;
 						}else {
 					            alert("반품 하려면 상품이 선택되어야 합니다.");
@@ -131,10 +131,11 @@
 					</script>
 					<div >
 						<ul>	
-													<li><a onclick="returnFrm()" class="nbtnMini iw40" style="cursor:pointer;">반품 신청 하기</a></li>
+						<li><a onclick="returnFrm()" class="nbtnMini iw401" style="cursor:pointer;">반품 신청 하기</a></li>
+						<input type="hidden" name="user_seq" id="user_seq" value="${sessionSeq }">
 						</ul>
 					</div>
-					
+					<br><br><br>
 					<div class="btnAreaList">
 						<!-- 페이징이동1 -->
 						<div class="allPageMoving1">
@@ -157,10 +158,14 @@
 
 <script type="text/javascript">
 // order 리스트 출력
-if(${result == 2}){
-	alert("로그인 후 이용 가능합니다");
-	location.href="/member/login";
-}
+
+		
+		function dateformat(date){
+			var t = date.split(' ');
+			var ymd = t[0].split('-');
+			return ymd[0]+"년 "+ymd[1]+"월 "+ymd[2]+"일";
+		}
+
 		var orderlist=[];
 		var order = [];
 		'<c:forEach var="order" items="${list }">'
@@ -176,7 +181,7 @@ if(${result == 2}){
 		order=[]
 		'</c:forEach>'
 		//console.log(orderlist)
-		
+
 		
 		var str = '';
 		var cnt = 0;
@@ -197,7 +202,7 @@ if(${result == 2}){
 					if (newcnt == 0){
 						str+='<td rowspan="'+cnt+'" style="border-bottom : 1px solid black; border-left : 1px solid black; border-right : 1px solid black;">'
 						str+='<br>'
-						str+='<p class="day">'+orderlist[i][0]+'</p>'
+						str+='<p class="day">'+dateformat(orderlist[i][0])+'</p>'
 						str+='<br>'
 						str+='<p class="orderNum">'+orderlist[i][1]+'</p>'
 						str+='</td>'
@@ -206,7 +211,7 @@ if(${result == 2}){
 					str+='<td style="border-bottom : 1px solid black; border-left : 1px solid black; border-right : 1px solid black;" >'
 					str+='<br>'
 					str+='<br>'
-					str+='<p class="day">'+orderlist[i][0]+'</p>'
+					str+='<p class="day">'+dateformat(orderlist[i][0])+'</p>'
 					str+='<br>'
 					str+='<p class="orderNum">'+orderlist[i][1]+'</p>'
 					str+='</td>'
@@ -225,16 +230,14 @@ if(${result == 2}){
 				{
 					if (newcnt == 0){
 						str+='<td rowspan="'+cnt+'" style="border-bottom : 1px solid black; border-right : 1px solid black">'
-						str+='<span class="heavygray">'+orderlist[i][5]+'</span>'
-						str+='<ul class="state"><li><a href="#" class="reviewbtn">리뷰작성</a></li></ul></td>'
+						str+='<span class="heavygray">'+orderlist[i][5]+'</span></td>'
 						
 					}
 					newcnt++;
 					if (cnt == newcnt) newcnt=0;
 				}else if(cnt==1){
 					str+='<td style="border-bottom : 1px solid black; border-right : 1px solid black">'
-					str+='<span class="heavygray">'+orderlist[i][5]+'</span>'
-					str+='<ul class="state"><li><a href="#" class="reviewbtn">리뷰작성</a></li></ul></td>'
+					str+='<span class="heavygray">'+orderlist[i][5]+'</span></td>'
 				}
 			}
 			cnt=0;

@@ -29,16 +29,13 @@ public interface myService {
 
 	void Inquiry_deleteone(int inquiry_no);
 
-	HashMap<String, Object> select_order_return(String order_list, String order_p_num);
+	HashMap<String, Object> select_order_return(String order_list, String order_p_num, int user_seq);
 
-	void insert_return(Return_table r1);
-
-
-	
+	void insert_return(Return_table r1, int user_seq);
 
 	
-	HashMap<String, Object> selectReturn(Page pageDto);
-	 
+	HashMap<String, Object> selectReturn(Page pageDto,int user_seq);
+
 
 
 

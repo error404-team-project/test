@@ -21,4 +21,6 @@ public interface PayMapper {
 
 	void state_return();
 
+	void deletecart(Porder order);
+
 }

@@ -54,7 +54,7 @@ console.log("${cartlist}")
 								<c:if test="${medi != null }">
 								<tr>
 									<td class="left">
-										<p class="img"><img src="../images/img/sample_product.jpg" alt="상품" width="66" height="66" /></p>
+										<p class="img"><img src="../image/${medi.image}" alt="상품" width="66" height="66" /></p>
 
 										<ul class="goods">
 											<li>
@@ -73,7 +73,7 @@ console.log("${cartlist}")
 								<c:if test="${medi == null }">
 								<tr>
 									<td class="left">
-										<p class="img"><img src="../images/img/sample_product.jpg" alt="상품" width="66" height="66" /></p>
+										<p class="img"><img src="../images/img/${daily.image}" alt="상품" width="66" height="66" /></p>
 
 										<ul class="goods">
 											<li>
@@ -133,19 +133,54 @@ console.log("${cartlist}")
 									</td>
 								</tr>
 <script>
+var address = '';
+var x = '';
+var y = '';
 function zipBtn() {
 	
     new daum.Postcode({
         oncomplete: function(data) {
         	
-       var newzc = $("#zip").val(data.zonecode);
-       var newzip = $("#zip1").val(data.address);
-       
+       $("#zip").val(data.zonecode);
+       $("#zip1").val(data.address);
+       address = data.address;
+       console.log(address);
+       getCoordinates(address); // 주소가 설정된 후 위도와 경도를 가져옵니다.
+       }
+   }).open();
+} // zipBtn
 
-            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
-        }
-    }).open();
+function getCoordinates(address) {
+   var apiKey = 'a9bc0a2eeb1937f6e9ec22ef39ceb2b5'; // 여기에 카카오 REST API 키를 입력하세요.
+   // JSP에서 주소를 URL 인코딩
+    var encodedAddress = encodeURIComponent(address); // JavaScript에서 주소 인코딩
+
+   // 백틱 대신 문자열 연결 사용
+   var geocodeUrl = 'https://dapi.kakao.com/v2/local/search/address.json?query=' + encodedAddress;
+   
+    $.ajax({
+       url: geocodeUrl,
+       type: 'GET',
+       headers: {
+           'Authorization': 'KakaoAK ' + apiKey // 카카오 API 키를 Authorization 헤더에 추가
+       },
+       success: function(data) {
+           if (data.documents.length > 0) {
+               var location = data.documents[0].address;
+               console.log("위도: " + location.y);
+               console.log("경도: " + location.x);
+               $("#x").val(location.x);
+               $("#y").val(location.y);
+               x = location.x;
+               y = location.y;
+           } else {
+               console.error("주소를 찾을 수 없습니다.");
+           }
+       },
+       error: function(xhr, status, error) {
+           console.error("API 요청 실패: " + error);
+       }
+   });
 }
 </script>
 								<tr>
@@ -350,7 +385,7 @@ function zipBtn() {
 			              var email = $("#email").val();
 			              var order_no = merchant_uid;
 			              // URL 생성
-			              var url = "/payment/order_check?p_num=" + p_num + "&p_count=" + count + "&name=" + encodeURIComponent(name) + "&zip=" + zip + "&zip1=" + zip1 + "&zip2=" + zip2 + "&phone="+phone +"&email="+email+"&order_no="+order_no;
+			              var url = "/payment/order_check?p_num=" + p_num + "&p_count=" + count + "&name=" + encodeURIComponent(name) + "&zip=" + zip + "&zip1=" + zip1 + "&zip2=" + zip2 + "&phone="+phone +"&email="+email+"&order_no="+order_no+"&x="+x+"&y="+y+"";
 			              // 링크 리다이렉트
 			              location.href = url;
 			      } 

@@ -4,8 +4,11 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.java.dto.Drone;
+import com.java.dto.Inquiry;
 import com.java.dto.Notice;
 import com.java.dto.Page;
+import com.java.dto.Porder;
 import com.java.dto.Product;
 import com.java.dto.User;
 
@@ -40,6 +43,21 @@ public interface AdminMapper {
 
 	void checkPre(int prescription_no, int prescription_price);
 
+	ArrayList<Inquiry> selectInquiry(Page pageDto);
+
+	ArrayList<Inquiry> selectdrone();
+
+	void updatedrone(String is_possible,String drone_id);
+
+	void deletedrone(String drone_id);
+	
+
+	
+	//-----------------------------
 	void deleteU(int user_seq);
+
+	void insertDrone(Drone drone);
+
+	ArrayList<Porder> selectYdrone();
 
 }

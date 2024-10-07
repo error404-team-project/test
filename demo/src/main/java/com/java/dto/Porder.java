@@ -1,6 +1,8 @@
 package com.java.dto;
 
-import java.security.Timestamp;
+
+
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +15,7 @@ public class Porder {
 	
     private int user_seq;
     private String drone_id;
-    private String order_date;
+    private Timestamp order_date;
     private String order_status;  // 주문상태 
     private String carry_zip;   //  받는 사람 주소
     private String order_request;

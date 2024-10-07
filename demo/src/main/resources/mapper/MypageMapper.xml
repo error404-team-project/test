@@ -4,16 +4,28 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.java.mapper.MyMapper">
 
+
+
+
+<delete id="delete_order">
+delete order_table where user_seq=#{user_seq} and p_num=#{r1.p_num}
+</delete>
+
 <select id="selectOrder" resultMap="order">
 		select * from (
 		select rownum rnum, a.* from
 		(select * from ORDER_table O
 		inner join product P
 		on O.p_num=P.p_num
-		where o.user_seq=#{user_seq}
+		<if test="authId == 'user'">
+		where O.user_seq=#{user_seq}
+		</if>
+		<if test="authId == 'store'">
+		where P.user_seq=#{user_seq}
+		</if> 
 	<![CDATA[
-        order by O.order_no desc, O.order_date desc) a )e
-		where rnum>=#{pageDto.startRow} and rnum<=#{pageDto.endRow}
+        order by O.order_no desc, O.order_date desc) a )
+		where rnum>=#{pageDto.startRow} and rnum<=#{pageDto.endRow} 
         ]]>
 
 </select> 
@@ -29,6 +41,7 @@
 		<result column="ORDER_NO" property="order_no" />	
 		<result column="order_count" property="order_count" />	
 		<association property="product" column="p_num" javaType="com.java.dto.Product">
+			<id column="user_seq" property="user_seq" />
 			<id column="p_num" property="p_num" />
 			<result column="name" property="name" />
 			<result column="price" property="price" />
@@ -132,18 +145,34 @@ delete from inquiry_board where inquiry_no=${inquiry_no}
 </delete>
 
 
-<select id="selectoneReturn" resultMap="reorder">
-	<![CDATA[
 
-SELECT p.name , p.price,p.image, o.* FROM order_table o
-inner join product p
-on o.p_num = p.p_num
-WHERE o.order_no=#{orderNos}and o.p_num =#{order_p_nums}
-        ]]>
-
+<select id="selectoneReturn" resultMap="reorder1">
+    SELECT 
+        p.name AS product_name, 
+        p.price AS product_price, 
+        p.image AS product_image, 
+        o.user_seq, 
+        o.p_num AS order_p_num, 
+        o.order_no, 
+        o.order_count, 
+        o.ORDER_DATE, 
+        o.ORDER_STATUS, 
+        o.ORDER_REQUEST, 
+        o.carry_zip, 
+        o.EMERGENCY
+    FROM order_table o
+    INNER JOIN product p ON o.p_num = p.p_num
+    WHERE o.user_seq = #{user_seq} 
+    AND p.p_num IN 
+        <foreach item="order_p_num" collection="order_p_nums" open="(" separator="," close=")">
+            #{order_p_num}
+        </foreach>
+    AND o.order_no IN 
+        <foreach item="order_no" collection="orderNos" open="(" separator="," close=")">
+            #{order_no}
+        </foreach>
 </select>
-
-	<resultMap id="reorder" type="com.java.dto.Porder">
+<resultMap id="reorder1" type="com.java.dto.Porder">
 		<result column="user_seq" property="user_seq" />
 		<result column="p_num" property="p_num" />	
 		<result column="DRONE_ID" property="drone_id" />	
@@ -156,29 +185,58 @@ WHERE o.order_no=#{orderNos}and o.p_num =#{order_p_nums}
 		<result column="order_count" property="order_count" />	
 		<association property="product" column="p_num" javaType="com.java.dto.Product">
 			<id column="p_num" property="p_num" />
+			<result column="product_name" property="name" />
+			<result column="product_price" property="price" />
+			<result column="product_image" property="image" />
+		</association>
+	</resultMap>
+
+
+<select id="selectReturn" resultMap="reorder2">
+		select * from (
+		select rownum rnum, a.* from
+		(select * from return_table r
+		inner join product P
+		on r.p_num=P.p_num
+		<if test="authId == 'user'">
+		where r.user_seq=#{user_seq}
+		</if>
+		<if test="authId == 'store'">
+		where P.user_seq=#{user_seq}
+		</if>
+	<![CDATA[
+        order by r.return_no desc) a )
+		where rnum>=#{pageDto.startRow} and rnum<=#{pageDto.endRow} 
+        ]]>
+
+</select>
+
+	<resultMap id="reorder2" type="com.java.dto.Return_table">
+		<result column="user_seq" property="user_seq" />
+		<result column="p_num" property="p_num" />
+		<result column="order_no" property="order_no" />
+		<result column="return_reason" property="return_reason" />
+		<result column="return_state" property="return_state" />
+		<result column="request_date" property="request_date" />
+		<result column="doreturn_date" property="doreturn_date" />
+		<result column="return_no" property="return_no" />
+		<association property="product" column="p_num" javaType="com.java.dto.Product">
+			<id column="p_num" property="p_num" />
 			<result column="name" property="name" />
 			<result column="price" property="price" />
 			<result column="image" property="image" />
 		</association>
 	</resultMap>
 
-<!-- <select id="selectReturn" resultType="com.java.dto.Return1">
-	<![CDATA[
-select * from
-(select rownum rnum, a.* from
-(select * from return
-order by return_id desc) a ) 
-where rnum >= #{startRow} and rnum<= #{endRow}
-        ]]>
-</select> 
 
 <select id="select_returnListCount" resultType="int">
-		select count(*) from return
+		select count(*) from return_table
 	</select>
- -->
+ 
 
 <insert id="insert_return">
 	INSERT INTO return_table (
+	user_seq,
     ORDER_NO,
     RETURN_REASON,
     RETURN_STATE,
@@ -187,13 +245,14 @@ where rnum >= #{startRow} and rnum<= #{endRow}
     P_NUM,
     RETURN_NO
 ) VALUES (
-    #{order_no},              
-    #{return_reason},           
-    #{return_state},             
-   #{request_date} ,              
+	#{user_seq},
+    #{r1.order_no},              
+    #{r1.return_reason},           
+    #{r1.return_state},             
+   sysdate,              
     NULL,                   
-    #{p_num},               
-    #{return_no}             
+    #{r1.p_num},               
+    #{r1.return_no}             
 )
 </insert>
  

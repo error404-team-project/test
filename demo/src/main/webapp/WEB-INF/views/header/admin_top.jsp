@@ -58,15 +58,10 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <!-- 자유게시판 삭제함 -->
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/adminPage/ex_f_board" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>자유게시판</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="../../index2.html" class="nav-link">
+                <a href="/adminPage/ex_inquiry" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>1:1 문의게시판</p>
                 </a>
@@ -102,6 +97,7 @@
               </li>
               </ul>
           </li>
+          
           <li class="nav-item">
             <a href="/adminPage/ex_member" class="nav-link">
               <i class="nav-icon far fa-user"></i>
@@ -112,25 +108,25 @@
           </li>
        </c:if>
        <c:if test="${sessionAuth == 'store'}">
-          <li class="nav-item">
+        <li class="nav-item">
             <a href="#" class="nav-link">
              <i class="nav-icon fas fa-truck"></i>
               <p>
-                주문/배송관리
+                주문/반품 관리
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/adminPage/ex_Product" class="nav-link">
+                <a href="/adminPage/ex_Porder" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>주문관리</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="flot.html" class="nav-link">
+                <a href="/adminPage/ex_return" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>배송관리</p>
+                  <p>반품관리</p>
                 </a>
               </li>
             </ul>
@@ -172,6 +168,32 @@
                 처방전
               </p>
             </a>
+          </li>
+          
+          
+          
+                    <li class="nav-item">
+            <a href="#" class="nav-link">
+             <i class="nav-icon fas fa-truck"></i>
+              <p>
+                드론관리
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/adminPage/drone_write" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>드론 정보 등록</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/adminPage/ex_drone" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>드론 관리</p>
+                </a>
+              </li>
+            </ul>
           </li>
       </nav>
       <!-- /.sidebar-menu -->

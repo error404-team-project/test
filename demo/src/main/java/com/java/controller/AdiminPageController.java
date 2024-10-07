@@ -1,6 +1,7 @@
 package com.java.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -15,14 +16,21 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.java.dto.Drone;
 import com.java.dto.Page;
+import com.java.dto.Porder;
 import com.java.dto.Prescription;
 import com.java.dto.Product;
 import com.java.dto.User;
+import com.java.mapper.AdminMapper;
+import com.java.mapper.MyMapper;
 import com.java.service.AdminService;
 import com.java.service.CustomerService;
 import com.java.service.EventService;
 import com.java.service.ProductService;
+import com.java.service.myService;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -33,7 +41,148 @@ public class AdiminPageController {
 	@Autowired ProductService pservice;
 	@Autowired CustomerService cservice;
 	@Autowired EventService eservice;
+	@Autowired myService myservice;
+	@Autowired MyMapper mymapper;
+	@Autowired AdminMapper adMapper;
+	@Autowired
+	HttpSession session;
 	
+	
+	@RequestMapping("/ex_drone_carry")
+	public String ex_drone_carry(Model model, Page pageDto ) {
+		
+		/*
+		 * int user_seq = (int) session.getAttribute("sessionSeq");
+		 * if(session.getAttribute("sessionSeq") == null) { model.addAttribute("result",
+		 * 2); } else { user_seq = (int) session.getAttribute("sessionSeq"); }
+		 * //System.out.println("마이페이지"+user_seq); HashMap<String, Object> ordermap
+		 * =myservice.selectOrder(pageDto,user_seq);
+		 * //System.out.println(order.getP_num()); int allcount
+		 * =mymapper.selectListCount(user_seq);
+		 * 
+		 * ArrayList<Porder> dronelist = adservice.selectYdrone();
+		 * 
+		 * model.addAttribute("list", ordermap.get("list"));
+		 * model.addAttribute("pageDto", ordermap.get("pageDto"));
+		 * model.addAttribute("allcount", allcount);
+		 * model.addAttribute("list",dronelist);
+		 */
+		  
+		
+		return"/adminPage/ex_drone_carry";
+	}
+	
+	@GetMapping("/drone_write")
+	public String drone_write() {
+		
+		
+		return"/adminPage/drone_write";
+	}
+
+	@PostMapping("/drone_write")
+	public String drone_write1(@RequestPart MultipartFile image, Drone drone) {
+		//	System.out.println(product.getCompany());
+		String fileName="";
+		// 파일이 있을경우 저장
+		if(!image.isEmpty()) {
+			String ori_fileName = image.getOriginalFilename();// 실제 파일이름
+			UUID uuid = UUID.randomUUID(); // 랜덤숫자 생성
+			fileName = uuid+"_"+ori_fileName; // 파일이름 변경(중복방지)
+		//	System.out.println(fileName);
+			String uploadUrl = "c:/upload/"; // 파일 업로드 위치
+			File f = new File(uploadUrl+fileName);
+			try {
+				image.transferTo(f); // 파일 저장
+			} catch(Exception e) {e.printStackTrace();}
+			drone.setDrone_image(fileName); // write일땐 트라이 밖에 modi일땐 안에
+		}	
+	//	System.out.println(fileName);
+		adservice.insertDrone(drone);
+		
+		return"/adminPage/drone_write";
+	}
+	
+	@RequestMapping("ex_return")
+	public String ex_return(Model model, Page pageDto) {
+		
+		int user_seq = (int)session.getAttribute("sessionSeq");
+		 HashMap<String, Object> ReturnMap = myservice.selectReturn(pageDto,user_seq);
+		  
+		  int allcount = mymapper.select_returnListCount();
+		  
+		  model.addAttribute("list",ReturnMap.get("list"));
+		  model.addAttribute("pageDto", ReturnMap.get("pageDto"));
+		  model.addAttribute("allcount",allcount);
+		
+		return"/adminPage/ex_return";
+	}
+	@RequestMapping("ex_Porder")
+	  public String ex_Porder(Model model, Page pageDto ) {
+	
+			
+		   int user_seq = (int) session.getAttribute("sessionSeq");
+			  if(session.getAttribute("sessionSeq") == null) { model.addAttribute("result",
+			  2); } else { user_seq = (int) session.getAttribute("sessionSeq"); } 
+			  //System.out.println("마이페이지"+user_seq); 
+			  HashMap<String, Object> ordermap =myservice.selectOrder(pageDto,user_seq); 
+			  //System.out.println(order.getP_num()); 
+			  int allcount =mymapper.selectListCount(user_seq);
+			  
+			  model.addAttribute("list", ordermap.get("list"));
+			  model.addAttribute("pageDto", ordermap.get("pageDto"));
+			  model.addAttribute("allcount", allcount);
+			 
+
+		return"/adminPage/ex_Porder";
+	}
+	
+	@RequestMapping("/deletedrone")
+	@ResponseBody
+	public String deletedrone (String drone_id) {
+		
+		adservice.deletedrone(drone_id);
+		
+		
+		return"/adminPage/deletedrone";
+	}
+	
+	@RequestMapping("/updatedrone")
+	@ResponseBody
+	public String updatedrone (@RequestParam String is_possible,String drone_id) {
+	
+		System.out.println(drone_id);
+		adservice.updatedrone(is_possible,drone_id);
+
+		
+		return"/adminPage/updatedrone";
+	}
+	
+	@RequestMapping("/ex_drone")
+	public String ex_drone (Model model) {
+		HashMap<String, Object> droneMap = adservice.selectdrone();
+	//	int allcount = mymapper.select_InquiryListCount();
+		model.addAttribute("list", droneMap.get("list"));
+	//	model.addAttribute("pageDto", droneMap.get("pageDto"));
+		//model.addAttribute("allcount", allcount);
+		
+		return"/adminPage/ex_drone";
+	}
+	
+	@RequestMapping("/ex_inquiry")
+	public String  ex_inquiry (Model model,Page pageDto) {
+		
+		HashMap<String, Object> InquiryMap = adservice.selectInquiry(pageDto);
+
+		//int allcount = mymapper.select_InquiryListCount();
+		
+		model.addAttribute("list", InquiryMap.get("list"));
+		model.addAttribute("pageDto", InquiryMap.get("pageDto"));
+	//	model.addAttribute("allcount", allcount);
+		return"/adminPage/ex_inquiry";
+	}
+	
+	
+//------------------------------------------------------------------------
 	@GetMapping ("/product_write")
 	public String product_write () {
 		return "/adminPage/product_write";
@@ -210,6 +359,8 @@ public class AdiminPageController {
 		model.addAttribute("result", 2);
 		return "redirect:/adminPage/ex_member";
 	}
+	
+
 	
 	
 	

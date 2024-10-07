@@ -4,6 +4,56 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.java.mapper.AdminMapper">
 	
+	
+	<select id="selectYdrone" resultType="com.java.dto.Drone">
+	  select * from drone_info where is_possible = 'Y'
+	</select>
+		 <insert id="insertDrone">
+		insert into drone_info values(#{drone_id},#{drone_image},
+				#{drone_weight},#{drone_distance},
+				#{drone_speed},#{drone_time})
+	</insert>
+	
+	<delete id="deletedrone">
+ 	delete from product where drone_id = #{drone_id}
+	</delete>
+<update id="updatedrone">
+    UPDATE drone_info
+    SET is_possible = #{is_possible}
+    WHERE drone_id = #{drone_id}
+</update>
+	
+	<select id="selectdrone" resultType="com.java.dto.Drone" >
+  select * from drone_info
+	</select>
+	
+	 <select id="selectInquiry" resultMap="IMap">
+	 
+	 	select * from (
+		select rownum rnum, a.* from
+		(select * from inquiry_board n
+		inner join user_table u
+		on n.user_seq=u.user_seq
+        order by n.inquiry_no desc, n.inquiry_date desc) a )
+        <![CDATA[	
+		where rnum>=#{startRow} and rnum<=#{endRow}
+		]]>
+	 </select>	 
+	 <resultMap type="com.java.dto.Inquiry" id="IMap">
+	 	<result column="inquiry_no" property="inquiry_no"/>
+	 	<result column="user_seq" property="user_seq"/>
+	 	<result column="inquiry_title" property="inquiry_title"/>
+	 	<result column="inquiry_date" property="inquiry_date"/>
+	 	<association property="user" column="user_seq" javaType="com.java.dto.User">
+	 		<id column="user_seq" property="user_seq"/>
+		 	<result column="user_name" property="user_name"/>
+		 	<result column="user_auth" property="user_auth"/>
+		 	<result column="user_id" property="user_id"/>
+	 	</association>
+	 </resultMap>
+	
+	<!-- 여기 위에서 부터 내가 한 것 -->
+	
 	 <select id="selectListCount" resultType="int">
 		select count(*) from product
 	 </select>
@@ -120,8 +170,10 @@
 	 	update prescription set store_check = 'Y', prescription_price=#{prescription_price} where prescription_no=#{prescription_no}
 	 </update>
 	 
-	 <delete id="deleteU">
+	 <!-- aa -->
+	 	 <delete id="deleteU">
 	 	delete user_table where user_seq = #{user_seq}
 	 </delete>
+	 
 	 
 </mapper>

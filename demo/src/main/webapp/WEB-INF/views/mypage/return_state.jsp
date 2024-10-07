@@ -1,8 +1,8 @@
 .<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ include file="../header/header.jsp" %>
-	
-
+	<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="description" content="JARDIN SHOP" />
 <meta name="keywords" content="JARDIN SHOP" />
@@ -74,36 +74,41 @@
 							<col width="15%" class="tnone" />
 							</colgroup>
 							<thead>
-								<th scope="col">요청일자 <span>/ 주문번호</span></th>
+								<th scope="col">요청일자 <span>/ 반품번호</span></th>
 								<th scope="col" class="tnone">분류</th>
 								<th scope="col">상품명</th>
-								<th scope="col" class="tnone">가격</th>
 								<th scope="col">상태</th>
-								<th scope="col" class="tnone">사유</th>
 							</thead>
 							<tbody>
-							<%-- <c:forEach var="return" items="${list. }"> --%>
+						
+							 <c:forEach var="return1" items="${list}"> 
 								<tr>
 									<td>
-										<p class="day"><%-- ${return.request_date} --%></p>
-										<p class="orderNum"><%-- ${return.return_id } --%></p>
+										<p class="day"><fmt:formatDate value="${return1.request_date }" pattern="yyyy년 MM월 dd일"/></p>
+										<p class="orderNum">${return1.return_no}</p>
 									</td>
 									<td class="tnone"><span class="heavygray">반품</span></td>
-									<td class="left">
-										쟈뎅 오리지널 콜롬비아 페레이라 원두커피백 15p
+									<td class="left" style="text-align:center;">
+										${return1.product.name}
 									</td>
-									<td class="tnone">999,999 원</td>
 									<td><span class="orange">반품신청</span></td>
-									<td class="tnone">
-										<a href="/mypage/reason" class="nbtnbig iwc80">사유보기</a>
-									</td>
-								</tr>
-							<%-- </c:forEach> --%>
-
-							
+								</tr>		
+								  <input type="hidden" class="reno${return1.return_no}" value="${return1.return_no}"/>			
+							 </c:forEach> 
 							</tbody>
 						</table>
 
+<script type="text/javascript">
+function reason1(no) {
+	console.log(no);
+var return_no= $(".reno"+no).val();
+
+console.log(return_no);
+	
+	url="/mypage/reason?return_no="+return_no;
+	location.href=url
+}
+</script>
 						<div class="noData">
 							등록된 상품이 없습니다.
 						</div>

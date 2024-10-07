@@ -49,6 +49,8 @@ function modiFrm() {  // 이거 수정 최종 버튼
 	 var Pw= $("#newPw2").val();	 
 	 var newzip = $("#zip").val();
      var newaddr =	$("#ziip").val();
+     var addr2 =	$("#addr2").val();
+     
      
      var x = $("#x").val();
      var y = $("#y").val();
@@ -82,7 +84,7 @@ function modiFrm() {  // 이거 수정 최종 버튼
 		url:"/mypage/updateM",
 		method:"post",
 		data:{"user_id":Id,"user_name":Name,"user_pw":Pw,"user_email":Email,"mkt_agree":marketing,
-			"user_zip":newzip,"user_addr":newaddr,"user_phone":newPhone,"x":x,"y":y},
+			"user_zip":newzip,"addr1":newaddr,"user_phone":newPhone,"x":x,"y":y,"addr2":addr2},
 		success: function(data){	
 		alert("회원 정보 수정이 완료되었습니다.")
 		location.href="../";
@@ -183,7 +185,7 @@ function modiFrm() {  // 이거 수정 최종 버튼
 									<td>
 										<p> 마케팅 정보에 대한 수신을 동의 하시겠습까?</p>
 										<ul class="question">
-												<c:if test="${member.mkt_agree == 'Y' }">
+												<c:if test="${member.mkt_agree == 'y' }">
 											<li>
 												<input type="radio" name="receive1" id="receive_yes" class="radio_t" value="y" checked /><label for="receive_yes">예</label>
 											</li>
@@ -191,7 +193,7 @@ function modiFrm() {  // 이거 수정 최종 버튼
 												<input type="radio" name="receive1" id="receive_no" class="radio_t" value="n"/><label for="receive_no">아니오</label>
 											</li>
 												</c:if>
-												<c:if test="${member.mkt_agree == 'N' || member.mkt_agree == null}">
+												<c:if test="${member.mkt_agree == 'n' || member.mkt_agree == null}">
 											<li>
 												<input type="radio" name="receive1" id="receive_yes" class="radio_t" value="y" /><label for="receive_yes">예</label>
 											</li>
@@ -211,6 +213,7 @@ function modiFrm() {  // 이거 수정 최종 버튼
 											<li class="pt5"><input type="text" class="w134" class="addressType" id="zip" value="${member.user_zip}" /></li>
 											<li>
 												<input type="text" class="addressType" id="ziip" value="${member.user_addr}"/>&nbsp;
+												<li class="pt5"><input type="text" id="addr2" name="addr2" class="addressType" value="${member.addr3}" /></li>
 												<input type="hidden" name="x" id="x" value="">
 												<input type="hidden" name="y" id="y" value="">
 											</li>		

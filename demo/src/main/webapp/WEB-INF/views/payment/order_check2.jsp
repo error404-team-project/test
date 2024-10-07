@@ -61,7 +61,7 @@
 								<c:forEach var="cart" items="${cartlist}">
 								<tr>
 									<td class="left">
-										<p class="img"><img src="../images/img/sample_product.jpg" alt="상품" width="66" height="66" /></p>
+										<p class="img"><img src="../image/${cart.product.image}" alt="상품" width="66" height="66" /></p>
 										
 										<ul class="goods">
 											<li style="text-align: center;">
@@ -272,7 +272,8 @@ var carry = $("#carry").val(); // carry의 값 가져오기
  console.log(pnums)   
  console.log(cnts)   
 
- 
+ var x = "${x}";
+var y = "${y}";
  
  
  console.log()
@@ -280,8 +281,8 @@ var carry = $("#carry").val(); // carry의 값 가져오기
   	$.ajax({
 		url:"/payment/DBorderList",
 		method:"post",
-		data:{"order_request":carry,"order_date":formattedDate,"order_no":order_no,"carry_zip":carry_zip,
-			"user_seq":user_seq,"emergency":emergency,"order_status":order_status,"pnums":pnums,"cnts":cnts},
+		data:{"order_request":carry,"order_no":order_no,"carry_zip":carry_zip,
+			"user_seq":user_seq,"emergency":emergency,"order_status":order_status,"pnums":pnums,"cnts":cnts,"x":x,"y":y},
 		success: function(data){
 		alert("상품 구매가 완료되었습니다. \n 메인페이지로 이동합니다 ");	
 		location.href = "/index";

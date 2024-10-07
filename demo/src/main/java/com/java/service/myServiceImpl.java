@@ -1,7 +1,6 @@
 package com.java.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,22 +10,28 @@ import com.java.dto.Inquiry;
 import com.java.dto.Member;
 import com.java.dto.Page;
 import com.java.dto.Porder;
+import com.java.dto.Product;
 import com.java.dto.Return_table;
 import com.java.mapper.MyMapper;
+
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class myServiceImpl implements myService {
 
 	@Autowired
 	MyMapper mymapper;
+	@Autowired HttpSession session;
 
 	@Override
 	public HashMap<String, Object> selectOrder(Page pageDto, int user_seq) {
 		
 		pageDto = pageMethod(pageDto,user_seq);
+		String authId = (String)session.getAttribute("sessionAuth");
 		
 		HashMap<String, Object> ordermap = new HashMap<>();
-		ArrayList<Porder> orderlist = mymapper.selectOrder(pageDto,user_seq);
+		ArrayList<Porder> orderlist = mymapper.selectOrder(pageDto,user_seq,authId);
+		
 		
 		ordermap.put("list", orderlist);
 		ordermap.put("pageDto", pageDto);
@@ -68,6 +73,8 @@ public class myServiceImpl implements myService {
 
 	@Override
 	public void updateone(Member mem) {
+		String user_addr = mem.getAddr1()+"/"+mem.getAddr2();
+		mem.setUser_addr(user_addr);
 		mymapper.updateone(mem);
 		
 	}
@@ -139,28 +146,39 @@ public class myServiceImpl implements myService {
 	}
 
 	@Override
-	public HashMap<String, Object> select_order_return(String order_list, String order_p_num) {
+	public HashMap<String, Object> select_order_return(String order_list, String order_p_num,int user_seq) {
 		
 		 HashMap<String, Object> map = new HashMap<>();	 
 		 //System.out.println(order_list);
 		 //System.out.println(order_p_num);	
-		  String[] orderNos =
-		  order_list.split("/"); String[] order_p_nums = order_p_num.split("/");
+		  String[] orderNos = order_list.split("/"); 
+		  String[] order_p_nums = order_p_num.split("/");
 	
 		  //System.out.println(Arrays.toString(orderNos));
 		  //System.out.println(Arrays.toString(order_p_nums));
 		  
-		  ArrayList<Porder> orderlist = new ArrayList<>();
+		  // MyBatis에 넘길 매개변수 맵 설정
+		    HashMap<String, Object> params = new HashMap<>();
+		    params.put("user_seq", user_seq);
+		    params.put("orderNos", orderNos);
+		    params.put("order_p_nums", order_p_nums);
 		  
-		  for(int i=0; i<orderNos.length; i++) {
-			  Porder p1  =  mymapper.selectoneReturn(orderNos[i],order_p_nums[i]);
-			  
-			  orderlist.add(p1);		  
-		  }
-		  
-		  for(int i=0; i<orderNos.length; i++) {		  
-			  System.out.println(orderlist.get(i).toString());	  
-		  }
+		 // ArrayList<Porder> orderlist = new ArrayList<>();
+		// MyBatis를 통해 데이터 가져오기
+		    ArrayList<Porder> orderlist = mymapper.selectoneReturn(params);
+		  //  map.put("list", orderlist);
+		    
+		    
+
+			/*
+			 * for(int i=0; i<orderNos.length; i++) { Porder p1 =
+			 * mymapper.selectoneReturn(orderNos[i],order_p_nums[i],user_seq);
+			 * 
+			 * orderlist.add(p1); }
+			 * 
+			 * for(int i=0; i<orderNos.length; i++) {
+			 * System.out.println(orderlist.get(i).toString()); }
+			 */
 		  
 		  map.put("list", orderlist);
 		  
@@ -168,9 +186,10 @@ public class myServiceImpl implements myService {
 	}
 
 	@Override
-	public void insert_return(Return_table r1) {
+	public void insert_return(Return_table r1,int user_seq) {
 		
-		mymapper.insert_return(r1);
+		mymapper.delete_order(r1,user_seq);
+		mymapper.insert_return(r1,user_seq);
 	}
 
 	
@@ -181,13 +200,14 @@ public class myServiceImpl implements myService {
 
 	
 	  @Override 
-	  public HashMap<String, Object> selectReturn(Page pageDto) {
+	  public HashMap<String, Object> selectReturn(Page pageDto,int user_seq) {
 	  
 	  pageDto = pageMethod2(pageDto);
 	  
+	  String authId = (String)session.getAttribute("sessionAuth");
+		
 	  HashMap<String, Object> ReturnMap = new HashMap<>(); 
-	  ArrayList<Inquiry> Returnlist = mymapper.selectReturn(pageDto);
-	  
+	  ArrayList<Inquiry> Returnlist = mymapper.selectReturn(pageDto,user_seq,authId);
 	  ReturnMap.put("list", Returnlist); ReturnMap.put("pageDto", pageDto);
 	  
 	  return ReturnMap; 
@@ -202,6 +222,8 @@ public class myServiceImpl implements myService {
 	  pageDto.setEndRow( pageDto.getStartRow() + 10 - 1 );
 	  return pageDto; 
 	  }
+
+	
 	 
 	
 

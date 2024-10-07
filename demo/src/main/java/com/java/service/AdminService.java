@@ -3,7 +3,9 @@ package com.java.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.java.dto.Drone;
 import com.java.dto.Page;
+import com.java.dto.Porder;
 import com.java.dto.Prescription;
 import com.java.dto.Product;
 import com.java.dto.User;
@@ -30,7 +32,26 @@ public interface AdminService {
 
 	Prescription checkPre(int prescription_no, int prescription_price);
 
+	HashMap<String, Object> selectInquiry(Page pageDto);
+
+	HashMap<String, Object> selectdrone();
+
+	void updatedrone(String is_possible,String drone_id);
+
+	void deletedrone(String drone_id);
+	
+	
+	
+	//--------------------------------------------
 	void deleteU(int user_seq);
+
+	void insertDrone(Drone drone);
+
+	ArrayList<Porder> selectYdrone();
+
+
+
+
 
 
 

@@ -36,7 +36,8 @@
 							<div class="subject">
 								<ul>
 									<li class="cate">[${inquiry.inquiry_category}]</li>
-									<li>${inquiry.inquiry_title }</li>
+									<li>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${inquiry.inquiry_title }</li>
 								</ul>
 							</div>
 							<div class="day">
@@ -57,8 +58,8 @@
 							${inquiry.inquiry_content}
 						</div>
 						
-						<div class="inquiry_image">
-							<img src = "/images/${inquiry.inquiry_image}" alt="" style="width:650px; height:270px; margin:0 auto;"/>
+						<div class="inquiry_image" style="text-align: center;">
+							<img src = "/image/${inquiry.inquiry_image}" alt="" style="width:450px; height:350px; margin:0 auto; "/>
 							
 						</div>
 					</div>

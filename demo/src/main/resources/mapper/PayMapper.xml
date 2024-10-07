@@ -5,16 +5,25 @@
 <mapper namespace="com.java.mapper.PayMapper">
 
 
+
+<delete id="deletecart">
+delete cart where state =1 and user_seq=#{user_seq} and p_num=#{p_num}
+</delete>
+
+
+
+
 <update id="state_return">
         UPDATE cart
         SET state = 0
         WHERE state = 1
 </update>
+
 <insert id="orderInsert">
     INSERT INTO ORDER_table (user_seq, order_date, order_status, order_request, emergency, p_num, order_no, carry_zip,order_count)
     VALUES (
         #{user_seq},                              <!-- USER_SEQ --> 
-        #{order_date},                        <!-- ORDER_DATE (현재 시간) -->
+       sysdate,                        <!-- ORDER_DATE (현재 시간) -->
         #{order_status},                          <!-- ORDER_STATUS --> 
         #{order_request},                         <!-- ORDER_REQUEST -->  
         #{emergency},                             <!-- EMERGENCY (긴급 여부) --> 

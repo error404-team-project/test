@@ -77,10 +77,7 @@
 								<div class="stit">원료/성분</div> <div>${medi.row_material }</div>
 							</li>
 							<li>
-								<div class="stit">남은수량</div> <div>${medi.stock }개</div>
-							</li>
-							<li>
-								<div class="stit">무게</div> <div>${medi.weight }kg</div>
+								<div class="stit">남은수량</div> <div>${medi.stock }</div>
 							</li>
 							<li>
 								<c:if test="${medi.stock != 0}">
@@ -149,10 +146,24 @@ function inCart(){
 		}) // ajax
 	}
 } // inCart
+</script>
 
-function onCart(){
-	alert("이미 장바구니에 담김!");
-}
+<!-- jQuery 부분 -->
+<script>
+// 구매하기 !!
+$(document).ready(function() {
+    $("#buyLink").on("click", function(event) {
+        event.preventDefault(); // 기본 링크 동작 방지
+        var p_num = ${medi.p_num}; 
+        var count = $("#spinner").val(); 
+
+        // URL 생성
+        var url = "/payment/payment?p_num=" + p_num + "&p_count=" + count;
+
+        // 링크 리다이렉트
+       location.href = url;
+    });
+});
 </script>
 
 
@@ -160,18 +171,18 @@ function onCart(){
 					<c:if test="${medi.stock != 0}">
 					<div class="infobtn">
 						<ul>
-							<li><a href="#" class="ty1">바로 <span>구매하기</span></a></li>
+							<li><a href="#" id="buyLink" class="ty1">바로 <span>구매하기</span></a></li>
 						  <c:if test="${cp_num == p_num}">
-							<li id="pl"><a onclick="onCart()" class="ty2">장바구니에 <span>담김</span></a></li>
+							<li id="pl"><a href="#" class="ty2">장바구니에 <span>담김</span></a></li>
 						  </c:if>
 						  <c:if test="${cp_num != p_num}">
-							<li id="pl"><a onclick="inCart()" class="ty2">장바구니 <span>담기</span></a></li>
+							<li id="pl"><a onclick="inCart()" class="ty2" style="cursor:pointer;">장바구니 <span>담기</span></a></li>
 						  </c:if>
 						  <c:if test="${wp_num == p_num }">
-							<li class="last" id="wl"><a onclick="wDBtn()" class="ty3">위시 <span>리스트 삭제</span></a></li>
+							<li class="last" id="wl"><a onclick="wDBtn()" class="ty3" style="cursor:pointer;">위시 <span>리스트 삭제</span></a></li>
 						  </c:if>
 						  <c:if test="${wp_num != p_num }">
-							<li class="last" id="wl"><a onclick="wBtn()" class="ty3">위시 <span>리스트 추가</span></a></li>
+							<li class="last" id="wl"><a onclick="wBtn()" class="ty3" style="cursor:pointer;">위시 <span>리스트 추가</span></a></li>
 						  </c:if>
 						</ul>
 					</div>

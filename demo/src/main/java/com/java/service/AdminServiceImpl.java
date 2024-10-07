@@ -8,8 +8,11 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.java.dto.Drone;
+import com.java.dto.Inquiry;
 import com.java.dto.Notice;
 import com.java.dto.Page;
+import com.java.dto.Porder;
 import com.java.dto.Prescription;
 import com.java.dto.Product;
 import com.java.dto.User;
@@ -209,10 +212,85 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
+	public HashMap<String, Object> selectInquiry(Page pageDto) {
+		HashMap<String, Object> map = new HashMap<>();
+		pageDto = PageMethod5(pageDto);
+		ArrayList<Inquiry> list = adMapper.selectInquiry(pageDto);
+	
+		map.put("list", list);
+		map.put("pageDto", pageDto);
+		return map;
+	}
+	
+	public Page PageMethod5(Page pageDto) {
+		// 전체 게시글 수 저장 
+		pageDto.setListCount(   adMapper.selectNListCount()   );
+		// 최대 넘버링 페이지 
+		pageDto.setMaxPage( (int)Math.ceil( (double)pageDto.getListCount()/10  ));
+		// 시작 넘버링페이지
+		pageDto.setStartPage(  (int)((pageDto.getPage()-1)/10)*10 +1     );
+		// 끝 넘버링 페이지 
+		pageDto.setEndPage(  pageDto.getStartPage() + 10 - 1   );
+		if(pageDto.getEndPage() > pageDto.getMaxPage()) {
+			pageDto.setEndPage(pageDto.getMaxPage());
+		} else	if(pageDto.getEndPage() < pageDto.getNumberingPerPage()) {
+			pageDto.setNumberingPerPage(pageDto.getEndPage());
+		}
+		// 게시글 시작번호 
+		pageDto.setStartRow( (pageDto.getPage() - 1 ) * 10 + 1   );
+		// 게시글 끝나는 번호
+		pageDto.setEndRow( pageDto.getStartRow() + 10 - 1 );
+		return pageDto;
+	}
+
+	@Override
+	public HashMap<String, Object> selectdrone() {
+
+		HashMap<String, Object> dronemap = new HashMap<>();
+	
+		ArrayList<Inquiry> list = adMapper.selectdrone();
+		dronemap.put("list", list);
+		return dronemap;
+	}
+
+	@Override
+	public void updatedrone(String is_possible,String drone_id) {
+		adMapper.updatedrone(is_possible,drone_id);
+		
+	}
+
+	@Override
+	public void deletedrone(String drone_id) {
+		
+		adMapper.deletedrone(drone_id);
+	}
+	
+	//-----------------------------------------------------------
+	@Override
 	public void deleteU(int user_seq) {
 		adMapper.deleteU(user_seq);
 		
 	}
+
+	@Override
+	public void insertDrone(Drone drone) {
+		adMapper.insertDrone(drone);
+	}
+
+	@Override
+	public ArrayList<Porder> selectYdrone() {
+		  ArrayList<Porder> dronelist = adMapper.selectYdrone();
+		return dronelist;
+	}
+	
+	
+	
+	
+	
+
+
+	
+	
 	
 	
 }

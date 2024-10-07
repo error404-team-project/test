@@ -60,7 +60,7 @@
 										<c:if test="${medi == null }">
 								<tr>
 									<td class="left">
-										<p class="img"><img src="../images/img/sample_product.jpg" alt="상품" width="66" height="66" /></p>
+										<p class="img"><img src="../image/${medi.image}" alt="상품" width="66" height="66" /></p>
 										
 										<ul class="goods">
 											<li>
@@ -79,7 +79,7 @@
 								
 								<tr>
 									<td class="left">
-										<p class="img"><img src="../images/img/sample_product.jpg" alt="상품" width="66" height="66" /></p>
+										<p class="img"><img src="../image/${daily.image}" alt="상품" width="66" height="66" /></p>
 
 										<ul class="goods">
 											<li>
@@ -288,12 +288,14 @@ var carry = $("#carry").val(); // carry의 값 가져오기
  var order_status = "결제 완료";
  var p_num = "${p_num}"; 
 var p_count = "${p_count}";
+var x = "${x}";
+var y = "${y}";
 
   	$.ajax({
 		url:"/payment/DBorder",
 		method:"post",
-		data:{"order_request":carry,"order_date":formattedDate,"order_no":order_no,"carry_zip":carry_zip,
-			"user_seq":user_seq,"emergency":emergency,"order_status":order_status,"p_num":p_num,"order_count":p_count},
+		data:{"order_request":carry,"order_no":order_no,"carry_zip":carry_zip,
+			"user_seq":user_seq,"emergency":emergency,"order_status":order_status,"p_num":p_num,"order_count":p_count,"x":x,"y":y},
 		success: function(data){
 		alert("상품 구매가 완료되었습니다. \n 메인페이지로 이동합니다 ");	
 		location.href = "/index";

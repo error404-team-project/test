@@ -86,7 +86,7 @@ return "수량 업데이트 실패";
 	@RequestMapping("/household_list")
 	public String household_list(@RequestParam(defaultValue= "0")int store_seq, Model model,@RequestParam(defaultValue= "0")int health_category, Page pageDto, String sWord,@RequestParam(defaultValue= "0")int sorting) {
 		HashMap<String, Object> map = pservice.selectDlist(health_category,pageDto,sWord,store_seq,sorting);
-		System.out.println(store_seq);
+			System.out.println(store_seq);
 		model.addAttribute("mDList", map.get("mDList"));
 		model.addAttribute("wList", map.get("wList"));
 		model.addAttribute("pageDto", map.get("pageDto"));
@@ -94,6 +94,7 @@ return "수량 업데이트 실패";
 		model.addAttribute("health_category", map.get("health_category"));
 		model.addAttribute("sWord", sWord);
 		model.addAttribute("store_seq", store_seq);
+
 		return "/product/household_list";
 	}
 	

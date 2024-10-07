@@ -25,7 +25,7 @@ public class PayserviceImpl implements PayService{
 //	System.out.println(order.getUser_seq());
 	
 		pmapper.orderInsert(order);
-		
+		pmapper.deletecart(order);
 	
 		
 	}

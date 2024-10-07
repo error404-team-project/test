@@ -18,7 +18,7 @@
 
 				<!-- 장바구니에 상품이 있을경우 -->
 					<!-- 장바구니 상품 -->
-					<h3>장바구니에 담긴 상품 <span>장바구니에 담긴 상품은 30일간 보관됩니다.</span></h3>
+					<h3>장바구니에 담긴 상품 <span style="color : red">동일한 약국의 상품들만 구매할 수 있습니다</span></h3>
 					<div class="orderDivNm">
 						<table summary="장바구니에 담긴 상품들을 전체선택, 상품명, 가격/포인트, 수량, 합계, 주문 순으로 조회 및 주문을 하실수 있습니다." class="orderTable" border="1" cellspacing="0">
 							<caption>장바구니 상품목록</caption>
@@ -49,6 +49,15 @@
 										<ul class="goods">
 											<li>
 												<a href="#">${c.product.name }</a>
+												<input type="hidden" class="store_seq" value="${c.product.user_seq}" />
+												<br><br>
+												<c:if test="${c.product.user_seq == 4}">
+												<a>미래로 365 약국</a>
+												</c:if>
+												
+												<c:if test="${c.product.user_seq == 7}">
+											   <a>하나 약국</a>
+												</c:if>
 											</li>
 										</ul>
 									</td>
@@ -120,7 +129,7 @@ $(function() {
 	            "p_count": count 
 	        },
 	        success: function(data){
-	    		alert(data);	
+	    	//	alert(data);	
 	    		},
 	    		error:function(){
 	    			alert("실패");
@@ -138,7 +147,7 @@ $(function() {
         var total = price * count; // 총 가격 계산
         row.find(".tPrice").text(total); // 총 가격을 표시
         
-        
+       
         
        // AJAX 요청으로 수량 업데이트
            var p_num = row.find(".pro_num").find(".a").val()
@@ -152,13 +161,13 @@ $(function() {
 	            "p_count": count 
 	        },
 	        success: function(data){
-	    		alert(data);	
+	    	//alert(data);	
 	    		},
 	    		error:function(){
 	    			alert("실패");
 	    		}
 	   
-	    		
+	
 	    }); //ajax
     });  // 아래로 버튼 클릭 이벤트
 }); // jquery
@@ -212,14 +221,115 @@ $(function() {
     	 var realTotal = 0;
          
          $("input[name=order_check]:checked").each(function() {
+        	 
              var pricetxt = $(this).closest('tr').find(".price").text();  // 행의 데이터 속성에서 ID 가져오기
 	         var price = parseInt(pricetxt, 10); // 가격을 정수로 변환
 	         var count = $(this).closest('tr').find(".spinner").val(); // 스피너의 값을 가져오기
 	         count = parseInt(count, 10); // 수량을 정수로 변환
 	         total += price * count; // 총 가격 계산
 	         realTotal = total+2500;
+        	
          });
          
+         if("input[name=order_check]:checked"){
+        	 $(".inputbox").spinner();
+
+        	    // 위로 버튼 클릭 이벤트
+        	    $(document).on("click", ".ui-spinner-button.ui-spinner-up", function() {
+        	        var row = $(this).closest("tr"); // 현재 행 찾기
+        	        var pricetxt = row.find(".price").text(); // 가격 텍스트 가져오기
+        	        var price = parseInt(pricetxt, 10); // 가격을 정수로 변환
+        	        var count = row.find(".spinner").val(); // 스피너의 값을 가져오기
+        	        count = parseInt(count, 10); // 수량을 정수로 변환
+        	        var total = price * count; // 총 가격 계산
+        	        row.find(".tPrice").text(total); // 총 가격을 표시
+        	        
+        	        // AJAX 요청으로 수량 업데이트
+        	         var p_num =  row.find(".pro_num").find(".a").val() 
+        	       
+        	      
+        	    
+        	      console.log(p_num);
+        	   
+        	        
+        	         $.ajax({
+        		        url: '/product/onchange', // 서버에서 수량을 업데이트할 URL
+        		        type: 'POST', // POST 요청
+        		        data: {
+        		            "p_num": p_num,
+        		            "p_count": count 
+        		        },
+        		        success: function(data){
+        		    	//	alert(data);	
+        		    	realTotal = total+2500;
+        		    	 var str="";
+            	str+= '<li><span class="title">상품 합계금액</span><span class="won"><strong>';
+            	str+=	total;
+            	str+=	'</strong> 원</span></li><li><span class="title">배송비</span><span class="won"><strong>2,500</strong> 원</span></li>	</ul>';  	
+            	
+            	var str2="";
+            	str2+= '<li class="txt"><strong>결제 예정 금액</strong></li>';
+            	str2+= '<li class="money"><span>';
+            	str2+= realTotal;
+            	str2+= '</span> 원</li>';
+            	
+            	$("#priceinfo").html(str)
+            	$("#totalpriceinfo").html(str2)
+        		    		},
+        		    		error:function(){
+        		    			alert("실패");
+        		    		}
+        		    }); 
+        	    });  // 위로 버튼 클릭 이벤트
+
+        	    // 아래로 버튼 클릭 이벤트
+        	    $(document).on("click", ".ui-spinner-button.ui-spinner-down", function() {
+        	        var row = $(this).closest("tr"); // 현재 행 찾기
+        	        var pricetxt = row.find(".price").text(); // 가격 텍스트 가져오기
+        	        var price = parseInt(pricetxt, 10); // 가격을 정수로 변환
+        	        var count = row.find(".spinner").val(); // 스피너의 값을 가져오기
+        	        count = parseInt(count, 10); // 수량을 정수로 변환
+        	        var total = price * count; // 총 가격 계산
+        	        row.find(".tPrice").text(total); // 총 가격을 표시
+        	        
+        	       
+        	        
+        	       // AJAX 요청으로 수량 업데이트
+        	           var p_num = row.find(".pro_num").find(".a").val()
+        	           
+        	              console.log(p_num);
+        	         $.ajax({
+        		        url: '/product/onchange', // 서버에서 수량을 업데이트할 URL
+        		        type: 'POST', // POST 요청
+        		        data: {
+        		          "p_num": p_num,
+        		            "p_count": count 
+        		        },
+        		        success: function(data){
+        		    	//alert(data);	
+        		    	realTotal = total+2500;
+        		    	 var str="";
+            	str+= '<li><span class="title">상품 합계금액</span><span class="won"><strong>';
+            	str+=	total;
+            	str+=	'</strong> 원</span></li><li><span class="title">배송비</span><span class="won"><strong>2,500</strong> 원</span></li>	</ul>';  	
+            	
+            	var str2="";
+            	str2+= '<li class="txt"><strong>결제 예정 금액</strong></li>';
+            	str2+= '<li class="money"><span>';
+            	str2+= realTotal;
+            	str2+= '</span> 원</li>';
+            	
+            	$("#priceinfo").html(str)
+            	$("#totalpriceinfo").html(str2)
+        		    		},
+        		    		error:function(){
+        		    			alert("실패");
+        		    		}
+        		   
+        		
+        		    }); //ajax
+        	    });  // 아래로 버튼 클릭 이벤트
+         }
          
     	var str="";
     	str+= '<li><span class="title">상품 합계금액</span><span class="won"><strong>';
@@ -318,7 +428,7 @@ function selectBuy() {   // 선택 상품 주문하기
 		method:"post",
 		data:{},
 		success: function(data){
-		alert(data);	
+		//alert(data);	
 		},
 		error:function(){
 			alert("실패");
@@ -330,12 +440,24 @@ function selectBuy() {   // 선택 상품 주문하기
     $("input[name=order_check]:checked").each(function() {
         var id = $(this).closest('tr').data('id'); // 상품 ID 가져오기
         var count = $(this).closest('tr').find('.spinner').val(); // 수량 가져오기
-        selectedItems.push({ p_num: id, count: count }); // 객체로 저장
+        var userSeq = $(this).closest('tr').find('.store_seq').val(); // user_seq 가져오기
+        selectedItems.push({ p_num: id, count: count,user_seq:userSeq }); // 객체로 저장
     });
 
     if (selectedItems.length === 0) {
         alert("주문할 항목을 선택하세요.");
         return;
+    }
+    
+ // 모든 선택된 상품의 user_seq를 확인
+    if (selectedItems.length > 0) {
+        var firstUserSeq = selectedItems[0].user_seq; // 첫 번째 user_seq 가져오기
+        for (var i = 1; i < selectedItems.length; i++) {
+            if (selectedItems[i].user_seq !== firstUserSeq) {
+                alert("동일한 약국의 상품들로 선택해주세요.");
+                return;
+            }
+        }
     }
 
  // 선택된 상품의 p_num을 배열로 준비

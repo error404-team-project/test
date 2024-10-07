@@ -40,7 +40,7 @@ public class MyController {
 //---------------------------------------------------------------------------------------------
 	@RequestMapping("/order")
 	public String order(Model model, Page pageDto, Porder order) {
-		int user_seq = 0;
+		int user_seq = (int) session.getAttribute("sessionSeq");
 		if(session.getAttribute("sessionSeq") == null) {
 			model.addAttribute("result", 2);
 		} else {
@@ -141,7 +141,17 @@ public class MyController {
 			member.setBirth2(birth2);
 			member.setBirth3(birth4);
 		}
-
+	//	System.out.println(member.getUser_addr());
+		
+		if (member.getUser_addr() != null) {
+			String addr33 = member.getUser_addr();
+			String[] addrParts = addr33.split("/");
+			String addr2 = addrParts[1]; // '-' 월부분
+			
+		
+			member.setAddr3(addr2);
+		}
+		
 		model.addAttribute("member", member);
 		return "/mypage/change";
 	}
@@ -156,6 +166,18 @@ public class MyController {
 	@ResponseBody
 	public String doupdateM(Member mem) {
 
+		//System.out.println(mem.getUser_id());
+		//System.out.println(mem.getUser_name());
+		//System.out.println(mem.getUser_pw());
+		//System.out.println(mem.getUser_email());
+		//System.out.println(mem.getMkt_agree());
+		//System.out.println(mem.getUser_zip());
+		//System.out.println(mem.getAddr1());
+		//System.out.println(mem.getAddr2());
+		//System.out.println(mem.getX());
+		//System.out.println(mem.getY());
+		//System.out.println(mem.getUser_phone());
+		
 		myservice.updateone(mem);
 		return "/mypage/updateM";
 	}
@@ -244,15 +266,17 @@ public class MyController {
 //-------------------------------------------------------
 	@RequestMapping("return_state")
 	public String takeback_state(Model model, Page pageDto) {
-		/*
-		 * HashMap<String, Object> ReturnMap = myservice.selectReturn(pageDto);
-		 * 
-		 * int allcount = mymapper.select_returnListCount();
-		 * 
-		 * model.addAttribute("list",ReturnMap.get("list"));
-		 * model.addAttribute("pageDto", ReturnMap.get("pageDto"));
-		 * model.addAttribute("allcount",allcount);
-		 */ return "/mypage/return_state";
+		
+		int user_seq = (int)session.getAttribute("sessionSeq");
+		 HashMap<String, Object> ReturnMap = myservice.selectReturn(pageDto,user_seq);
+		  
+		  int allcount = mymapper.select_returnListCount();
+		  
+		  model.addAttribute("list",ReturnMap.get("list"));
+		  model.addAttribute("pageDto", ReturnMap.get("pageDto"));
+		  model.addAttribute("allcount",allcount);
+		  
+		  return "/mypage/return_state";
 	}
 //-------------------------------------------------------
 
@@ -262,16 +286,17 @@ public class MyController {
 	}
 
 	@RequestMapping("reason")
-	public String reason() {
-
+	public String reason(String reno,Model model) {
+		System.out.println();
+		model.addAttribute("reno", reno);
 		return "/mypage/reason";
 	}
 
 //--------------------------------------------------------
 	@RequestMapping("/return_dv")
-	public String return_dv(Model model, @RequestParam String order_list, @RequestParam String order_p_num) {
+	public String return_dv(Model model, @RequestParam String order_list, @RequestParam String order_p_num,int user_seq) {
 		// System.out.println(order_list);
-		HashMap<String, Object> map = myservice.select_order_return(order_list, order_p_num);
+		HashMap<String, Object> map = myservice.select_order_return(order_list, order_p_num,user_seq);
 
 		model.addAttribute("list", map.get("list"));
 		return "/mypage/return_dv";
@@ -283,7 +308,7 @@ public class MyController {
 
 		System.out.println(p_num);
 
-		
+		  int user_seq = (int) session.getAttribute("sessionSeq");
 		  String id =(String)session.getAttribute("sessionId");
 		  
 		  Date now = new Date(); // 현재 날짜/시간 출력 
@@ -291,8 +316,7 @@ public class MyController {
 		  SimpleDateFormat formatter = new SimpleDateFormat("yyMMddHHmm"); // 포맷팅 적용 
 		  String formatedNow =	  formatter.format(now); // 포맷팅 현재 날짜/시간 출력 
 	
-		  SimpleDateFormat return_d = new SimpleDateFormat("yyyy년MM월dd일HH시"); // 포맷팅 적용 
-		  String return_date =	  return_d.format(now); // 포맷팅 현재 날짜/시간 출력 
+		  
 		  
 		  
 		  
@@ -312,9 +336,9 @@ public class MyController {
 			  r1.setOrder_no(order_nos[i]);
 			  r1.setReturn_state(statuss[i]);
 			  r1.setReturn_reason(reason);
-			  r1.setRequest_date(return_date);
 			  r1.setReturn_no(return_no+i);
-			  myservice.insert_return(r1);
+			  
+			  myservice.insert_return(r1,user_seq);
 			  
 		  }
 		 

@@ -17,7 +17,7 @@
     </update>
 
 
-	<select id="selectMListCountAll" resultType="int">
+<select id="selectMListCountAll" resultType="int">
 		<if test="medical_category == 0">
 			select count(*)from product where product_category = 1
 			<if test="store_seq > 0">

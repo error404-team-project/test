@@ -1,9 +1,12 @@
 package com.java.controller;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,13 +69,20 @@ public class Paycontroller {
 	@RequestMapping("/payment2")
 	public String payment2 (Model model){
 		
+		System.out.println("가나다라");
 				String id=(String)session.getAttribute("sessionId");
+				
+			//	System.out.println(id);
+				
 				User user = uservice.userInfo(id);
 				model.addAttribute("user",user);
 				
 				int user_seq = user.getUser_seq();
+			//	System.out.println(user_seq);
+				
 				
 				ArrayList<Cart> cartlist = payService.cartview(user_seq);
+			//	System.out.println(cartlist.size());
 				model.addAttribute("cartlist",cartlist);
 				
 				return "/payment/payment2";
@@ -86,10 +96,13 @@ public class Paycontroller {
            @RequestParam("zip2") String zip2,
            @RequestParam("order_no") String order_no,
            String phone, String email,
-           Model model) {
+           Model model,
+           double x,
+           double y) {
 		
 			
 		String id=(String)session.getAttribute("sessionId");
+
 		User user = uservice.userInfo(id);
 		model.addAttribute("user",user);
 		
@@ -101,6 +114,8 @@ public class Paycontroller {
        model.addAttribute("phone",phone);
        model.addAttribute("email",email);
        model.addAttribute("order_no",order_no);
+       model.addAttribute("x",x);
+       model.addAttribute("y",y);
        
     // split 메서드를 사용하여 영어와 숫자를 분리
        String[] parts = order_no.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
@@ -130,7 +145,9 @@ public class Paycontroller {
            @RequestParam("zip2") String zip2,
            @RequestParam("order_no") String order_no,
            String phone, String email,
-           Model model) {
+           Model model,
+           double x,
+           double y) {
 		
 		//  이건 medi 쪽 정보
 		  HashMap<String,Object> map = pservice.mediView(p_num);
@@ -160,6 +177,8 @@ public class Paycontroller {
        model.addAttribute("phone",phone);
        model.addAttribute("email",email);
        model.addAttribute("order_no",order_no);
+       model.addAttribute("x",x);
+       model.addAttribute("y",y);
        
 
     // split 메서드를 사용하여 영어와 숫자를 분리
@@ -188,16 +207,18 @@ public class Paycontroller {
 	// 고객이 주문한 정보들을 DB에 넣는 메서드
 	@RequestMapping("/DBorder")
 	@ResponseBody
-	public String DBorder(Porder order){
+	public String DBorder(Porder order, double x,double y, Model model){
 		
 		 payService.orderInsert(order);
-
+			onejsonWrite(order,x,y);
+			model.addAttribute("x",x);
+			model.addAttribute("y",y);
 		return "/payment/DBorder";	
 	}
 	// 고객이 주문한 정보들을 DB에 넣는 메서드
 	@RequestMapping("/DBorderList")
 	@ResponseBody
-	public String DBorderList(Porder order, String pnums, String cnts){
+	public String DBorderList(Porder order, String pnums, String cnts, double x,double y,Model model){
 		
 		String[] p_nums = pnums.split(",");
 		String[] cntss = cnts.split(",");
@@ -214,10 +235,11 @@ public class Paycontroller {
 		//	System.out.println(order.toString());
 			payService.orderInsert(order);
 		}
+		onejsonWrite(order,x,y);
+		model.addAttribute("x",x);
+		model.addAttribute("y",y);
 		
-		
-		
-		return "/payment/DBorder";	
+		return "/payment/DBorderList";	
 	}
 	
 	 @PostMapping("/updatestate")
@@ -246,7 +268,21 @@ public class Paycontroller {
 		payService.state_return();
 		return "성공";
 	}
-
+	
+	
+	
+	
+	
+	  public void onejsonWrite(Porder order, double x, double y) { 
+		  JSONObject obj = new JSONObject();
+	  obj.put("name", order.getUser_seq()); 
+	  obj.put("order_no",	 order.getOrder_no());
+	  obj.put("x", x); 
+	  obj.put("y", y); 
+	  try { FileWriter
+	  file = new FileWriter("c:/upload/drone.json");
+	  file.write(obj.toJSONString()); file.flush(); file.close(); } catch
+	  (IOException e) { e.printStackTrace(); } System.out.print(obj); }
 	
 }
 	

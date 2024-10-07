@@ -1,6 +1,7 @@
 package com.java.mapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,7 +14,7 @@ import com.java.dto.Return_table;
 @Mapper
 public interface MyMapper {
 
-	ArrayList<Porder> selectOrder(Page pageDto, int user_seq);
+	ArrayList<Porder> selectOrder(Page pageDto, int user_seq, String authId);
 
 	int selectListCount(int user_seq);
 
@@ -39,15 +40,19 @@ public interface MyMapper {
 
 	void Inquiry_deleteone(int inquiry_no);
 
-	ArrayList<Inquiry> selectReturn(Page pageDto);	
+	ArrayList<Inquiry> selectReturn(Page pageDto,int user_seq, String authId);	
 
 	int select_returnListCount();
 
-	Porder selectoneReturn(String orderNos, String order_p_nums);
+	//Porder selectoneReturn(String orderNos, String order_p_nums, int user_seq);
 
-	void insert_return(Return_table r1);
+	void insert_return(Return_table r1, int user_seq);
 
-	
+	void delete_order(Return_table r1, int user_seq);
+
+	 ArrayList<Porder> selectoneReturn(HashMap<String, Object> params);
+
+
 
 
 

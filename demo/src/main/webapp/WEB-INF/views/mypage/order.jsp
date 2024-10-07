@@ -158,6 +158,10 @@
 					</div>
 
 <script type="text/javascript">
+if("${user_seq == 0}"){
+	alert("로그인 후 이용 가능합니다.");
+	location.href="/member/login"
+}
 // order 리스트 출력
 
 		

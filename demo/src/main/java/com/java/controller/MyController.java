@@ -41,11 +41,13 @@ public class MyController {
 //---------------------------------------------------------------------------------------------
 	@RequestMapping("/order")
 	public String order(Model model, Page pageDto, Porder order) {
-		int user_seq = (int) session.getAttribute("sessionSeq");
+		Integer user_seq = (Integer)session.getAttribute("sessionSeq");
 		if(session.getAttribute("sessionSeq") == null) {
-			model.addAttribute("result", 2);
+			model.addAttribute("user_seq", 0);
+			user_seq = 0;
 		} else {
-			user_seq = (int) session.getAttribute("sessionSeq");
+			user_seq = (Integer) session.getAttribute("sessionSeq");
+			model.addAttribute("user_seq", user_seq);
 		}
 	//	System.out.println("마이페이지"+user_seq);
 		HashMap<String, Object> ordermap = myservice.selectOrder(pageDto,user_seq);

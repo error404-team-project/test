@@ -48,7 +48,7 @@
 					<div class="img">
 						<ul>
 						  <c:if test="${daily.stock != 0}">
-							<li style="padding:0;"><img src="../images/img/${daily.image}" alt="제품이미지" style="width:348px; height:348px; margin:0 auto;"/></li>
+							<li style="padding:0;"><img src="../image/${daily.image}" alt="제품이미지" style="width:348px; height:348px; margin:0 auto;"/></li>
 						  </c:if>
 						  <c:if test="${daily.stock == 0}">
 							<li style="padding:0;"><img src="../images/img/stock0.png" alt="제품이미지" style="width:348px; height:348px; margin:0 auto;"/></li>

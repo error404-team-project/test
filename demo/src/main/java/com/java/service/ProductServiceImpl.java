@@ -29,8 +29,10 @@ public class ProductServiceImpl implements ProductService {
 		int user_seq;
 		if(session.getAttribute("sessionSeq") == null) {
 			user_seq = 0;
+			map.put("user_seq", user_seq);
 		} else {
 			user_seq = (int) session.getAttribute("sessionSeq");
+			map.put("user_seq", user_seq);
 		}
 		pageDto = mPageMethod(pageDto,medical_category,sWord,store_seq);
 		ArrayList<Product> mCList = pMapper.selectMList(medical_category,pageDto,sWord,store_seq,sorting);
@@ -42,7 +44,6 @@ public class ProductServiceImpl implements ProductService {
 		map.put("mCList", mCList);
 		map.put("wList", wList);
 		map.put("pageDto", pageDto);
-		map.put("user_seq", user_seq);
 		map.put("medical_category", medical_category);
 		map.put("sWord", sWord);
 		
@@ -224,7 +225,6 @@ public class ProductServiceImpl implements ProductService {
 		}
 		ArrayList<Cart> list = pMapper.seletMyCart(user_seq);
 	//	System.out.println(list.get(0).getUser_seq());
-		System.out.println("카트불러오기"+list.get(0).getProduct().getUser_seq());
 		map.put("list", list);
 		map.put("user_seq", user_seq);
 		return map;

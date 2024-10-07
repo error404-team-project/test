@@ -214,7 +214,7 @@
 	</select>
 	
 	<select id="seletMyCart" resultMap="cmap">
-		select c.*, p.* from cart c
+		select c.*, p.*,p.user_seq p_seq from cart c
 		inner join product p
 		on c.p_num = p.p_num
 		where c.user_seq = #{user_seq}
@@ -225,10 +225,11 @@
 		<result column="p_num" property="p_num" />	
 		<result column="count" property="count" />	
 		<association property="product" column="p_num" javaType="com.java.dto.Product">
-			<id column="p_num" property="p_num" />
+			<result column="p_num" property="p_num" />
 			<result column="name" property="name" />
 			<result column="price" property="price" />
 			<result column="image" property="image" />
+		<result column="p_seq" property="user_seq" />
 		</association>
 	</resultMap>
 	

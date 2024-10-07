@@ -224,6 +224,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 		ArrayList<Cart> list = pMapper.seletMyCart(user_seq);
 	//	System.out.println(list.get(0).getUser_seq());
+		System.out.println("카트불러오기"+list.get(0).getProduct().getUser_seq());
 		map.put("list", list);
 		map.put("user_seq", user_seq);
 		return map;

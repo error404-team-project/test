@@ -105,8 +105,7 @@ function dBtn(pno){
                    <td>	${return1.return_state}</td>
                   
                  	<td>
-                  		<input type="button" onclick="mBtn(${return1.return_no})" class="btn btn-sm btn-primary" value="수정"> 
-                  		<input type="button" onclick="dBtn(${return1.return_no})" class="btn btn-sm btn-secondary" value="삭제">
+                  		<input type="button" onclick="dBtn(${return1.return_no})" class="btn btn-sm btn-secondary" value="반품 요청 확인">
                   	</td>
                   </tr>
                   </c:forEach>

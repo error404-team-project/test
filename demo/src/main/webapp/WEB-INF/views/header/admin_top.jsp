@@ -106,6 +106,29 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+             <i class="nav-icon fas fa-truck"></i>
+              <p>
+                드론관리
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/adminPage/drone_write" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>드론 정보 등록</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/adminPage/ex_drone" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>드론 관리</p>
+                </a>
+              </li>
+            </ul>
+          </li>
        </c:if>
        <c:if test="${sessionAuth == 'store'}">
         <li class="nav-item">
@@ -160,7 +183,6 @@
               </li>
               </ul>
           </li>
-          </c:if>
            <li class="nav-item">
             <a href="/adminPage/ad_prescription" class="nav-link">
             	<i class="nav-icon far fa-clipboard"></i>
@@ -169,32 +191,7 @@
               </p>
             </a>
           </li>
-          
-          
-          
-                    <li class="nav-item">
-            <a href="#" class="nav-link">
-             <i class="nav-icon fas fa-truck"></i>
-              <p>
-                드론관리
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/adminPage/drone_write" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>드론 정보 등록</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/adminPage/ex_drone" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>드론 관리</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+          </c:if>
       </nav>
       <!-- /.sidebar-menu -->
     </div>

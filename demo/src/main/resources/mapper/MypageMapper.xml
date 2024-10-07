@@ -174,7 +174,7 @@ delete from inquiry_board where inquiry_no=${inquiry_no}
 </select>
 <resultMap id="reorder1" type="com.java.dto.Porder">
 		<result column="user_seq" property="user_seq" />
-		<result column="p_num" property="p_num" />	
+		<result column="order_p_num" property="p_num" />	
 		<result column="DRONE_ID" property="drone_id" />	
 		<result column="ORDER_DATE" property="order_date" />	
 		<result column="ORDER_STATUS" property="order_status" />	
@@ -184,7 +184,7 @@ delete from inquiry_board where inquiry_no=${inquiry_no}
 		<result column="ORDER_NO" property="order_no" />	
 		<result column="order_count" property="order_count" />	
 		<association property="product" column="p_num" javaType="com.java.dto.Product">
-			<id column="p_num" property="p_num" />
+			<result column="p_num" property="p_num" />
 			<result column="product_name" property="name" />
 			<result column="product_price" property="price" />
 			<result column="product_image" property="image" />

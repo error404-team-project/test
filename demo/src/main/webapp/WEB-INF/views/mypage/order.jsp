@@ -106,6 +106,7 @@
 							   var pNumberValue = $(this).siblings('.p_number').val(); 
 							   order_num.push(pNumberValue);
 							   
+							   console.log("asdasdasd"+order_num);
 							});
 							  
 							// order_list에 값 넣기

@@ -2,6 +2,7 @@ package com.java.controller;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
@@ -295,7 +296,7 @@ public class MyController {
 //--------------------------------------------------------
 	@RequestMapping("/return_dv")
 	public String return_dv(Model model, @RequestParam String order_list, @RequestParam String order_p_num,int user_seq) {
-		// System.out.println(order_list);
+		System.out.println(order_p_num);
 		HashMap<String, Object> map = myservice.select_order_return(order_list, order_p_num,user_seq);
 
 		model.addAttribute("list", map.get("list"));
@@ -321,8 +322,8 @@ public class MyController {
 		  
 		  
 		  String return_no = id+formatedNow;
-		
 		  String[] p_nums = p_num.split(","); 
+		  System.out.println(p_nums);
 		  String[] counts = count.split(",");
 		  String[] order_nos = order_no.split(",");
 		  String[] order_dates = order_date.split(",");
@@ -330,17 +331,17 @@ public class MyController {
 		  
 		 
 		  
-		  for(int i=0; i<p_nums.length; i++) {
-			  Return_table r1 = new Return_table();
-			  r1.setP_num(p_nums[i]);
-			  r1.setOrder_no(order_nos[i]);
-			  r1.setReturn_state(statuss[i]);
-			  r1.setReturn_reason(reason);
-			  r1.setReturn_no(return_no+i);
+//		  ArrayList<Return_table> r1 = new ArrayList<>();
+//		  for(int i=0; i<p_nums.length; i++) {
+//			  r1.add(i,p_nums[i]);
+//			  r1.setOrder_no(order_nos[i]);
+//			  r1.setReturn_state(statuss[i]);
+//			  r1.setReturn_reason(reason);
+//			  r1.setReturn_no(return_no+i);
+//			  
+//			  myservice.insert_return(r1,user_seq);
 			  
-			  myservice.insert_return(r1,user_seq);
-			  
-		  }
+//		  }
 		 
 		return "ss";
 	}

@@ -153,7 +153,7 @@
 					 status +=  "${r.order_status}"+",";	
 					 '</c:forEach >'
 						
-						    	console.log(p_num);
+						    	console.log("asdfsdf"+p_num);
 						    	console.log(count);
 						    	console.log(order_date);
 						    	console.log(status);
@@ -169,7 +169,7 @@
 							alert("반품 요청 완료되었습니다.");
 							console.log(data);
 							
-							location.href="/mypage/return_state";
+					//		location.href="/mypage/return_state";
 							},
 							error:function(){
 								alert("실패");

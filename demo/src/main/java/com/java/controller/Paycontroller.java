@@ -279,6 +279,7 @@ public class Paycontroller {
 	  obj.put("order_no",	 order.getOrder_no());
 	  obj.put("x", x); 
 	  obj.put("y", y); 
+	  
 	  try { FileWriter
 	  file = new FileWriter("c:/upload/drone.json");
 	  file.write(obj.toJSONString()); file.flush(); file.close(); } catch

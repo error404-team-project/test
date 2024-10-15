@@ -7,9 +7,23 @@
 
 
 
+<update id="updatereturn">
+update return_table set return_state='반품 처리중' where return_no=#{return_no}
+</update>
 <delete id="delete_order">
 delete order_table where user_seq=#{user_seq} and p_num=#{r1.p_num}
 </delete>
+
+<select id="selectOrderOne" resultMap="order">
+		select * from (
+		select rownum rnum, a.* from
+		(select * from ORDER_table O
+		inner join product P
+		on O.p_num=P.p_num
+		
+
+</select> 
+
 
 <select id="selectOrder" resultMap="order">
 		select * from (
@@ -57,6 +71,10 @@ delete order_table where user_seq=#{user_seq} and p_num=#{r1.p_num}
 	
 <select id="selectone"	resultType="com.java.dto.Member">
 select * from user_table where  user_id=#{user_id}
+</select>
+
+<select id="selectdoreturn"	resultType="com.java.dto.Member">
+select * from user_table where  user_seq=#{user_seq}
 </select>
 
 <delete id="deletemember" >
@@ -243,7 +261,8 @@ delete from inquiry_board where inquiry_no=${inquiry_no}
     REQUEST_DATE,
     DORETURN_DATE,
     P_NUM,
-    RETURN_NO
+    RETURN_NO,
+    return_count
 ) VALUES (
 	#{user_seq},
     #{r1.order_no},              
@@ -252,7 +271,9 @@ delete from inquiry_board where inquiry_no=${inquiry_no}
    sysdate,              
     NULL,                   
     #{r1.p_num},               
-    #{r1.return_no}             
+    #{r1.return_no},
+    #{r1.return_count}             
+    
 )
 </insert>
  

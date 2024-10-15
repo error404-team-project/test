@@ -8,6 +8,7 @@ import com.java.dto.Page;
 import com.java.dto.Porder;
 import com.java.dto.Prescription;
 import com.java.dto.Product;
+import com.java.dto.Return_table;
 import com.java.dto.User;
 
 public interface AdminService {
@@ -48,6 +49,8 @@ public interface AdminService {
 	void insertDrone(Drone drone);
 
 	ArrayList<Porder> selectYdrone();
+
+	Return_table selectdoreturn(String return_no);
 
 
 

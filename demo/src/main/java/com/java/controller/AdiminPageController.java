@@ -1,7 +1,6 @@
 package com.java.controller;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -17,10 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.java.dto.Drone;
+import com.java.dto.Member;
 import com.java.dto.Page;
-import com.java.dto.Porder;
 import com.java.dto.Prescription;
 import com.java.dto.Product;
+import com.java.dto.Return_table;
 import com.java.dto.User;
 import com.java.mapper.AdminMapper;
 import com.java.mapper.MyMapper;
@@ -28,6 +28,7 @@ import com.java.service.AdminService;
 import com.java.service.CustomerService;
 import com.java.service.EventService;
 import com.java.service.ProductService;
+import com.java.service.UserService;
 import com.java.service.myService;
 
 import jakarta.servlet.http.HttpSession;
@@ -44,13 +45,44 @@ public class AdiminPageController {
 	@Autowired myService myservice;
 	@Autowired MyMapper mymapper;
 	@Autowired AdminMapper adMapper;
+	@Autowired UserService uservice;
 	@Autowired
 	HttpSession session;
 	
 	
-	@RequestMapping("/ex_drone_carry")
-	public String ex_drone_carry(Model model, Page pageDto ) {
+	@RequestMapping("/return_check")
+	public String return_check(String return_no,Model model) {
+	Return_table re =  adservice.selectdoreturn(return_no);
+	System.out.println(re.getP_num());
+	System.out.println(re.getUser_seq());
+	Member m = new Member();
+	m.setUser_seq(re.getUser_seq());
+	Member mem = myservice.selectdoreturn(m);
+	String p_num=re.getP_num();
+	Product product = pservice.selectdoreturn(p_num);
+	System.out.println(product.getPrice());
+	
+	model.addAttribute("re",re);
+	model.addAttribute("mem",mem);
+	model.addAttribute("product",product);
+		return"/adminPage/return_check";
+	}
+	
+
+	@RequestMapping("/return_docheck")
+	@ResponseBody
+	public String return_docheck(int user_seq,String return_no ) {
+		Member m = new Member();
+		m.setUser_seq(user_seq);
+		Member mem = myservice.selectdoreturn(m);
+		uservice.sendEmail2(mem);
+		myservice.updatereturn(return_no);
 		
+		
+	return "성공";
+	}
+	@RequestMapping("/ex_drone_carry")
+	public String ex_drone_carry(Model model, Page pageDto ) {	
 		/*
 		 * int user_seq = (int) session.getAttribute("sessionSeq");
 		 * if(session.getAttribute("sessionSeq") == null) { model.addAttribute("result",

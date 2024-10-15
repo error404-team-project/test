@@ -1,5 +1,6 @@
 package com.java.service;
 
+import com.java.dto.Member;
 import com.java.dto.User;
 
 public interface UserService {
@@ -15,5 +16,7 @@ public interface UserService {
 	String findId(String user_name, String user_email);
 
 	User userInfo(String id);
+	
+	void sendEmail2(Member mem);
 
 }

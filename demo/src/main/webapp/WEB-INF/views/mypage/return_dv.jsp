@@ -143,14 +143,16 @@
 					     var order_no= '';
 					     var order_date= '';
 						var status = '';
+						var order_count='';
 						var reason =$("#reason").val();
 						
 						'<c:forEach var="r" items="${list}">'
 					 p_num += "${r.p_num}"+",";			
 					 count +=  "${r.order_count }"+",";						
 					 order_no += "${r.order_no}"+",";			
-					 order_date +=  "${r.order_date }"+",";	
-					 status +=  "${r.order_status}"+",";	
+					 order_date +=  "${r.order_date }"+",";
+					 status += "반품 신청" +",";	
+				
 					 '</c:forEach >'
 						
 						    	console.log("asdfsdf"+p_num);

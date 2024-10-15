@@ -22,6 +22,7 @@ public class Return_table {
     private Timestamp request_date;
     private Timestamp doreturn_date;
     private String return_no;
+    private String return_count;
     
     Product product;
     

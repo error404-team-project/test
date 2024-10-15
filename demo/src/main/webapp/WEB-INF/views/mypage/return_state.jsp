@@ -91,7 +91,7 @@
 									<td class="left" style="text-align:center;">
 										${return1.product.name}
 									</td>
-									<td><span class="orange">반품신청</span></td>
+									<td><span class="orange">${return1.return_state}</span></td>
 								</tr>		
 								  <input type="hidden" class="reno${return1.return_no}" value="${return1.return_no}"/>			
 							 </c:forEach> 

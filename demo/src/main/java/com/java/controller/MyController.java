@@ -342,6 +342,7 @@ public class MyController {
 	  r1.setOrder_no(order_nos[i]);
 		  r1.setReturn_reason(reason);
 		  r1.setReturn_no(return_no+i);
+		  r1.setReturn_count(counts[i]);
 		  
 		
 		  

@@ -8,24 +8,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
-	private Integer p_num;
-	private Integer product_category;
-	private Integer medical_category;
-	private Integer health_category;
-	private Integer price;
-	private Integer stock;
-	private Integer p_count;
-	private Integer user_seq;
-	private double weight;
-	private String name;
-	private String company;
-	private String image;
-	private String howuse;
-	private String description;
-	private String precautions;
-	private String side_effects;
-	private String storage;
-	private String becareful;
-	private String row_material;
+	private Integer p_num; // 상품 고유번호
+	private Integer product_category; // 상품 카테고리(의약품인지 건강기능식품인지)
+	private Integer medical_category; // 의약품 카테고리
+	private Integer health_category; // 건강기능식품 카테고리
+	private Integer price; // 가격
+	private Integer stock; // 재고(수량)
+	private Integer p_count; // 판매량
+	private Integer user_seq; // 약국 고유번호
+	private double weight; // 무게
+	private String name; // 이름
+	private String company; // 제조사
+	private String image; // 이미지
+	private String howuse; // 사용법
+	private String description; // 상품설명
+	private String precautions; // 주의사항
+	private String side_effects; // 부작용
+	private String storage; // 보관법
+	private String becareful; // 주의할 약 / 음식
+	private String row_material; // 원료
 	
 }

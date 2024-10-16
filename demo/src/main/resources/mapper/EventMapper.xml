@@ -4,18 +4,21 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.java.mapper.EventMapper">
 	
+	<!-- 진행중인 이벤트 게시글 수 -->
 	<select id="selectEListCountAll" resultType="int">
 		<![CDATA[
 			select count(*) from event where event_end_date > sysdate
 		]]>
 	</select>
 	
+	<!-- 종료된 이벤트 게시글 수 -->
 	<select id="selectfListCountAll" resultType="int">
 		<![CDATA[
 			select count(*) from event where event_end_date < sysdate
 		]]>
 	</select>
 	
+	<!-- 진행중인 이벤트와 회원테이블 연결한 inner join -->
 	<select id="selectAllE" resultMap="eMap">
 		<![CDATA[
 		select * from (
@@ -29,6 +32,7 @@
 		]]>
 	</select>
 	
+	<!-- 종료된 이벤트와 회원테이블 연결한 inner join -->
 	<select id="selectAllF" resultMap="eMap">
 		<![CDATA[
 		select * from (
@@ -42,21 +46,23 @@
 		]]>
 	</select>
 	
-	<resultMap id="eMap" type="com.java.dto.Event">
-		<result column="event_no" property="event_no"/>
-		<result column="event_title" property="event_title"/>
-		<result column="event_image" property="event_image"/>
-		<result column="event_start_date" property="event_start_date"/>
-		<result column="event_end_date" property="event_end_date"/>
-		<result column="event_hit" property="event_hit"/>
-		<association property="user" column="user_seq" javaType="com.java.dto.User">
-	 		<id column="user_seq" property="user_seq"/>
-		 	<result column="user_name" property="user_name"/>
-		 	<result column="user_auth" property="user_auth"/>
-		 	<result column="user_id" property="user_id"/>
+	<!-- 위 두개 쿼리문에 가져올 값들 -->
+	<resultMap id="eMap" type="com.java.dto.Event"> <!-- 이벤트 테이블 -->
+		<result column="event_no" property="event_no"/> <!-- 이벤트 고유번호 -->
+		<result column="event_title" property="event_title"/> <!-- 제목 -->
+		<result column="event_image" property="event_image"/> <!-- 이미지파일 -->
+		<result column="event_start_date" property="event_start_date"/> <!-- 시작일 -->
+		<result column="event_end_date" property="event_end_date"/> <!-- 종료일 -->
+		<result column="event_hit" property="event_hit"/> <!-- 조회수 -->
+		<association property="user" column="user_seq" javaType="com.java.dto.User"> <!-- 회원테이블 -->
+	 		<id column="user_seq" property="user_seq"/> <!-- 회원 고유번호 -->
+		 	<result column="user_name" property="user_name"/> <!-- 이름 -->
+		 	<result column="user_auth" property="user_auth"/> <!-- 권한 아이디 -->
+		 	<result column="user_id" property="user_id"/> <!-- 회원 아이디 -->
 	 	</association>
 	</resultMap>
 	
+	<!-- 선택한 이벤트 정보 가져오기 -->
 	<select id="selectOneE" resultType="com.java.dto.Event">
 		<![CDATA[
 		select * from event where
@@ -64,6 +70,7 @@
 		]]>
 	</select>
 	
+	<!-- 다음 이벤트 정보 가져오기 -->
 	<select id="selectNextE" resultType="com.java.dto.Event">
 		<![CDATA[
 		select * from event where event_no =
@@ -74,6 +81,7 @@
 		]]>
 	</select>
 	
+	<!-- 이전 이벤트 정보 가져오기 -->
 	<select id="selectPrevE" resultType="com.java.dto.Event">
 	<![CDATA[
 		SELECT * FROM EVENT WHERE EVENT_NO = 
@@ -85,18 +93,22 @@
 		]]>
 	</select>
 	
+	<!-- 이벤트 삭제 -->
 	<delete id="deleteE">
 		delete from event where event_no=#{event_no}
 	</delete>
 	
+	<!-- 이벤트 등록 -->
 	<insert id="insertE">
 		insert into event values(event_seq.nextval,#{user_seq},#{event_title},#{event_content},#{event_image},0,#{event_start_date},#{event_end_date})
 	</insert>
 	
+	<!-- 이벤트 수정 -->
 	<update id="modiE">
 		update event set event_title=#{event_title}, event_content=#{event_content}, event_image=#{event_image}, event_start_date=#{event_start_date}, event_end_date=#{event_end_date} where event_no=#{event_no}
 	</update>
 	
+	<!-- 조회수 증가 -->
 	<update id="EHitUp">
 		update event set event_hit=event_hit+1 where event_no=#{event_no}
 	</update>

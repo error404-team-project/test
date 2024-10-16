@@ -19,102 +19,120 @@ select * from Product where p_num=#{p_num}
         WHERE p_num = #{p_num} and user_seq=#{user_seq}
     </update>
 
-
+<!-- 의약품 갯수 가져오기 -->
 <select id="selectMListCountAll" resultType="int">
-		<if test="medical_category == 0">
+		<if test="medical_category == 0"> <!-- 의약품 카테고리를 선택하지 않았을때 -->
+			<!-- 전체 의약품 갯수 가져오기 -->
 			select count(*)from product where product_category = 1
-			<if test="store_seq > 0">
+			<if test="store_seq > 0"> <!-- 약국을 선택했으면 -->
+				<!-- 해당 약국의 상품만 -->
 				and user_seq = #{store_seq}
 			</if>
+			<!-- 검색어가 있을때 -->
 			<if test="sWord != null">
-			and name like '%'|| #{sWord} ||'%'
+				and name like '%'|| #{sWord} ||'%'
 			</if>
 		</if>
-		<if test="medical_category > 0">
+		<if test="medical_category > 0"> <!-- 의약품 카테고리를 선택했을때 -->
+			<!-- 선택한 카테고리의 의약품 갯수 -->
 			select count(*)from product where medical_category = #{medical_category} 
-			<if test="store_seq > 0">
+			<if test="store_seq > 0"> <!-- 약국을 선택했으면 -->
+				<!-- 해당 약국의 상품만 -->
 				and user_seq = #{store_seq}
 			</if>
+			<!-- 검색어가 있을때 -->
 			<if test="sWord != null">
 			and name like '%'|| #{sWord} ||'%'
 			</if>
 		</if>
 	</select>
 	
+	<!-- 건강기능식품 갯수 가져오기 -->
 	<select id="selectDListCount" resultType="int">
-		<if test="health_category == 0">
+		<if test="health_category == 0"> <!-- 건강기능식품 카테고리를 선택하지 않았을때 -->
+			<!-- 전체 건강기능식품 갯수 가져오기 -->
 			select count(*)from product where product_category = 2
-			<if test="store_seq > 0">
+			<if test="store_seq > 0"> <!-- 약국을 선택했다면 -->
+				<!-- 해당 약국의 상품 갯수 가져오기 -->
 				and user_seq = #{store_seq}
 			</if>
-			<if test="sWord != null">
+			<if test="sWord != null"> <!-- 검색어가 있다면 -->
 			and name like '%'|| #{sWord} ||'%'
 			</if>
 		</if>
-		<if test="health_category > 0">
+		<if test="health_category > 0"> <!-- 건강기능식품 카테고리를 선택했다면 -->
+			<!-- 해당 카테고리의 상품만 -->
 			select count(*)from product where health_category = #{health_category}
-			<if test="store_seq > 0">
+			<if test="store_seq > 0"> <!-- 약국을 선택했다면 -->
+				<!-- 해당 약국의 상품만 -->
 				and user_seq = #{store_seq}
 			</if>
+			<!-- 검색어가 있다면 -->
 			<if test="sWord != null">
 			and name like '%'|| #{sWord} ||'%'
 			</if>
 		</if>
 	</select>
-
+	
+	<!-- 의약품 리스트 가져오기 -->
 	<select id ="selectMList" resultType="com.java.dto.Product">
-		<if test="medical_category == 0">
+		<if test="medical_category == 0"> <!-- 카테고리 비 선택시 -->
+				<!-- 전체 상품 가져오기 -->
 				select * from
 				(select rownum rnum, a.* from
 				(select * from Product where product_category = 1
-				<if test="store_seq > 0">
+				<if test="store_seq > 0"> <!-- 약국을 선택했다면 -->
+					<!-- 해당 약국의 상품만 -->
 					and user_seq = #{store_seq}
 				</if>
-				<if test="sWord != null">
+				<if test="sWord != null"> <!-- 검색어가 있다면 -->
 				and name like '%'|| #{sWord} ||'%'
 				</if>
-				<if test="sorting == 0">
+				<if test="sorting == 0"> <!-- 정렬기준 비 선택시 -->
+				 <!-- 고유번호순 정렬 -->
 				 order by p_num asc) a ) 
 				</if>
-				<if test="sorting == 1">
+				<if test="sorting == 1"> <!-- 재고 적은순 정렬 -->
 				 order by stock asc) a ) 
 				</if>
-				<if test="sorting == 2">
+				<if test="sorting == 2"> <!-- 재고 많은순 정렬 -->
 				 order by stock desc) a ) 
 				</if>
-				<if test="sorting == 3">
+				<if test="sorting == 3"> <!-- 판매량 적은순 -->
 				 order by p_count asc) a ) 
 				</if>
-				<if test="sorting == 4">
+				<if test="sorting == 4"> <!-- 판매량 많은순 -->
 				 order by p_count desc) a ) 
 				</if>
 			<![CDATA[
 				where rnum >= #{pageDto.startRow} and rnum<= #{pageDto.endRow}
 			]]>
 		</if>
-		<if test="medical_category > 0">
+		<if test="medical_category > 0"> <!-- 의약품 카테고리 선택 시 -->
+				<!-- 선택한 카테고리의 상품만 가져옴 -->
 				select * from
 				(select rownum rnum, a.* from
 				(select * from Product where medical_category = #{medical_category}
-				<if test="store_seq > 0">
+				<if test="store_seq > 0"> <!-- 약국 선택 시 -->
+					<!-- 해당 약국의 상품들로 가져옴 -->
 					and user_seq = #{store_seq}
 				</if>
-				<if test="sWord != null">
+				<if test="sWord != null"> <!-- 검색어가 있다면 -->
 				and name like '%'|| #{sWord} ||'%'
 				</if>
-				<if test="sorting == 0">
+				<if test="sorting == 0"> <!-- 정렬순서 비 선택 시 상품 번호순으로 가져옴 -->
 				 order by p_num asc) a ) 
 				</if>
-				<if test="sorting == 1">
+				<if test="sorting == 1"> <!-- 재고 적은순 -->
 				 order by stock asc) a ) 
 				</if>
-				<if test="sorting == 2">
+				<if test="sorting == 2"> <!-- 재고 많은순 -->
 				 order by stock desc) a ) 
 				</if>
-				<if test="sorting == 3">
+				<if test="sorting == 3"> <!-- 판매량 적은순 -->
 				 order by p_count asc) a ) 
 				</if>
-				<if test="sorting == 4">
+				<if test="sorting == 4"> <!-- 판매량 많은순 -->
 				 order by p_count desc) a ) 
 				</if>
 			<![CDATA[
@@ -123,63 +141,65 @@ select * from Product where p_num=#{p_num}
 		</if>
 	</select>
 	
+	<!-- 선택한 의약품 정보 가져오기 -->
 	<select id="mediView" resultType="com.java.dto.Product">
 		select * from product where p_num=#{p_num}
 	</select>
 	
+	<!-- 건강기능식품 리스트 가져오기 -->
 	<select id="selectDList" resultType="com.java.dto.Product">
-		<if test="health_category == 0">
+		<if test="health_category == 0"> <!-- 카테고리 비 선택시 전체 상품 가져오기 -->
 				select * from
 				(select rownum rnum, a.* from
 				(select * from Product where product_category = 2
-				<if test="store_seq > 0">
+				<if test="store_seq > 0"> <!-- 약국 선택 시 해당 약국의 상품만 가져옴 -->
 					and user_seq = #{store_seq}
 				</if>
-				<if test="sWord != null">
+				<if test="sWord != null"> <!-- 검색어가 있다면 -->
 				and name like '%'|| #{sWord} ||'%'
 				</if>
-				<if test="sorting == 0">
+				<if test="sorting == 0"> <!-- 정렬순서 비 선택시 번호순으로 정렬 -->
 				 order by p_num asc) a ) 
 				</if>
-				<if test="sorting == 1">
+				<if test="sorting == 1"> <!-- 재고 적은순 -->
 				 order by stock asc) a ) 
 				</if>
-				<if test="sorting == 2">
+				<if test="sorting == 2"> <!-- 재고 많은순 -->
 				 order by stock desc) a ) 
 				</if>
-				<if test="sorting == 3">
+				<if test="sorting == 3"> <!-- 판매량 적은순 -->
 				 order by p_count asc) a ) 
 				</if>
-				<if test="sorting == 4">
+				<if test="sorting == 4"> <!-- 판매량 많은순 -->
 				 order by p_count desc) a ) 
 				</if>
 			<![CDATA[
 				where rnum >= #{pageDto.startRow} and rnum<= #{pageDto.endRow}
 			]]>
 		</if>
-		<if test="health_category > 0">
+		<if test="health_category > 0"> <!-- 건강기능식품 카테고리 선택 시 선택한 카테고리의 상품만 가져옴 -->
 				select * from
 				(select rownum rnum, a.* from
 				(select * from Product where health_category = #{health_category}
-				<if test="store_seq > 0">
+				<if test="store_seq > 0"> <!-- 약국 선택 시 해당 약국의 상품들로만 가져옴 -->
 					and user_seq = #{store_seq}
 				</if>
-				<if test="sWord != null">
+				<if test="sWord != null"> <!-- 검색어가 있다면 -->
 				and name like '%'|| #{sWord} ||'%'
 				</if>
-				<if test="sorting == 0">
+				<if test="sorting == 0"> <!-- 정렬기준 비 선택시 상품번호순 정렬 -->
 				 order by p_num asc) a ) 
 				</if>
-				<if test="sorting == 1">
+				<if test="sorting == 1"> <!-- 재고 적은순 -->
 				 order by stock asc) a ) 
 				</if>
-				<if test="sorting == 2">
+				<if test="sorting == 2"> <!-- 재고 많은순 -->
 				 order by stock desc) a ) 
 				</if>
-				<if test="sorting == 3">
+				<if test="sorting == 3"> <!-- 판매량 적은순 -->
 				 order by p_count asc) a ) 
 				</if>
-				<if test="sorting == 4">
+				<if test="sorting == 4"> <!-- 판매량 많은순 -->
 				 order by p_count desc) a ) 
 				</if>
 			<![CDATA[
@@ -187,35 +207,38 @@ select * from Product where p_num=#{p_num}
 			]]>
 		</if>
 	</select>
-
+	
+	<!-- 선택한 상품 정보 가져오기 -->
 	<select id="dailyView" resultType="com.java.dto.Product">
 		select * from product where p_num=#{p_num}
 	</select>
-
+	
+	<!-- 위시리스트 추가하기 -->
 	<insert id="insertWish">
 		insert into wishlist values(#{user_seq},#{p_num})
 	</insert>
 	
+	<!-- 위시리스트 삭제 -->
 	<delete id="deleteWish">
 		delete from wishlist where user_seq=#{user_seq} and p_num=#{p_num}
 	</delete>
 	
+	<!-- 위시리스트에 담겨있는지 확인 -->
 	<select id="selectWish" resultType="com.java.dto.Wishlist">
 		select p_num from wishlist where user_seq=#{user_seq}
 	</select>
 	
+	<!-- 장바구니 담기 -->
 	<insert id="inCart">
 		insert into cart values(#{user_seq},#{p_num},#{count},null)
 	</insert>
-
+	
+	<!-- 장바구니에 담겼는지 확인 -->
 	<select id="selectCart" resultType="com.java.dto.Cart">
 		select p_num,count from cart where user_seq=#{user_seq}
 	</select>
 	
-	<select id="selectDListAll" resultType="com.java.dto.Product">
-		select * from Product where product_category = 2
-	</select>
-	
+	<!-- 내 장바구니 리스트 가져오는 inner join -->
 	<select id="seletMyCart" resultMap="cmap">
 		select c.*, p.*,p.user_seq p_seq from cart c
 		inner join product p
@@ -223,36 +246,39 @@ select * from Product where p_num=#{p_num}
 		where c.user_seq = #{user_seq}
 	</select>
 	
-	<resultMap id="cmap" type="com.java.dto.Cart">
-		<result column="user_seq" property="user_seq" />
-		<result column="p_num" property="p_num" />	
-		<result column="count" property="count" />	
-		<association property="product" column="p_num" javaType="com.java.dto.Product">
-			<result column="p_num" property="p_num" />
-			<result column="name" property="name" />
-			<result column="price" property="price" />
-			<result column="image" property="image" />
-		<result column="p_seq" property="user_seq" />
+	<!-- 장바구니 가져오는 inner join에서 가져올 값들 -->
+	<resultMap id="cmap" type="com.java.dto.Cart"> <!-- 장바구니 테이블 -->
+		<result column="user_seq" property="user_seq" /> <!-- 회원 고유번호 -->
+		<result column="p_num" property="p_num" />	 <!-- 상품 고유번호 -->
+		<result column="count" property="count" />	 <!-- 수량 -->
+		<association property="product" column="p_num" javaType="com.java.dto.Product"> <!-- 상품테이블 -->
+			<result column="p_num" property="p_num" /> <!-- 상품 고유번호 -->
+			<result column="name" property="name" /> <!-- 상품 이름 -->
+			<result column="price" property="price" /> <!-- 가격 -->
+			<result column="image" property="image" /> <!-- 상품 이미지 -->
+		<result column="p_seq" property="user_seq" /> <!-- 약국 고유번호 -->
 		</association>
 	</resultMap>
 	
+	<!-- 위시리스트 가져오는 inner join -->
 	<select id="selectAllWish" resultMap="wmap">
-		select w.*, p.* from wishlist w
+		select w.*, p.*, p.user_seq p_seq from wishlist w
 		inner join product p
 		on w.p_num = p.p_num
 		where w.user_seq = #{user_seq}
 	</select>
 	
-	<resultMap id="wmap" type="com.java.dto.Wishlist">
-		<result column="user_seq" property="user_seq" />
-		<result column="p_num" property="p_num" />	
-		<association property="product" column="p_num" javaType="com.java.dto.Product">
-			<id column="p_num" property="p_num" />
-			<result column="name" property="name" />
-			<result column="image" property="image" />
-			<result column="medical_category" property="medical_category" />
-			<result column="health_category" property="health_category" />
-			<result column="product_category" property="product_category" />
+	<!-- 위시리스트 가져오는 inner join 값들 -->
+	<resultMap id="wmap" type="com.java.dto.Wishlist"> <!-- 위시리스트 테이블 -->
+		<result column="user_seq" property="user_seq" /> <!-- 회원고유번호 -->
+		<result column="p_num" property="p_num" />	<!-- 상품 고유번호 -->
+		<association property="product" column="p_num" javaType="com.java.dto.Product"> <!-- 상품테이블 -->
+			<id column="p_seq" property="p_num" /> <!-- 약국 고유번호 -->
+			<result column="name" property="name" /> <!-- 상품 이름 -->
+			<result column="image" property="image" /> <!-- 상품 이미지 -->
+			<result column="medical_category" property="medical_category" /> <!-- 의약품 카테고리 -->
+			<result column="health_category" property="health_category" /> <!-- 건강기능식품 카테고리 -->
+			<result column="product_category" property="product_category" /> <!-- 상품 카테고리 -->
 		</association>
 	</resultMap>
 

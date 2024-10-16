@@ -9,19 +9,24 @@
 	select * from user_table where user_id=#{id}
 	</select>
 
+	<!-- 아이디 중복확인 -->
 	<select id="selectId" resultType="String">
 		select user_id from user_table where user_id=#{id}
 	</select>
 	
+	<!-- 로그인 -->
 	<select id="selectLogin" resultType="com.java.dto.User">
 		select * from User_table where user_id=#{user_id} and user_pw=#{user_pw}
 	</select>
 	
+	<!-- 로그인 날짜 현재시간으로 업데이트 -->
 	<update id="lastLogin">
 		update user_table set login_date = sysdate where user_id=#{user_id}
 	</update>
 	
+	<!-- 회원가입하기 -->
 	<insert id="joinOne">
+		<!-- 권한아이디가 일반회원 일때 -->
 		<if test="auth_id == 'user'">
 			insert into user_table values 
 			(user_seq.nextval,#{auth_id},#{user_id},#{user_pw},#{user_name},
@@ -29,6 +34,7 @@
 			sysdate,#{user_gender},#{svc_agree},#{ps_agree},#{mkt_agree},null
 			,null,null,null,'Y',#{x},#{y})
 		</if>
+		<!-- 권한아이디가 약국일때 -->
 		<if test="auth_id == 'store'">
 			insert into user_table values 
 			(user_seq.nextval,#{auth_id},#{user_id},#{user_pw},#{user_name},
@@ -38,14 +44,17 @@
 		</if>
 	</insert>
 	
+	<!-- 비밀번호 찾기 -->
 	<select id="findPw" resultType="com.java.dto.User">
 		select * from user_table where user_id=#{user_id} and user_email=#{user_email}
 	</select>
 	
+	<!-- 임시비밀번호로 업데이트 -->
 	<update id="updatePw">
 		update user_table set user_pw=#{pwcode} where user_id=#{user_id} and user_email=#{user_email}
 	</update>
 	
+	<!-- 아이디 찾기 -->
 	<select id="findId" resultType="String">
 		select user_id from user_table where user_name=#{user_name} and user_email=#{user_email}
 	</select>

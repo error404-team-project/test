@@ -194,14 +194,14 @@ public class AdiminPageController {
 	
 //------------------------------------------------------------------------
 	@GetMapping ("/product_write")
-	public String product_write () {
+	public String product_write () { // 약국 로그인 시 상품등록 페이지 열리게
 		return "/adminPage/product_write";
 	}
 	
 	@PostMapping ("/product_write")
-	public String doproduct_write (@RequestPart MultipartFile pimage, Product product) {
-	//	System.out.println(product.getCompany());
-		int store_seq=(int)session.getAttribute("sessionSeq");
+	public String doproduct_write (@RequestPart MultipartFile pimage, Product product) { // 상품등록 페이지에서 올린 이미지파일,    상품페이지에서 입력된 정보들
+									
+		int store_seq=(int)session.getAttribute("sessionSeq"); // 로그인 한 약국의 고유번호
 		String fileName="";
 		// 파일이 있을경우 저장
 		if(!pimage.isEmpty()) {
@@ -217,7 +217,7 @@ public class AdiminPageController {
 			product.setImage(fileName); // write일땐 트라이 밖에 modi일땐 안에
 		}	
 	//	System.out.println(fileName);
-		adservice.insertP(product);
+		adservice.insertP(product); // 서비스로 연결
 		return "/adminPage/product_write";
 	}
 	

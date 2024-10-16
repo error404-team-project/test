@@ -43,10 +43,12 @@
         <div class="row">
           <div class="col-12">
 <script>
+// 건강기능식품 카테고리 이름 배열
 var hCate = ["오메가3","비타민","유산균","비오틴","루테인/자이잔틴","밀크씨슬/실리마린","프로폴리스","가르시니아/잔티젠","녹차추출물/카테킨","콜라겐","글루코사민/MSM","칼슘/마그네슘","아연/철분","모나콜린K","마카/쏘팔메토","아르기닌","포스파티딜","옥타코사놀/폴리코사놀","스피루라나","글루타치온","기타건강식품"];
-var mCate = ["항생제","소화제","비염","진통/소염제","항바이러스제","항염증제","연고","밴드"];
+// 정렬순서 카테고리 이름 배열
 var sCate = ["재고 적은순","재고 많은순","판매량 적은순","판매량 많은순"];
-$(document).ready(function() {
+$(document).ready(function() { // 페이지 열릴 때 그려질것들
+	// 건강기능식품 카테고리 그려줌
 	var str = '';
 	str += '<option value="0" selected>선택하세요</option>';
 	for(let i = 0; i < hCate.length; i++){
@@ -56,6 +58,7 @@ $(document).ready(function() {
 			str += '<option value="'+(i+1)+'">'+hCate[i]+'</option>';
 		}
 	}
+	// 정렬순서 카테고리 그려줌
 	$("#pCateDt").html(str);
 	var sort = '';
 	sort += '<option selected value="0">정렬</option>';
@@ -68,25 +71,28 @@ $(document).ready(function() {
 	}
 	$("#sorting").html(sort);
 });
+// 건강기능식품 카테고리 바뀌었을때
 function cbtn(){
-	var health_category = $("#pCateDt").val();
-	var store_seq = $("#store_seq").val();
-	var sorting = $("#sorting").val();
+	var health_category = $("#pCateDt").val(); // 선택한 건강기능식품 카테고리값
+	var store_seq = $("#store_seq").val(); // 현재 로그인 한 약국의 고유번호
+	var sorting = $("#sorting").val(); // 선택한 정렬순서
+	// 주소에 실어서 보내줌
 	location.href="/adminPage/ad_health?health_category="+health_category+"&store_seq="+store_seq+"&sorting="+sorting+"";
 }
-
+// 정렬순서 바뀌었을때
 function soBtn(){
-	var sorting = $("#sorting").val();
-	var health_category = $("#pCateDt").val();
-	var store_seq = $("#store_seq").val();
+	var sorting = $("#sorting").val(); // 선택한 정렬순서
+	var health_category = $("#pCateDt").val(); // 선택한 기능식품 카테고리
+	var store_seq = $("#store_seq").val(); // 현재 로그인 한 약국의 고유번호
+	// 주소에 실어서 보내줌
 	location.href="/adminPage/ad_health?health_category="+health_category+"&store_seq="+store_seq+"&sorting="+sorting+"";
 	//alert(sorting);
 }
-
+// 재고수량, 가격 변경 후 저장버튼 눌렀을때
 function sbtn(pno){
-	var p_num = $(".p_num"+pno).val();
-	var price = $(".price"+pno).val();
-	var stock = $(".stock"+pno).val();
+	var p_num = $(".p_num"+pno).val(); // 해당 상품의 고유번호
+	var price = $(".price"+pno).val(); // 해당 상품의 가격
+	var stock = $(".stock"+pno).val(); // 해당 상품의 재고
 //	alert($(".p_num"+pno).val()+"  "+$(".price"+pno).val()+"   "+$(".stock"+pno).val());
 	$.ajax({
 		url : "/adminPage/modi_health",
@@ -102,7 +108,7 @@ function sbtn(pno){
 		}
 	})// ajax
 }
-
+// 상품 삭제버튼 눌렀을때
 function dbtn(pno){
 	var p_num = $(".p_num"+pno).val();
 	$.ajax({

@@ -55,14 +55,16 @@
 	 	</association>
 	 </resultMap>
 	
-	<!-- 여기 위에서 부터 내가 한 것 -->
+	<!-- 여기 위에서 부터 다른 조원이 한 것 -->
 	
+	<!-- 전체 상품 갯수 가져오기 -->
 	 <select id="selectListCount" resultType="int">
-		select count(*) from product
+		select count(*) from product 
 	 </select>
 	 
-	
+	<!-- 상품 등록하기 -->
 	 <insert id="insertP">
+	 	<!-- 의약품일때 -->
 	 	<if test="medical_category == null">
 		insert into product values(product_seq.nextval,#{product_category},
 				null,#{health_category},#{name},
@@ -70,6 +72,7 @@
 				#{howuse},#{description},#{precautions},#{side_effects},
 				#{storage},#{becareful},#{row_material},0,#{user_seq},#{weight})
 	 	</if>
+	 	<!-- 건강기능식품일때 -->
 	 	<if test="health_category == null">
 		insert into product values(product_seq.nextval,#{product_category},
 				#{medical_category},null,#{name},
@@ -79,14 +82,17 @@
 	 	</if>
 	</insert>
 	 
+	 <!-- 상품 가격, 수량 업데이트 -->
 	 <update id="updateP">
 	 	update product set stock=#{stock},price=#{price} where p_num=#{p_num}
 	 </update>
 	 
+	 <!-- 상품 삭제 -->
 	 <delete id="deleteP">
 	 	delete from product where p_num = #{p_num}
 	 </delete>
 	 
+	 <!-- 전체 공지사항 가져오는 inner join -->
 	 <select id="selectN" resultMap="nMap">
 	 <![CDATA[	
 	 	select * from (
@@ -99,24 +105,27 @@
 		]]>
 	 </select>
 	 
+	 <!-- 이너조인해서 가져올 값들 -->
 	 <resultMap type="com.java.dto.Notice" id="nMap">
-	 	<result column="notice_no" property="notice_no"/>
-	 	<result column="user_seq" property="user_seq"/>
-	 	<result column="notice_hit" property="notice_hit"/>
-	 	<result column="notice_title" property="notice_title"/>
-	 	<result column="notice_date" property="notice_date"/>
-	 	<association property="user" column="user_seq" javaType="com.java.dto.User">
-	 		<id column="user_seq" property="user_seq"/>
-		 	<result column="user_name" property="user_name"/>
-		 	<result column="user_auth" property="user_auth"/>
-		 	<result column="user_id" property="user_id"/>
+	 	<result column="notice_no" property="notice_no"/> <!-- 공지사항 번호 -->
+	 	<result column="user_seq" property="user_seq"/> <!-- 해당 공지사항 작성자 -->
+	 	<result column="notice_hit" property="notice_hit"/> <!-- 공지사항 조회수 -->
+	 	<result column="notice_title" property="notice_title"/> <!-- 공지사항 제목 -->
+	 	<result column="notice_date" property="notice_date"/> <!-- 작성일 -->
+	 	<association property="user" column="user_seq" javaType="com.java.dto.User"> <!-- 회원테이블과 조인 -->
+	 		<id column="user_seq" property="user_seq"/> <!-- 회원 고유번호 -->
+		 	<result column="user_name" property="user_name"/> <!-- 이름 -->
+		 	<result column="user_auth" property="user_auth"/> <!-- 권한아이디 -->
+		 	<result column="user_id" property="user_id"/> <!-- 회원아이디 -->
 	 	</association>
 	 </resultMap>
 	 
+	 <!-- 공지사항 삭제 -->
 	 <delete id="deleteNotice">
 	 	delete from notice where notice_no = #{notice_no}
 	 </delete>
 	 
+	 <!-- 전체 회원리스트 가져오기 -->
 	 <select id="allUser" resultType="com.java.dto.User">
  			select * from
 			(select rownum rnum, a.* from
@@ -127,6 +136,7 @@
 		]]>
 	 </select>
 	 
+	 <!-- 약국 회원리스트 가져오기 -->
 	 <select id="storeUser" resultType="com.java.dto.User">
  			select * from
 			(select rownum rnum, a.* from
@@ -138,6 +148,7 @@
 		]]>
 	 </select>
 	 
+	 <!-- 일반회원 리스트 가져오기 -->
 	 <select id="NomalUser" resultType="com.java.dto.User">
  			select * from
 			(select rownum rnum, a.* from
@@ -149,26 +160,30 @@
 		]]>
 	 </select>
 	 
+	 <!-- 전체 회원 수 -->
 	 <select id="selectUListCount" resultType="int">
 	 	select count(*) from user_table
 	 </select>
-	 
+	 <!-- 약국 회원 수 -->
 	 <select id="selectSListCount" resultType="int">
 	 	select count(*) from  user_table where auth_id = 'store'
 	 </select>
-	 
+	 <!-- 일반 회원 수 -->
 	 <select id="selectNListCount" resultType="int">
 	 	select count(*) from  user_table where auth_id = 'user'
 	 </select>
 	 
+	 <!-- 가입신청한 약국의 정보 가져오기 -->
 	 <select id="checkApproval" resultType="com.java.dto.User">
 	 	select * from user_table where user_seq= #{user_seq}
 	 </select>
 	 
+	 <!-- 약국 가입승인여부 변경 -->
 	 <update id="updateApproval">
 	 	update user_table set approval = 'Y' where user_seq=#{user_seq}
 	 </update>
 	 
+	 <!-- 약국이 처방전 확인 후 약국확인여부, 가격 업데이트 -->
 	 <update id="checkPre">
 	 	update prescription set store_check = 'Y', prescription_price=#{prescription_price} where prescription_no=#{prescription_no}
 	 </update>

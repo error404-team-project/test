@@ -41,61 +41,62 @@ public class UserServiceImpl implements UserService {
 	}
 		
 	///////////////////////////////////////////////////////////////////////////
-	@Override
-	public String selectId(String id) {
-		String uid = uMapper.selectId(id);
+	@Override // 아이디 중복확인
+	public String selectId(String id) { 
+		String uid = uMapper.selectId(id); // 입력한 아이디로 DB에서 정보 가져오기 
 		return uid;
 	}
 
-	@Override
+	@Override // 회원가입
 	public void joinOne(User user) {
-		String user_email = user.getMailH()+"@"+user.getMailT();
-		String user_phone = user.getPhone1()+"-"+user.getPhone2()+"-"+user.getPhone3();
-		String user_addr = user.getAddr1()+"/"+user.getAddr2();
-		String birth = user.getYear()+"-"+user.getMonth()+"-"+user.getDay()+" 00:00:00";
+		String user_email = user.getMailH()+"@"+user.getMailT(); // 이메일 완성하는 변수
+		String user_phone = user.getPhone1()+"-"+user.getPhone2()+"-"+user.getPhone3(); // 전화번호 완성하는 변수
+		String user_addr = user.getAddr1()+"/"+user.getAddr2(); // 주소 완성하는 변수
+		String birth = user.getYear()+"-"+user.getMonth()+"-"+user.getDay()+" 00:00:00"; // 생일 설정하는 변수
 //		System.out.println(birth);
 //		System.out.println(user_email);
 //		System.out.println(user_phone);
 //		System.out.println(user_addr);
-		if(user.getAuth_id().equals("user")) {
-			Timestamp u_birth = Timestamp.valueOf(birth);
-			user.setUser_birth(u_birth);
+		if(user.getAuth_id().equals("user")) { // 회원가입 하는 사람의 권한아이디가 user 라면
+			Timestamp u_birth = Timestamp.valueOf(birth); // 생일변수 Timestamp타입으로 변환
+			user.setUser_birth(u_birth); // 객체에 생일 값 넣기
 		}
-		user.setUser_addr(user_addr);
-		user.setUser_email(user_email);
-		user.setUser_phone(user_phone);
+		user.setUser_addr(user_addr); // 객체에 주소 값 넣기
+		user.setUser_email(user_email); // 객체에 이메일 값 넣기
+		user.setUser_phone(user_phone); // 객체에 전화번호 값 넣기
 		System.out.println("서비스임플"+user.getAuth_id());
-		uMapper.joinOne(user);
+		uMapper.joinOne(user); // DB로 전송
 	}
 
 
 	@Override
-	public User selectLogin(User user) {
-		User u = uMapper.selectLogin(user);
-		if(u != null) {
-			uMapper.lastLogin(user);
+	public User selectLogin(User user) { // 로그인
+		User u = uMapper.selectLogin(user); // 입력한 값으로 회원정보 가져오기
+		if(u != null) { // 회원정보를 가져왔다면
+			uMapper.lastLogin(user); // 로그인 일자 업데이트
 		}
 		//System.out.println(u.getUser_id());
 		return u;
 	}
 
 ////////////////////////////// 비밀번호찾기 이메일 발송 //////////////////////////////////////////
-	@Override
+	@Override // 비밀번호 찾기 이메일발송 
 	public String findPw(String user_id, String user_email) {
-		User user = uMapper.findPw(user_id,user_email);
-		if(user == null) {
-			return null;
-		} else {
+		User user = uMapper.findPw(user_id,user_email); // 입력한 아이디, 이메일이 DB에 있는 값과 일치하는 회원정보 가져오기
+		if(user == null) { // 회원정보를 가져오지 못했다면
+			return null; // null 보내기
+		} else { // 회원정보를 가져왔다면
 			// 1. 임시 비밀번호 생성
 			String pwcode = createPwCode();
 			System.out.println("생성된 임시코드 : " + pwcode);
 			// 2-1 단순 이메일 발송
 			sendEmail(user,pwcode);
-			uMapper.updatePw(user_id,user_email,pwcode);
+			uMapper.updatePw(user_id,user_email,pwcode); // 생성된 임시 비밀번호로 DB 비밀번호 업데이트
 			return "성공";
 		}
 	}
 
+	// 비밀번호 찾기 이메일발송
 	private void sendEmail(User user, String pwcode) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(user.getUser_email()); // -에게
@@ -110,14 +111,15 @@ public class UserServiceImpl implements UserService {
 		System.out.println("메일이 발송되었습니다.");
 	}
 
-	private String createPwCode() {
+	// 임시 비밀번호 만들기
+	private String createPwCode() { 
 		char[] charset = {'0','1','2','3','4','5','6','7','8','9',
 				'a','b','c','d','e','f','g','h','i','j','k','l','m','n',
 				'o','p','q','r','s','t','u','v','w','x','y','z'};
 		String pwcode="";
 		int idx = 0;
 		
-		for(int i = 0; i < 10; i++) {
+		for(int i = 0; i < 10; i++) { // 10자리 랜덤한 비밀번호 만들기
 			idx = (int)(Math.random()*36);
 			pwcode += charset[idx];
 		}
@@ -131,7 +133,7 @@ public class UserServiceImpl implements UserService {
 	public String findId(String user_name, String user_email) {
 	//	System.out.println("아이디찾기 "+ user_name);
 	//	System.out.println("아이디찾기 "+ user_email);
-		String fid = uMapper.findId(user_name,user_email);
+		String fid = uMapper.findId(user_name,user_email); // 입력한 이름, 이메일 DB와 비교 후 일치하면 아이디 가져오기
 		return fid;
 	}
 

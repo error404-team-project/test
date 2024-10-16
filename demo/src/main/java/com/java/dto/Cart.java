@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Cart {
 	private int user_seq, p_num,count ;
+	//			회원 고유번호, 상품 고유번호, 수량
 	private String state;
-	private Product product;
+	private Product product; // 상품 객체
 	
 }

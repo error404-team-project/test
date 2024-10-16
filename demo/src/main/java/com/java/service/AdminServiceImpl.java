@@ -31,70 +31,70 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired JavaMailSender mailSender;
 
 	@Override
-	public void insertP(Product product) {
+	public void insertP(Product product) { // 상품등록
 		System.out.println("서비스임플");
-		adMapper.insertP(product);
+		adMapper.insertP(product); // mapper로 연결
 	}
 
 	@Override
-	public Product updateP(Product product) {
-		adMapper.updateP(product);
-		Product pr = pMapper.mediView(product.getP_num());
+	public Product updateP(Product product) { // 의약품 가격, 재고수량 업데이트 ajax
+		adMapper.updateP(product); // mapper로 연결
+		Product pr = pMapper.mediView(product.getP_num()); // 업데이트할 상품 정보 가져오기
 		return pr;
 	}
 	@Override
-	public Product updateHP(Product product) {
-		adMapper.updateP(product);
-		Product pr = pMapper.dailyView(product.getP_num());
+	public Product updateHP(Product product) { // 건강기능식품 가격, 재고수량 업데이트 ajax
+		adMapper.updateP(product); // mapper로 연결
+		Product pr = pMapper.dailyView(product.getP_num()); // 업데이트 할 상품 정보 가져오기
 		return pr;
 	}
 
 	@Override
-	public void deleteP(Integer p_num) {
-		adMapper.deleteP(p_num);
+	public void deleteP(Integer p_num) { // 상품 삭제
+		adMapper.deleteP(p_num); // mapper로 연결
 	}
 
 	@Override
-	public HashMap<String, Object> selectN(Page pageDto) {
-		HashMap<String, Object> map = new HashMap<>();
-		pageDto = cserviceImpl.nPageMethod(pageDto);
-		ArrayList<Notice> nlist = adMapper.selectN(pageDto);
+	public HashMap<String, Object> selectN(Page pageDto) { // 공지사항 가져오기
+		HashMap<String, Object> map = new HashMap<>(); // 공지사항 정보들 저장할 Hash Map
+		pageDto = cserviceImpl.nPageMethod(pageDto); // 공지사항 페이지설정
+		ArrayList<Notice> nlist = adMapper.selectN(pageDto); // 공지사항 가져오기
 		System.out.println("페이지 "+pageDto.getPage());
 		System.out.println("시작게시글 "+pageDto.getStartRow());
 		System.out.println("끝게시글 "+pageDto.getEndRow());
 		System.out.println(nlist.get(0).getNotice_title());
 		
-		map.put("nlist", nlist);
-		map.put("pageDto", pageDto);
+		map.put("nlist", nlist); // 공지사항 리스트 맵에 넣기
+		map.put("pageDto", pageDto); // 공지사항 페이지정보 맵에 넣기
 		return map;
 	}
 
 	@Override
-	public void deleteNotice(int notice_no) {
-		adMapper.deleteNotice(notice_no);
+	public void deleteNotice(int notice_no) { // 공지사항 삭제
+		adMapper.deleteNotice(notice_no); // mapper로 연결
 		
 	}
 
 	@Override
-	public HashMap<String, Object> allUser(Page pageDto) {
-		HashMap<String, Object> map = new HashMap<>();
+	public HashMap<String, Object> allUser(Page pageDto) { // 회원정보 가져오기
+		HashMap<String, Object> map = new HashMap<>(); // 회원정보들 담을 Hash Map
 		Page upageDto = uPageMethod(pageDto);						// 전체 회원 페이지 넘버링
-		Page spageDto = sPageMethod(pageDto); 						// 사업자 회원 페이지 넘버링
+		Page spageDto = sPageMethod(pageDto); 						// 약국 회원 페이지 넘버링
 		Page npageDto = nPageMethod(pageDto); 						// 일반 회원 페이지 넘버링
 		ArrayList<User> uList = adMapper.allUser(upageDto); 		// 전체 회원
-		ArrayList<User> sList = adMapper.storeUser(spageDto); 		// 사업자 회원
+		ArrayList<User> sList = adMapper.storeUser(spageDto); 		// 약국 회원
 		ArrayList<User> nList = adMapper.NomalUser(npageDto); 		// 일반 회원
-		map.put("upageDto", upageDto);
-		map.put("spageDto", spageDto);
-		map.put("npageDto", npageDto);
-		map.put("uList", uList);
-		map.put("sList", sList);
-		map.put("nList", nList);
+		map.put("upageDto", upageDto);								// 전체 회원 페이지정보 맵에 넣기
+		map.put("spageDto", spageDto);								// 약국 회원 페이지정보 맵에 넣기
+		map.put("npageDto", npageDto);								// 일반회원 페이지정보 맵에 넣기
+		map.put("uList", uList);									// 전체 회원리스트 맵에 넣기
+		map.put("sList", sList);									// 약국 회원리스트 맵에 넣기
+		map.put("nList", nList);									// 일반회원 리스트 맵에 넣기
 		return map;
 	}
 
-	public Page uPageMethod(Page pageDto) {
-		// 전체 게시글 수 저장 
+	public Page uPageMethod(Page pageDto) { // 전체 회원 페이지 넘버링
+		// 전체 회원 수 저장 
 		pageDto.setListCount(   adMapper.selectUListCount()   );
 		// 최대 넘버링 페이지 
 		pageDto.setMaxPage( (int)Math.ceil( (double)pageDto.getListCount()/10  ));
@@ -114,8 +114,8 @@ public class AdminServiceImpl implements AdminService {
 		return pageDto;
 	}
 	
-	public Page sPageMethod(Page pageDto) {
-		// 전체 게시글 수 저장 
+	public Page sPageMethod(Page pageDto) { // 약국 회원 페이지 넘버링
+		// 약국 회원 수 저장 
 		pageDto.setListCount(   adMapper.selectSListCount()   );
 		// 최대 넘버링 페이지 
 		pageDto.setMaxPage( (int)Math.ceil( (double)pageDto.getListCount()/10  ));
@@ -135,8 +135,8 @@ public class AdminServiceImpl implements AdminService {
 		return pageDto;
 	}
 
-	public Page nPageMethod(Page pageDto) {
-		// 전체 게시글 수 저장 
+	public Page nPageMethod(Page pageDto) { // 일반회원 페이지 넘버링
+		// 일반회원 수 저장 
 		pageDto.setListCount(   adMapper.selectNListCount()   );
 		// 최대 넘버링 페이지 
 		pageDto.setMaxPage( (int)Math.ceil( (double)pageDto.getListCount()/10  ));
@@ -158,8 +158,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public User checkApproval(int user_seq) {
-		User user = adMapper.checkApproval(user_seq);
-		// 회원seq로 한명 정보 전체 가져오기
+		User user = adMapper.checkApproval(user_seq); // 회원seq로 한명 정보 전체 가져오기
 		//System.out.println(user.getUser_name());
 		return user;
 	}
@@ -167,13 +166,13 @@ public class AdminServiceImpl implements AdminService {
 	
 ////////////////////////////////////가입승인 메일 ////////////////////////////////
 	@Override
-	public void updateApproval(int user_seq) {
-		adMapper.updateApproval(user_seq);
-		User user = adMapper.checkApproval(user_seq);
+	public void updateApproval(int user_seq) { // 약국회원 가입승인
+		adMapper.updateApproval(user_seq);     // 가입승인여부 업데이트
+		User user = adMapper.checkApproval(user_seq); // 가입승인 메일 보낼 회원 정보 가져오기
 		sendEmail(user);
 	}
 
-	private void sendEmail(User user) {
+	private void sendEmail(User user) { // 메일보내기
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(user.getUser_email()); // -에게
 		message.setFrom("Medison@medison.com"); // -로부터
@@ -189,15 +188,15 @@ public class AdminServiceImpl implements AdminService {
 ////////////////////////////////////가입승인 메일 ////////////////////////////////
 ////////////////////////////////처방전 결제확인 메일 //////////////////////////////
 	@Override
-	public Prescription checkPre(int prescription_no, int prescription_price) {
-		adMapper.checkPre(prescription_no,prescription_price);
-		Prescription pre = cMapper.selectOnePre(prescription_no);
-		User user = adMapper.checkApproval(pre.getUser_seq());
-		sendPEmail(user);
+	public Prescription checkPre(int prescription_no, int prescription_price) { // 처방전 결제확인 메일
+		adMapper.checkPre(prescription_no,prescription_price); // 처방전의 약국 확인여부 Y로 업데이트
+		Prescription pre = cMapper.selectOnePre(prescription_no); // 해당 처방전 정보 가져오기
+		User user = adMapper.checkApproval(pre.getUser_seq()); // 처방전 작성자 정보 가져오기
+		sendPEmail(user); // 메일발송
 		return pre;
 	}
 	
-	private void sendPEmail(User user) {
+	private void sendPEmail(User user) { // 처방전 결제확인 메일발송
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(user.getUser_email()); // -에게
 		message.setFrom("Medison@medison.com"); // -로부터

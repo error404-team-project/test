@@ -4,21 +4,30 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.java.mapper.CustomerMapper">
 	
+	<!-- 공지사항 갯수 가져오기 -->
 	<select id="selectNListCountAll">
 		select count(*) from notice
 	</select>
 	
+	<!-- 처방전 게시글 수 가져오기 -->
 	<select id="selectPListCountAll">
-		<if test="auth_id == 'admin' || auth_id == 'store'">
+		<!-- 로그인 되어있는 사람의 권한 아이디가 약국일때 -->
+		<if test= "auth_id == 'store'">
+			<!-- 모든 처방전 게시글 수 가져옴 -->
 			select count(*) from prescription
 		</if>
+		<!-- 로그인 되어있는 사람의 권한아이디가 일반회원일때 -->
 		<if test="auth_id == 'user'">
+			<!-- 내가 작성한 처방전 게시글 수 가져옴 -->
 			select count(*) from prescription where user_seq=#{user_seq}
 		</if>
 	</select>
 	
+	<!-- 처방전 리스트 가져오기 -->
 	<select id="selectPre" resultType="com.java.dto.Prescription">
-		<if test="auth_id == 'admin' || auth_id == 'store'">
+		<!-- 로그인 되어있는 사람의 권한아이디가 약국일때 -->
+		<if test="auth_id == 'store'">
+			<!-- 모든 처방전 게시글 리스트 가져오기 -->
 			<![CDATA[
 			select * from
 			(select rownum rnum, a.* from 
@@ -27,6 +36,7 @@
 			]]>
 		</if>
 		<if test="auth_id == 'user'">
+			<!-- 내가 작성한 처방전 게시글 리스트 가져오기 -->
 			<![CDATA[
 			select * from
 			(select rownum rnum, a.* from 
@@ -38,14 +48,17 @@
 		</if>
 	</select>
 	
+	<!-- 선택한 처방전 게시글 정보 가져오기 -->
 	<select id="selectOnePre" resultType="com.java.dto.Prescription">
 		select * from prescription where prescription_no = #{prescription_no}
 	</select>
 	
+	<!-- 처방전 게시글 수정하기 -->
 	<update id="updatePre">
 		update prescription set prescription_content=#{prescription_content}, prescription_image=#{prescription_image} where prescription_no=#{prescription_no}
 	</update>
 	
+	<!-- 공지사항 리스트 가져오기 -->
 	<select id="selectAllN" resultType="com.java.dto.Notice">
 		<![CDATA[
 		select * from
@@ -56,10 +69,12 @@
 		]]>
 	</select>
 	
+	<!-- 선택한 공지사항 정보 가져오기 -->
 	<select id="selectOneN" resultType="com.java.dto.Notice">
 		select * from notice where notice_no=#{notice_no}
 	</select>
 	
+	<!-- 선택한 공지사항의 이전 공지 게시글 정보 가져오기 -->
 	<select id="selectPrev" resultType="com.java.dto.Notice">
 		select * from notice where notice_no =
 		(select prevDto from
@@ -68,6 +83,7 @@
 		where notice_no = #{notice_no})
 	</select>
 	
+	<!-- 선택한 공지사항의 다음 공지 게시글 정보 가져오기 -->
 	<select id="selectNext" resultType="com.java.dto.Notice">
 		select * from notice where notice_no =
 		(select prevDto from
@@ -76,18 +92,22 @@
 		where notice_no = #{notice_no})
 	</select>
 	
+	<!-- 공지사항 작성하기 -->
 	<insert id="insertNotice">
 		insert into notice values(notice_seq.nextval,#{user_seq},#{notice_title},#{notice_content},#{notice_image},0,sysdate)
 	</insert>
 	
+	<!-- 공지사항 수정하기 -->
 	<update id="updateNotice">
 		update notice set notice_title=#{notice_title}, notice_content=#{notice_content}, notice_image=#{notice_image} where notice_no=#{notice_no}
 	</update>
 	
+	<!-- 공지사항 조회수 증가 -->
 	<update id="NHitUp">
 		update notice set notice_hit=notice_hit+1 where notice_no=#{notice_no}
 	</update>
 	
+	<!-- 처방전 게시글 작성하기 -->
 	<insert id="insertPrescription">
 		insert into prescription values(pre_seq.nextval,#{user_seq},#{prescription_title},#{prescription_content},#{prescription_image},'N',NULL)
 	</insert>

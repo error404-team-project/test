@@ -44,8 +44,7 @@ public class AdiminPageController {
 	@Autowired myService myservice;
 	@Autowired MyMapper mymapper;
 	@Autowired AdminMapper adMapper;
-	@Autowired
-	HttpSession session;
+	@Autowired HttpSession session;
 	
 	
 	@RequestMapping("/ex_drone_carry")

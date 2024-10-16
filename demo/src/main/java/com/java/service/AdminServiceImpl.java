@@ -283,14 +283,4 @@ public class AdminServiceImpl implements AdminService {
 		return dronelist;
 	}
 	
-	
-	
-	
-	
-
-
-	
-	
-	
-	
 }

@@ -52,6 +52,10 @@ public interface MyMapper {
 
 	 ArrayList<Porder> selectoneReturn(HashMap<String, Object> params);
 
+	Member selectdoreturn(Member m);
+
+	void updatereturn(String return_no);
+
 
 
 

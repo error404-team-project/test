@@ -59,20 +59,11 @@
 					<col width="10%"/>
 					<col width="10%"/>
 				</colgroup>
-<!-- <script>
-function wBtn(){
-	location.href="/customer/notice_write"
-}
-
-function mBtn(pno){
-	if(confirm("해당 공지사항을 수정하시겠습니까?"))
-	location.href="/customer/notice_modi?notice_no="+pno;
-} // mBtn
-
+				<script>
 function dBtn(pno){
-	//alert("삭제누른번호"+notice_no);
-	if(confirm("해당 공지사항을 삭제하시겠습니까?")){
-		 $.ajax({
+
+location.href="/adminPage/return_check?return_no="+pno;
+	/* 	 $.ajax({
 			url : "/adminPage/deleteNotice",
 			data : {"notice_no" : pno},
 			method : "post",
@@ -82,11 +73,12 @@ function dBtn(pno){
 			},
 			error : function(){
 				alert("실패");
-			}
+			} 
 		});//ajax 
-	} // if
+
+			*/
 } // dBtn
-</script> -->
+</script>
                   <thead>
 								<th scope="col">반품 요청일자 </th>
 								<th scope="col">반품 번호 </th>
@@ -105,7 +97,7 @@ function dBtn(pno){
                    <td>	${return1.return_state}</td>
                   
                  	<td>
-                  		<input type="button" onclick="dBtn(${return1.return_no})" class="btn btn-sm btn-secondary" value="반품 요청 확인">
+                  		<input type="button" onclick="dBtn('${return1.return_no}' )" class="btn btn-sm btn-secondary" value="반품 요청 확인">
                   	</td>
                   </tr>
                   </c:forEach>
@@ -119,7 +111,7 @@ function dBtn(pno){
 							<c:forEach var="num" begin="${pageDto.startPage }" 
 											end="${pageDto.maxPage }" step="1">
 						<c:if test="${num != pageDto.page }">
-							<a href="/mypage/inquiry?page=${num }">${num }</a>
+							<a href="/mypage/inquiry?page=${num }">${num}</a>
 						</c:if>
 						<c:if test="${num == pageDto.page }">
 							<strong>${num }</strong>

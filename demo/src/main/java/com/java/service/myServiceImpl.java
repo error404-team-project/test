@@ -215,4 +215,16 @@ public class myServiceImpl implements myService {
 		return pageDto;
 	}
 
+	@Override
+	public Member selectdoreturn(Member m) {
+		Member mem = mymapper.selectdoreturn(m);
+		return mem;
+	}
+
+	@Override
+	public void updatereturn(String return_no) {
+		mymapper.updatereturn(return_no);
+		
+	}
+
 }

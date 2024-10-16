@@ -36,6 +36,10 @@ public interface myService {
 	
 	HashMap<String, Object> selectReturn(Page pageDto,int user_seq);
 
+	Member selectdoreturn(Member m);
+
+	void updatereturn(String return_no);
+
 
 
 

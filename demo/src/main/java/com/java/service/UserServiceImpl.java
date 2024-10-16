@@ -7,12 +7,9 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.java.dto.Member;
 import com.java.dto.User;
 import com.java.mapper.UserMapper;
-
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
-import jakarta.mail.internet.MimeMessage.RecipientType;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -141,5 +138,18 @@ public class UserServiceImpl implements UserService {
 
 ////////////////////////////// 아이디찾기 //////////////////////////////////////////
 
+	
+	public void sendEmail2(Member user) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(user.getUser_email()); // -에게
+		message.setFrom("Medison@medison.com"); // -로부터
+		message.setSubject("[Medison.] "+user.getUser_name()+"님에게 알림을 발송합니다."); // 제목
+		message.setText("안녕하세요 반품신청을 요청받아 연락드립니다\n"+
+					 "반품 요청하신 상품을 해당 약국으로 보내주시기 바랍니다. (택배 가능)\n" 
+					+ "본 이메일은 발신 전용 이메일이므로 수신 불가합니다."
+					);
+		mailSender.send(message);
+		System.out.println("메일이 발송되었습니다.");
+	}
 
 }

@@ -10,6 +10,7 @@ import com.java.dto.Notice;
 import com.java.dto.Page;
 import com.java.dto.Porder;
 import com.java.dto.Product;
+import com.java.dto.Return_table;
 import com.java.dto.User;
 
 @Mapper
@@ -59,5 +60,7 @@ public interface AdminMapper {
 	void insertDrone(Drone drone);
 
 	ArrayList<Porder> selectYdrone();
+
+	Return_table selectdoreturn(String return_no);
 
 }

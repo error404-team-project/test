@@ -15,6 +15,7 @@ import com.java.dto.Page;
 import com.java.dto.Porder;
 import com.java.dto.Prescription;
 import com.java.dto.Product;
+import com.java.dto.Return_table;
 import com.java.dto.User;
 import com.java.mapper.AdminMapper;
 import com.java.mapper.CustomerMapper;
@@ -281,6 +282,12 @@ public class AdminServiceImpl implements AdminService {
 	public ArrayList<Porder> selectYdrone() {
 		  ArrayList<Porder> dronelist = adMapper.selectYdrone();
 		return dronelist;
+	}
+
+	@Override
+	public Return_table selectdoreturn(String return_no) {
+		Return_table re =  adMapper.selectdoreturn(return_no);
+		return re;
 	}
 	
 }

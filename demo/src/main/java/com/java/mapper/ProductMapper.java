@@ -43,6 +43,8 @@ public interface ProductMapper {
 
 	void deleteById(Long id);
 
+	Product selectdoreturn(String p_num);
+
 
 
 

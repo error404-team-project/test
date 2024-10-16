@@ -28,5 +28,7 @@ public interface ProductService {
 
 	void deleteCartItems(List<Long> ids);
 
+	Product selectdoreturn(String p_num);
+
 
 }

@@ -250,6 +250,12 @@ public class ProductServiceImpl implements ProductService {
 	        }
 	}
 
+	@Override
+	public Product selectdoreturn(String p_num) {
+		Product product = pMapper.selectdoreturn(p_num);
+		return product;
+	}
+
 
 
 
